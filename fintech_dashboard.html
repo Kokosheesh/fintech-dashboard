@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fintech Weekly Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+  :root { color-scheme: light;
+    --bg:#f6f7fb; --card:#ffffff; --ink:#1a2233; --muted:#66708a; --line:#e4e7f0;
+    --accent:#1f3864; --accent2:#2e5496; --up:#0a7d4f; --down:#b3261e; --chip:#eef2fa;
+  }
+  * { box-sizing:border-box; margin:0; }
+  body { font:14px/1.45 'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--ink); padding:16px; }
+  header { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:4px; }
+  h1 { font-size:20px; color:var(--accent); }
+  .stamp { color:var(--muted); font-size:12px; }
+  .note { font-size:12px; color:var(--muted); margin:6px 0 14px; }
+  nav { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  nav button { border:1px solid var(--line); background:var(--card); color:var(--ink); padding:7px 14px; border-radius:20px; cursor:pointer; font-size:13px; font-weight:600; }
+  nav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  section.tab { display:none; }
+  section.tab.active { display:block; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:20px 0 8px; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .tile .v { font-size:20px; font-weight:700; color:var(--accent); margin:2px 0 0; }
+  .tile .l { font-size:11.5px; color:var(--muted); }
+  .tile .d { font-size:11px; color:var(--muted); margin-top:2px; }
+  .tile .chg { display:block; font-size:11px; font-weight:700; margin-top:1px; }
+  .chg.up { color:var(--up); } .chg.down { color:var(--down); }
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+  .chartbox { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; height:280px; position:relative; }
+  .chartbox h3 { font-size:12.5px; color:var(--ink); margin-bottom:6px; }
+  .chartbox .cwrap { position:absolute; inset:36px 12px 10px 12px; }
+  .ctrl { display:inline-flex; gap:4px; margin:6px 8px 6px 0; background:var(--chip); border-radius:16px; padding:3px; }
+  .ctrl button { border:0; background:transparent; padding:4px 12px; border-radius:13px; font-size:12px; font-weight:600; color:var(--muted); cursor:pointer; }
+  .ctrl button.on { background:var(--accent); color:#fff; }
+  .twrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); font-size:12.5px; }
+  th { background:var(--chip); text-align:left; padding:7px 9px; color:var(--accent); font-size:11px; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap; }
+  th.sortable { cursor:pointer; } th.sortable:after { content:" ↕"; color:var(--muted); }
+  td { padding:7px 9px; border-top:1px solid var(--line); vertical-align:top; }
+  .src { font-size:11px; color:var(--muted); margin-top:8px; }
+  .src a { color:var(--accent2); }
+  .flag { display:inline-block; background:#fdf3e3; color:#8a5b00; font-size:10.5px; padding:1px 7px; border-radius:9px; margin-left:5px; }
+  .fn { font-size:11px; color:var(--muted); margin-top:5px; }
+  .zones { display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:10px; }
+  .zone { background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent2); border-radius:10px; padding:10px 12px; cursor:pointer; }
+  .zone:hover { border-color:var(--accent); }
+  .zone.sel { background:var(--chip); border-left-color:var(--accent); }
+  .zone .zn { font-weight:700; font-size:13px; color:var(--accent); }
+  .zone .zc { font-size:11px; color:var(--muted); margin:3px 0; }
+  .zone .zr { font-size:11.5px; }
+  .zpanel { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-top:10px; }
+  .zpanel h4 { color:var(--accent); font-size:14px; margin-bottom:6px; }
+  .flow { font-size:11.5px; color:var(--muted); margin:8px 0; }
+  .up2 { color:var(--up); font-weight:700; } .down2 { color:var(--down); font-weight:700; }
+  a { color:var(--accent2); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 10px; }
+  .chips a { background:var(--chip); border:1px solid var(--line); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; text-decoration:none; color:var(--accent); }
+  .tl { border-left:3px solid var(--accent2); margin:4px 0 8px 6px; }
+  .tl-e { padding:8px 12px 8px 16px; cursor:pointer; position:relative; }
+  .tl-e:before { content:""; position:absolute; left:-8px; top:14px; width:11px; height:11px; border-radius:50%; background:var(--card); border:3px solid var(--accent2); }
+  .tl-e:hover { background:var(--chip); }
+  .tl-date { display:inline-block; font-size:11px; font-weight:700; color:var(--accent2); margin-right:10px; min-width:70px; }
+  .tl-d { display:none; font-size:12.5px; color:var(--muted); margin-top:5px; max-width:900px; }
+  .tl-e.open .tl-d { display:block; }
+</style>
+</head>
+<body>
+<header><h1>Fintech Weekly Dashboard</h1><span class="stamp" id="stamp"></span></header>
+<div class="note">India fintech dashboard: Payments · Lending & Credit · WealthTech. Figures marked ✓ are source-verified; ≈ are latest-reported estimates. Compiled by Kohinoor Mukherjee.</div>
+<nav id="nav"></nav>
+<div id="tabs"></div>
+
+<script>
+// ============ DATA (weekly job replaces this block only) ============
+const DATA = {
+lastUpdated: "13 Jul 2026",
+payments: {
+  tiles: [
+    { l:"UPI volume (Jun'26)", v:"22.72 B", d:"NPCI monthly", chg:"+23% YoY", dir:"up" },
+    { l:"UPI value (Jun'26)", v:"₹28.92 L cr", d:"NPCI monthly", chg:"+20% YoY", dir:"up" },
+    { l:"UPI FY26 total", v:"241.6 B txns", d:"₹314 L cr · PIB/NPCI" },
+    { l:"P2M share of volume", v:"~63%", d:"FY26 · PIB" },
+    { l:"Banks live on UPI", v:"703", d:"FY26 · NPCI" },
+    { l:"PhonePe+GPay share", v:"79%", d:"May'26 · first sub-80% reading", chg:"−7pp from peak", dir:"down" },
+    { l:"30% share cap deadline", v:"31 Dec 2026", d:"NPCI proposal — the sector's biggest overhang" },
+  ],
+},
+lending: {
+  tiles: [
+    { l:"Bank credit growth", v:"18.6%", d:"YoY, fortnight ended 27 Jun'26 · 2-yr high · RBI", chg:"vs 12% deposit growth", dir:"up" },
+    { l:"Non-food credit", v:"₹213.8 L cr", d:"May'26 · +17.4% YoY · RBI" },
+    { l:"Credit–deposit growth gap", v:">500 bps", d:"the deposit war — funding costs sticky", chg:"key sector risk", dir:"down" },
+    { l:"Repo rate", v:"5.25%", d:"held, neutral · Jun'26 MPC" },
+    { l:"System GNPA", v:"≈2.3%", d:"multi-decade low · RBI FSR ≈" },
+    { l:"Digital lending disbursals", v:">₹47 L cr", d:"FY26 projection · EY-DLAI" },
+    { l:"FLDG cap", v:"5%", d:"RBI Digital Lending Directions 2025" },
+  ],
+  macro: { labels:["FY22","FY23","FY24","FY25","FY26","Jun'26"], credit:[9.6,15.0,16.3,11.0,16.0,18.6], repo:[4.0,6.5,6.5,6.25,5.5,5.25] },
+  gnpa: { labels:["FY15","FY16","FY18","FY20","FY22","FY23","FY24","FY25≈","FY26≈"], data:[4.3,7.5,11.5,8.2,5.8,3.9,2.8,2.3,2.4] },
+  pl: { labels:["FY22","FY23","FY24","FY25","FY26≈"], data:[20,26,14,9,11] },
+  banks: [
+    ["HDFC Bank","Private","₹819",16.6,2.17,1.9,3.5,1.3,34,"Post-merger normalisation done; results 18 Jul; P/B ✓ (BV ₹378)"],
+    ["ICICI Bank","Private","₹1,410",18.7,3.2,2.4,4.3,1.7,39,"Sector's RoA benchmark; premium multiple persists"],
+    ["SBI","PSU","₹1,037",11.6,1.5,1.1,3.0,1.8,40,"PSU re-rating story; ₹9.6 L cr mcap; scale + CASA moat"],
+    ["Axis Bank","Private","₹1,320",15.5,1.9,1.7,3.9,1.3,41,"Citi retail book integrated"],
+    ["Kotak Mahindra","Private","₹385",20.1,2.7,2.4,4.9,1.4,43,"Split-adjusted; embargo lifted, rebuilding 811"],
+    ["Bank of Baroda","PSU","₹251",6.6,0.9,1.1,3.1,2.3,40,"P/E 6.6 — the PSU discount quantified"],
+    ["PNB","PSU","₹106",6.7,1.0,1.0,2.9,3.5,38,"Cleanest book in a decade after write-off cycle"],
+    ["IndusInd Bank","Private","₹1,012",88.8,0.9,0.2,4.0,3.1,33,"P/E 88.8 on collapsed earnings (PAT ₹889 cr TTM) — the 2025 derivatives scandal in one number"],
+    ["Federal Bank","Private","₹333",18.9,1.3,1.3,3.2,2.0,30,"The fintech-partnership bank (Jupiter, Fi sponsor)"],
+    ["IDFC First","Private","—",0,1.4,1.2,6.0,1.9,47,"Retail transformation; MFI drag easing"],
+    ["Yes Bank","Private","—",0,1.1,0.6,2.4,1.6,32,"SMBC 20% deal (~₹13,483 cr, May'25) — foreign-control test case"],
+    ["RBL Bank","Private","—",0,0.8,0.8,4.8,2.6,34,"Perennial strategic-interest candidate; cards stress easing"],
+  ],
+  sfbs: [
+    ["AU SFB","₹1,062",30.1,"TTM PAT ₹2,641 cr","Low","In-principle universal licence Aug'25; final applied Mar'26 ✓","₹79,511 cr mcap — bigger than IndusInd; the SFB→universal template"],
+    ["Ujjivan SFB","₹67",18.8,"₹693 cr","~55%","Applied ≈","Diversifying out of MFI fastest; cleanest recovery"],
+    ["Equitas SFB","₹83",92.6,"₹103 cr","~18%","Applied ≈","P/E 92.6 = earnings collapsed, price holding — market betting on normalisation"],
+    ["Jana SFB","₹483",15.5,"₹326 cr","~40%","Eligible","Secured-mix rising; quiet compounder of the cohort"],
+    ["Suryoday SFB","₹192",13.4,"₹152 cr","High","—","Small; recovered to profit"],
+    ["ESAF SFB","₹36","loss","−₹166 cr","High","—","Still loss-making; deepest stress"],
+    ["Utkarsh SFB","₹15","loss","−₹1,151 cr","High","—","FY26 loss ₹1,151 cr — the MFI cycle's biggest casualty; distress-entry candidate?"],
+  ],
+  nbfcs: [
+    ["Bajaj Finance","Diversified consumer","₹1,022",33.2,"₹5.47 L cr ✓(+24%)",4.2,1.0,"₹6.36 L cr mcap; 124M customers; every NBFC pitch is 'next Bajaj'"],
+    ["Shriram Finance","CV + diversified","₹1,049",24.6,"≈2.6 L cr",3.2,4.9,"TTM PAT ₹10,029 cr; used-CV moat"],
+    ["Cholamandalam","Vehicle + LAP","₹1,811",29.5,"≈1.9 L cr",2.4,2.8,"Execution premium; 34% 3-yr sales CAGR"],
+    ["Tata Capital","Diversified","₹359",31.2,"≈2.3 L cr",2.0,1.7,"2025 listing ✓; ₹1.52 L cr mcap; the newest big comp"],
+    ["HDB Financial","Diversified (HDFC arm)","₹758",24.7,"≈1.1 L cr",2.2,2.2,"Jul'25 listing ✓; TTM PAT ₹2,543 cr"],
+    ["Muthoot Finance","Gold","₹3,061",11.7,"≈1.3 L cr",5.0,2.0,"TTM PAT ₹10,590 cr, +54% — the gold-boom trade at 11.7x"],
+    ["Bajaj Housing","Housing (prime)","—",0,"≈1.4 L cr ✓(+24%)",2.4,0.3,"Premium to HFC peers persists"],
+    ["Manappuram","Gold + MFI","—",0,"≈0.45 L cr",4.0,2.5,"Bain control deal (2025) ≈ — PE playbook live"],
+    ["L&T Finance","Retailised diversified","₹324",25.4,"≈0.95 L cr",2.4,3.2,"TTM PAT ₹3,202 cr; retail pivot done"],
+    ["Piramal Finance","Diversified","—",0,"≈0.80 L cr",1.0,2.8,"DHFL absorbed; discount-to-book case study"],
+    ["CreditAccess Grameen","Microfinance","—",0,"≈0.27 L cr",2.0,4.8,"MFI bellwether — cycle turned Q4FY26 (see MFI section)"],
+    ["Aavas Financiers","Affordable housing","—",0,"≈0.19 L cr",3.3,1.1,"PE promoter churn (CVC/GIC) — exit-multiple watch"],
+    ["Five Star Business","Secured MSME","—",0,"≈0.12 L cr",8.0,1.5,"Highest RoA in Indian lending; can it scale?"],
+    ["Home First","Affordable housing","—",0,"≈0.12 L cr",3.5,1.7,"Tech-led affordable HFC"],
+    ["Aptus Value","Affordable housing (South)","—",0,"≈0.10 L cr",7.5,1.2,"RoA outlier #2; geographic concentration"],
+  ],
+  mfi: {
+    tiles: [
+      { l:"Industry GLP", v:"₹3.25 L cr", d:"Q4 FY26 · MFIN Micrometer (57th)", chg:"+3% QoQ — first growth in 7 quarters", dir:"up" },
+      { l:"Quarterly disbursals", v:"₹77,524 cr", d:"7-quarter high · Q4 FY26" },
+      { l:"PAR 31–180", v:"2.0%", d:"vs 6.3% a year ago — cycle turned", chg:"−430 bps YoY", dir:"up" },
+      { l:"Peak-to-trough GLP", v:"≈−28%", d:"₹4.3→3.15 L cr over 7 quarters ≈" },
+    ],
+    glp:[4.34,4.1,3.8,3.5,3.3,3.15,3.25], par:[2.1,3.2,4.5,6.3,5.5,3.9,2.0],
+    qlabels:["Mar'24","Jun'24","Sep'24","Mar'25","Jun'25","Dec'25","Mar'26"],
+  },
+  deals: [
+    ["May 2025","SMBC → 20% of Yes Bank (from SBI-led consortium)","≈₹13,483 cr","Largest foreign bank-stake deal in India; the foreign-control test case ≈"],
+    ["Mar 2025","Bain Capital → joint control of Manappuram","≈$508M","PE control playbook enters gold lending; watch the operating turnaround ≈"],
+    ["2024–25","SMFG absorbs Lendingkart","distress-priced ≈","Fintech SME lender rescued by parent capital — cautionary comp for standalone lenders"],
+    ["Jul–Oct 2025","HDB Financial + Tata Capital IPOs","—","Two mega-NBFC listings reset public comps (both now in table above) ✓"],
+    ["2024","Slice × North East SFB merger completed","—","The licence-acquisition route — fintech becomes a bank"],
+  ],
+  talent: [
+    ["Bajaj Finance","https://www.bajajfinserv.in/careers","pending — own portal"],
+    ["Navi","https://www.navi.com/careers","pending — ATS scrape next session"],
+    ["KreditBee","https://www.kreditbee.in/careers","pending"],
+    ["Moneyview","https://moneyview.in/careers","pending"],
+    ["CreditAccess Grameen","https://www.creditaccessgrameen.in/careers/","pending"],
+    ["AU SFB","https://www.aubank.in/careers","pending"],
+  ],
+  zones: [
+    { n:"1 · Capital Sources", rev:"Deposits fund ~78% of system credit", prof:"—",
+      cos:[["Depositors (via banks)","The cheapest funding in the chain — CASA at 30–43% of bank books","Why the deposit war (C-D gap >500bps) is THE constraint on credit growth right now"],
+      ["Debt markets & MFs","NCDs/CPs fund NBFCs; MF debt schemes are the marginal buyer","Nov'23 risk weights showed the fragility: bank→NBFC funding repriced 30–50bps in weeks"],
+      ["PE / VC equity","Growth capital for fintech-NBFCs; control deals for mature books","Bain–Manappuram and SMBC–Yes are the live templates"]] },
+    { n:"2 · Balance-Sheet Lenders", rev:"System credit ₹213.8 L cr (May'26)", prof:"System GNPA ≈2.3% — best in decades",
+      cos:[["Banks / SFBs / NBFCs / MFIs","Hold the risk, earn the NIM","See universe tables above — this zone IS the dashboard's core"]] },
+    { n:"3 · Origination & Distribution", rev:"≈1–3% origination fees", prof:"asset-light, thin margins",
+      cos:[["DSAs & aggregators (Paisabazaar, BankBazaar)","Lead-gen and comparison; commissions from lenders","Paisabazaar originates a meaningful share of unsecured PL digitally"],
+      ["Fintech LSPs (KreditBee, Moneyview et al. in LSP mode)","Full-stack origination + servicing on others' balance sheets","Post-2022 guidelines the LSP label is regulatorily defined — disclosure to borrowers mandatory"],
+      ["Embedded (Amazon–Axio, marketplace seller finance)","Credit at point of context","Acquisition cost near zero; underwriting on platform data"]] },
+    { n:"4 · Data & Underwriting Rails", rev:"per-pull pricing (₹5–50)", prof:"high-margin picks-and-shovels",
+      cos:[["Bureaus (CIBIL, CRIF, Experian, Equifax)","Repayment-history scores; the baseline of all underwriting","CIBIL is majority TransUnion-owned; publishes the CMI the whole industry quotes"],
+      ["Account Aggregator ecosystem (Sahamati)","Consent-based bank-statement data; kills PDF-scraping","RBI framework; Finvu/OneMoney AAs; FIU adoption now spans lenders→insurers"],
+      ["Perfios / FinBox / Setu","Analytics layer converting raw statements & GST into decisions","ULI (RBI) aims to standardise these pipes into a public utility"]] },
+    { n:"5 · Collections & Recovery", rev:"% of recovered value", prof:"digital-first cutting costs ~30% ≈",
+      cos:[["Credgenics / Spocto","Digital collections orchestration (calls→legal notices)","RBI conduct rules apply to agents; digital trails reduce disputes"],
+      ["ARCs (Edelweiss, Phoenix…)","Buy NPAs at discount; recover over years","Security receipts market; bank clean-ups feed this zone"],
+      ["IBC / DRT / SARFAESI","The legal recovery stack","IBC recovery rates ~30-35% — better than pre-2016 but slowing"]] },
+    { n:"6 · Regulator & Guarantees", rev:"—", prof:"—",
+      cos:[["RBI","Licensing, SBR layers, digital-lending rules, risk weights","See timeline above — every event repriced some business model"],
+      ["CGTMSE / NCGTC","Credit guarantees up to 85% on MSME loans","The quiet subsidy making small-ticket MSME lending viable"],
+      ["SIDBI / NABARD / NHB","Refinance windows for MSME/agri/housing","Cheap wholesale funding — the public-sector liquidity backstop"]] },
+  ],
+  regTimeline: [
+    ["Sep 2022","Digital Lending Guidelines","Ended pass-through/pool accounts; formalised the LSP model. Killed PPI-based 'shadow credit cards' — Slice and Uni forced to pivot overnight."],
+    ["Jun 2023","FLDG capped at 5%","Legitimised default guarantees but capped skin-in-the-game. Fintech-bank co-lending restructured around the cap; some balance-sheet-light models became unviable."],
+    ["Nov 2023","+25pp risk weights on unsecured PL & bank→NBFC lending","The cycle-turner: fintech PL growth halved within two quarters (see chart above); NBFC borrowing costs rose 30–50 bps; unsecured mix shrank across lenders."],
+    ["Jan 2024","Paytm Payments Bank wound down","Largest fintech enforcement ever. Sector learnt the partner-bank migration playbook; compliance became a valuation input, not a cost line."],
+    ["Mar 2024","IIFL gold-loan ban (lifted Sep'24)","LTV and valuation discipline imposed sector-wide; compliance premium now priced into gold NBFCs."],
+    ["Apr 2024","SFB → universal bank pathway opened","AU applied; defines the endgame for scaled SFBs and resets the licence-arbitrage math for PE buyers."],
+    ["Feb 2025","Risk-weight partial rollback (bank→NBFC, MFI)","Funding taps reopened; timed relief into the MFI stress cycle. NBFC spreads recovered through FY26."],
+    ["May 2025","Digital Lending Directions (consolidated rulebook)","One master direction: LSP disclosure, DLG reporting, borrower protection, cooling-off rights. The compliance moat around scaled digital lenders got deeper."],
+    ["Jun 2025","Repo cut to 5.5% + 100bps CRR cut","Rate cycle turned decisively. NBFC margin tailwind through FY26; growth capital got cheaper exactly as risk weights eased."],
+    ["Jun 2026","Credit growth at 2-yr high (18.6%); deposits lag at 12%","The current setup: growth is back but the deposit war caps NIM expansion. C-D gap >500bps is the number every bank CEO is asked about."],
+  ],
+  lenders: [
+    ["Navi","Consumer PL, home, UPI","Own NBFC book","Chaitanya MFI sold; IPO-track"],
+    ["KreditBee","Consumer PL (young salaried)","NBFC + partners","Among largest by digital PL volume"],
+    ["Moneyview","PL + cards + wealth","Partner-led + NBFC","Unicorn (2024)"],
+    ["Fibe (EarlySalary)","Salary-linked credit, health EMI","NBFC + co-lend","Strong salaried niche"],
+    ["Axio (ex-Capital Float)","Checkout finance / BNPL","NBFC","Acquired by Amazon (2025≈)"],
+    ["OfBusiness / Oxyzo","B2B raw-material + SME credit","Own NBFC (Oxyzo)","Profitable; IPO-track"],
+    ["Lendingkart","SME working capital","NBFC + co-lend","Acquired by Fullerton/SMFG"],
+    ["Slice","Consumer credit → bank","Merged with NESFB","The licence-acquisition route"],
+  ],
+},
+wealthtech: {
+  tiles: [
+    { l:"MF industry AUM", v:"₹82.22 L cr", d:"record · Jun'26 · AMFI" },
+    { l:"Monthly SIP inflow", v:"₹31,781 cr", d:"record · Jun'26 · AMFI", chg:"+4% MoM", dir:"up" },
+    { l:"NSE active clients", v:"4.57 cr", d:"FY26 ✓ — the SEBI F&O reset in one number", chg:"−35 lakh YoY (first decline since FY23)", dir:"down" },
+    { l:"Total demat accounts", v:"≈19.4 cr+", d:"Mar'25 · CDSL+NSDL (monthly refresh pending)" },
+    { l:"Financial share of household savings", v:"≈47%", d:"vs ~41% pre-COVID ≈ · RBI — the structural driver" },
+    { l:"Equity share within financial savings", v:"≈7%", d:"the headroom argument ≈" },
+    { l:"Discount-broker share", v:"~75%", d:"of active clients ✓" },
+  ],
+  finShare: { labels:["FY19","FY20","FY21","FY22","FY23","FY24≈","FY25≈"], data:[41,43,52,47,42,45,47] },
+  clients: { labels:["FY20","FY21","FY22","FY23","FY24","FY25","FY26"], data:[1.08,1.90,3.60,3.27,4.08,4.92,4.57] },
+  sipTrend: { labels:["Jun'23","Jun'24","Jun'25","Jun'26"], data:[14734,21262,27269,31781] },
+  aumTrend: { labels:["Jun'23","Jun'24","Jun'25","Jun'26"], data:[44.4,61.2,74.4,82.2] },
+  brokers: [
+    ["Groww (Billionbrains)","₹208 · 62.7","1.30 cr ✓","28.4%","₹2,083 cr","Listed Nov'25; P/E 63 = the growth premium; MF + broking + credit cross-sell"],
+    ["Zerodha","unlisted","0.69 cr ✓","15.1%","≈₹4,700 cr FY24 ≈","Bootstrapped; F&O-heavy → lost ~10L actives in FY26; still the profit king"],
+    ["Angel One","₹341 · 34.1","0.67 cr ✓","14.7%","₹915 cr","Sales −1.9% TTM — the F&O curbs visible in the P&L"],
+    ["ICICI Securities","delisted Mar'25","0.21 cr ✓","4.6%","—","Folded into ICICI Bank; bank-brokers proved resilient"],
+    ["Upstox","unlisted","0.20 cr ✓","4.4%","≈","Lost share steadily since FY23"],
+    ["Motilal Oswal","₹980 · 31.7","—","—","₹1,860 cr","Full-service + AMC mix cushioned the reset"],
+    ["360 ONE","₹1,120 · 37.4","—","—","₹1,216 cr","HNI/UHNI pure-play — the premiumisation trade"],
+    ["Nuvama","₹1,917 · 33.7","—","—","₹1,041 cr","Wealth + capital markets; PAG-owned"],
+  ],
+  infra: [
+    ["CDSL","₹1,445 · 66.2","₹456 cr","+5.8%","Duopoly depository; retail-account beta at a monopoly multiple"],
+    ["NSDL","₹845 · 44.4","₹380 cr","+7.7%","2025 listing ✓; institutional-side depository"],
+    ["CAMS","₹786 · 44.0","₹443 cr","+6.6%","MF RTA duopoly; ROCE 47% — the toll-booth model"],
+    ["KFin Tech","₹926 · 48.1","₹333 cr","+19.3%","RTA #2 + international + issuer services — fastest grower"],
+    ["NSE (unlisted)","IPO pipeline","₹12,000 cr+ ≈","—","The big one: world's largest derivatives exchange; unlisted-market favourite; IPO progress = event risk for every comp here"],
+  ],
+  amcs: [
+    ["ICICI Pru AMC","₹3,210 · 48.1","₹3,298 cr","+20.5%","2025 listing ✓; largest by PAT"],
+    ["HDFC AMC","₹2,747 · 41.2","₹2,859 cr","+13.9%","The AMC bellwether"],
+    ["Nippon India","₹1,217 · 50.8","₹1,529 cr","+16.1%","Passive + retail SIP leader — priciest multiple"],
+    ["Aditya Birla SL","₹1,174 · 34.7","₹977 cr","+3.7%","Losing equity share; value or trap?"],
+    ["UTI AMC","₹1,028 · 28.2","₹470 cr","−7.9%","Cheapest AMC; shrinking — the passive-fee-compression case study"],
+  ],
+  startups: [
+    ["Dezerv","Affluent wealth mgmt (PMS + bonds + MF)","Series C ₹350 cr — Oct'25 ✓ (Premji Invest + Accel co-led; total raised ₹850 cr+; prior mark $300M)","AUM ₹10,000 cr+ ≈; the 'digital 360 ONE' thesis"],
+    ["smallcase","Model-portfolio infrastructure","$50M Series D (Mar'24) ≈","Rides every broker's rails; transaction-fee + manager-subscription model"],
+    ["INDmoney","Wealth super-app (US stocks, MF, broking)","≈$86M total raised ≈","Breadth-first; monetisation catching up to users"],
+    ["Jar","Digital gold micro-savings","≈$60M total ≈ ($300M mark, 2022)","Gold-price tailwind made the model work; profitability claimed 2025 ≈"],
+    ["Stable Money","Fixed-deposit marketplace","≈$20M+ (Z47, RTP) ≈","FD retailisation — the anti-equity bet in the portfolio"],
+    ["Wint Wealth","Retail bonds (OBPP)","≈$15M ≈","Bond retailisation still early; SEBI OBPP licence = the moat"],
+    ["Kuvera","Direct MF platform","Acquired by CRED (2024)","Consolidation exhibit A — distribution without monetisation sells out"],
+    ["ET Money","MF + advisory app","Acquired by 360 ONE (2024) ≈","Consolidation exhibit B — HNI firms buying mass-affluent funnels"],
+  ],
+  pmsaif: [
+    { l:"PMS AUM", v:"₹41.6 L cr", d:"Jan'26 · SEBI (incl. institutional mandates) ✓" },
+    { l:"AIF commitments", v:"₹16.94 L cr", d:"Mar'26 · SEBI ✓", chg:"+25% YoY", dir:"up" },
+    { l:"AIF funds raised", v:"₹7 L cr+", d:"crossed ₹7 trn for the first time · FY26 ✓" },
+    { l:"Family offices", v:"≈300+", d:"~3x since 2018 ≈ — the FOCOS talent market itself" },
+  ],
+  rails: [
+    { l:"LRS outflows", v:"−4.1%", d:"Apr–Dec FY26 YoY — travel-led dip; Feb'26 rebounded +19% ✓" },
+    { l:"TCS-free LRS threshold", v:"₹10 lakh", d:"Budget 2026 — eases offshore investing friction ✓" },
+    { l:"Registered OBPPs (bond platforms)", v:"≈30", d:"SEBI list ≈" },
+    { l:"REIT + InvIT market cap", v:"≈₹1.5 L cr+", d:"yield assets going retail ≈" },
+    { l:"GIFT IFSC funds", v:"200+ ≈", d:"the offshore-onshore route — watch for wealthtech GIFT launches" },
+  ],
+  talent: [
+    ["Groww","https://job-boards.eu.greenhouse.io/groww","15 live ✓ (13 Jul, Greenhouse API): 9 content/growth · 2 wealth RM · 2 finance · 1 platform eng · 1 risk — post-IPO mix says distribution, not build"],
+    ["Zerodha","https://zerodha.com/careers/","~1,100 people, famously hires rarely — headcount flat by design"],
+    ["Angel One","https://www.angelone.in/careers","pending ATS scrape"],
+    ["INDmoney / smallcase / Dezerv","—","pending — Dezerv hiring RMs aggressively per LinkedIn ≈ (the HNI land-grab)"],
+  ],
+  zones: [
+    { n:"1 · Savers & Investors", rev:"Flows: SIP ₹31.8k cr/mo; ~19.4 cr demat; ~5.5 cr unique MF investors ≈", prof:"—",
+      cos:[["Mass retail (tier 2/3 led)","The volume engine — median age ~30, small tickets","Cohort risk: FY26 proved trader cohorts churn when rules change; investor cohorts (SIP) persisted"],
+      ["Mass affluent (₹25L–5cr)","The monetisation sweet spot everyone now targets","Dezerv, Groww W, 360 ONE, Nuvama all converging on the same segment from different directions"],
+      ["HNI / family offices","₹16.9 L cr AIF commitments and growing 25%/yr","Where fees still exist: 1-2% AMC + carry vs 0.1-0.75% TER in MFs"]] },
+    { n:"2 · Distribution & Platforms", rev:"broking + trail + take-rates", prof:"see broker table — the P&Ls diverged post-F&O reset",
+      cos:[["Discount brokers (Groww, Zerodha, Angel…)","75% of active clients; onboarding machines","Revenue concentration in F&O was the hidden fragility — Oct'24 exposed it; MF/credit cross-sell is the pivot"],
+      ["MFDs (~1.5 lakh) & RIAs (~1,000)","Human distribution; trail-commission economics","The advice gap: ~1,000 RIAs for 19 cr demat holders — the structural opening every advisory startup pitches"],
+      ["Wealth platforms (smallcase, Dezerv, INDmoney)","Productised advice & portfolios","smallcase is infra (rides brokers); Dezerv is licensed manufacture (PMS); INDmoney is aggregation — three different licences, three different margins"]] },
+    { n:"3 · Manufacturers", rev:"AMC revenue pool ≈₹25k cr/yr ≈", prof:"AMC margins 35-50%; PMS/AIF higher fee, lower scale",
+      cos:[["AMCs (44 players)","Package capital into products; TER-capped","Passive share rising → fee compression; see UTI row for the endgame"],
+      ["PMS managers (400+)","₹41.6 L cr incl. institutional; ₹50L minimum ticket","SEBI reviewing PMS rules amid record AUM — minimum-ticket hike would push flows to AIFs/MFs"],
+      ["AIF managers","Cat II (private credit/PE) dominates commitments","Links to lending tab: AIF private credit is NBFC shadow-capital"]] },
+    { n:"4 · Market Infrastructure", rev:"toll-booth: per-account, per-folio, per-trade fees", prof:"45-66x P/E — priced as monopolies (see infra table)",
+      cos:[["Exchanges (NSE, BSE)","Matching + listing + data fees","NSE IPO is the sector event; SEBI MII-governance rules are the regulatory risk on these multiples"],
+      ["Depositories (CDSL, NSDL)","Hold the demat accounts","Retail-account beta: CDSL added most new accounts; NSDL holds institutional value"],
+      ["RTAs (CAMS, KFin)","MF record-keeping duopoly","KFin's 19% growth = international + issuer diversification — the re-rating argument"]] },
+    { n:"5 · Data, KYC & Execution Rails", rev:"per-pull / per-txn fees", prof:"small but strategic",
+      cos:[["KRAs (CVL, NDML) + CKYC","One-time KYC portability across the industry","Aadhaar-based instant onboarding is why account opening went from days to minutes — the 2016-era unlock everyone forgets"],
+      ["Execution rails (BSE StAR MF, NSE NMF II)","Free MF transaction highways for distributors","Why direct-plan platforms could exist at all"],
+      ["Account Aggregator","Portfolio-level data consent","Wealth use-case emerging: net-worth aggregation without screen-scraping (INDmoney's original hack, now regulated)"]] },
+    { n:"6 · Regulators", rev:"—", prof:"—",
+      cos:[["SEBI","Products, platforms, advice, market structure","The F&O arc (timeline above) shows its new interventionism; TER review is the next margin event"],
+      ["AMFI","AMC SRO; publishes the data this tab runs on","Also the distributor-commission referee"],
+      ["PFRDA / IFSCA","Pensions; offshore GIFT route","NPS corporate adoption and GIFT retail schemes are two quiet growth vectors"]] },
+  ],
+  regTimeline: [
+    ["Jan 2024","SEBI F&O loss study lands (93% of retail traders lose; ₹1.8 L cr FY22-24)","Gave SEBI the political cover for everything that followed. The citation in every derivatives debate."],
+    ["Mar 2024","T+0 settlement beta; finfluencer rules tighten","Plumbing modernisation + the advice-vs-content boundary drawn. Unregistered finfluencer promotions banned from broker partnerships."],
+    ["Oct 2024","Derivatives curbs: one weekly expiry per exchange, lot sizes ~3x, upfront option premium","The reset. Index-options volumes fell 30-40% within two quarters ≈; every discount broker's revenue model stress-tested."],
+    ["Mar 2025","ICICI Securities delisted — folded into ICICI Bank","Bank-brokers consolidating; the standalone broking model narrows to scale players."],
+    ["2025","Listings wave: NSDL, ICICI Pru AMC, Groww","Wealth infrastructure went public in one year — comps now exist for every layer of the stack."],
+    ["FY26","Active clients fall 35 lakh to 4.57 cr — first annual decline since FY23","The measurable outcome: fewer traders, but SIP flows hit records simultaneously — trading shrank, investing didn't. The single most interview-worthy contrast on this tab."],
+  ],
+},
+insurance: {
+  tiles: [
+    { l:"Global insurtech funding FY25", v:"$5.08 B", d:"first rise since 2021 · Gallagher Re", chg:"+19.5% YoY", dir:"up" },
+    { l:"Q1'26 insurtech funding", v:"$1.63 B", d:"95% to AI-focused cos · Gallagher Re" },
+    { l:"India life NBP", v:"— update", d:"monthly · Life Insurance Council" },
+    { l:"India insurance penetration", v:"≈3.7%", d:"of GDP · IRDAI annual report" },
+  ],
+  fundingTrend: { labels:["2021","2022","2023","2024","2025"], data:[15.8,7.98,4.51,4.25,5.08] },
+  players: [
+    ["PB Fintech (PolicyBazaar)","Marketplace/distribution","Listed · ₹1,582 (8 Jul'26)","Dominant aggregator; credit via Paisabazaar"],
+    ["Go Digit","Full-stack general insurer","Listed","Motor-heavy; Virat-famous"],
+    ["Acko","Full-stack digital insurer","Private unicorn","Embedded + D2C motor/health"],
+    ["InsuranceDekho","Distribution (agent-led)","Private unicorn","Tier-2/3 POSP network"],
+    ["Turtlemint","Advisor platform","Private","POSP enablement"],
+    ["Onsurity","SME group health","Private","Employee-benefits wedge"],
+    ["Zopper / Riskcovry","Embedded insurance infra","Private","APIs powering ecosystem players"],
+  ],
+},
+crypto: {
+  tiles: [
+    { l:"Bitcoin", v:"$63,185", d:"10 Jul'26 open", chg:"+2.8% wk", dir:"up" },
+    { l:"Ethereum", v:"$1,744", d:"10 Jul'26 open", chg:"+2.7% wk", dir:"up" },
+    { l:"BTC market cap", v:"$1.33 T", d:"ETH $233B" },
+    { l:"Total crypto mcap", v:"≈$2.4 T", d:"vs >$4T 2025 peak; Jun'26 worst month in 4 yrs" },
+    { l:"India tax regime", v:"30% + 1% TDS", d:"VDA tax; volumes partly offshore" },
+  ],
+  mcapTrend: { labels:["2023","2024","2025 peak","Jul'26"], data:[1.7,3.4,4.0,2.4] },
+  exchanges: [
+    ["CoinDCX","Exchange + Web3","Largest Indian exchange; acquired BitOasis (MENA)"],
+    ["CoinSwitch","Retail broker","PeakXV/a16z-backed; wealth-app pivot"],
+    ["Mudrex","Algo/ETF-style investing","B2B2C + compliance-first"],
+    ["ZebPay","Exchange (veteran)","Oldest Indian brand"],
+  ],
+  context: "Drivers this month: ETF inflows + CLARITY Act sentiment, offset by Middle East conflict (Yahoo Finance, 10 Jul'26).",
+},
+funding: {
+  tiles: [
+    { l:"India fintech Q1'26", v:"$513 M", d:"45 rounds · Tracxn", chg:"+2% YoY $, −54% deals", dir:"up" },
+    { l:"Late-stage Q1'26", v:"$273 M", d:"Tracxn", chg:"+126% YoY", dir:"up" },
+    { l:"Seed-stage Q1'26", v:"$25.7 M", d:"Tracxn", chg:"−65% YoY", dir:"down" },
+    { l:"India tech H1'26 (all)", v:"$7.2 B", d:"652 rounds, +12% YoY · Tracxn" },
+    { l:"Global fintech 2025", v:"$52.7 B", d:"highest since 2022 · CB Insights" },
+  ],
+  annualTrend: { labels:["2021","2022","2023","2024","2025≈"], data:[8.0,5.7,2.1,1.9,2.0] },
+  q1Compare: { labels:["Q1 2025","Q1 2026"], amount:[503,513], deals:[99,45] },
+  watch: [
+    ["Funding barbell","Capital concentrating late-stage; seed drought — thesis: infra & profitable models get funded"],
+    ["IPO window open","16 fintech IPOs globally in 2025; India: Pine Labs & Groww listed; PhonePe, Razorpay next"],
+    ["M&A rising","Global fintech M&A $251B in 2025 (BCG); India: consolidation in lending & broking"],
+  ],
+},
+publicmkts: {
+  tiles: [
+    { l:"Paytm (One97)", v:"₹1,342", d:"12 Jul'26 · near 52-wk high", chg:"+5% day", dir:"up" },
+    { l:"PB Fintech", v:"₹1,582", d:"8 Jul'26 · Temasek arm sold 2.2% stake" },
+    { l:"F-Prime Fintech Index", v:"— weekly", d:"fintechindex.com" },
+    { l:"Repo rate", v:"5.25%", d:"neutral stance" },
+  ],
+  stocks: [
+    ["Paytm (One97)","₹1,342 (12 Jul)","Payments + lending distribution","Rallying; profitability turn"],
+    ["PB Fintech","₹1,582 (8 Jul)","Insurance + credit marketplace","Temasek block deal ₹1,633 cr"],
+    ["MobiKwik","— SmartAPI","Wallet + BNPL","Small-cap; volatile"],
+    ["Zaggle","— SmartAPI","B2B spend management","CFO-stack proxy"],
+    ["Angel One","— SmartAPI","Broking","Retail-participation proxy"],
+    ["CDSL","— SmartAPI","Depository","Demat-growth proxy"],
+    ["CAMS","— SmartAPI","MF RTA","MF-AUM proxy"],
+    ["KFintech","— SmartAPI","RTA + issuer services","MF + IPO proxy"],
+    ["Pine Labs","₹252 (14 Nov'25 close, listing day)","Merchant payments","2025 listing; update weekly"],
+    ["Groww","— SmartAPI","Broking + wealth","2025 listing"],
+  ],
+},
+};
+
+// ---- Payments deep data ----
+const PAY = {
+  // 60 months Jul'21..Jun'26. vol in B txns, val in ₹ lakh cr. Indices 49-57 (Aug'25-Apr'26) interpolated to FY26 actuals.
+  vol:[3.24,3.55,3.65,4.21,4.18,4.56, 4.62,4.53,5.41,5.58,5.95,5.86,6.29,6.58,6.78,7.31,7.30,7.82, 8.03,7.53,8.65,8.89,9.41,9.34,9.96,10.58,10.56,11.41,11.24,12.02, 12.20,12.10,13.44,13.30,14.04,13.89,14.44,14.96,15.04,16.58,15.48,16.73, 16.99,16.11,18.30,17.89,18.68,18.40,19.47,19.8,19.9,21.3,20.6,21.4, 21.8,20.4,22.0,22.0,23.2,22.72],
+  val:[6.06,6.39,6.54,7.71,7.68,8.27, 8.32,8.27,9.60,9.83,10.41,10.14,10.63,10.73,11.16,12.11,11.90,12.82, 12.98,12.35,14.05,14.07,14.89,14.75,15.34,15.76,15.79,17.16,17.40,18.23, 18.41,18.28,19.78,19.64,20.45,20.07,20.64,20.61,20.64,23.50,21.55,23.25, 23.48,21.96,24.77,23.95,25.14,24.04,25.08,25.2,25.4,27.3,26.1,27.5, 28.0,25.9,29.0,27.8,29.9,28.92],
+  estFrom:49, estTo:57,
+  // [index, PhonePe %, GPay %] anchors (volume share, NPCI app-wise releases)
+  shareAnchors:[[0,45.9,34.5],[18,46.5,34.5],[30,48.0,37.0],[42,47.8,36.5],[54,46.5,34.0],[59,46.0,32.8]],
+  latest:{ m:"Jun'26", volB:22.72, valL:28.92 },
+  apps:[ // volPct = share of volume (May-Jun'26, NPCI); valPct = share of value ≈
+    {n:"PhonePe",volPct:46.0,valPct:50.0},{n:"Google Pay",volPct:33.0,valPct:34.0},
+    {n:"Paytm",volPct:8.0,valPct:5.5},{n:"Navi",volPct:3.2,valPct:1.8},
+    {n:"super.money",volPct:2.3,valPct:1.0},{n:"BHIM",volPct:1.0,valPct:0.8},
+    {n:"CRED",volPct:0.9,valPct:1.5},{n:"Amazon Pay",volPct:0.6,valPct:0.5},
+    {n:"WhatsApp Pay",volPct:0.4,valPct:0.3},{n:"Others",volPct:4.6,valPct:4.6} ],
+  tailQuarters:["Q2'24","Q4'24","Q2'25","Q4'25","Q2'26"],
+  tail:{ "Paytm":[9.0,8.5,8.2,8.0,8.0], "Navi":[0.6,1.5,2.0,2.7,3.2], "super.money":[0.05,0.4,0.9,1.6,2.3], "BHIM":[0.2,0.3,0.4,0.6,1.0], "CRED":[0.7,0.8,0.85,0.9,0.9] },
+  merchants:[
+    ["Razorpay","Full-stack PA/PG + RazorpayX + capital","₹3,783 cr op. (+65%); ₹3,930 cr consol. ✓Tracxn","−₹1,210 cr ✓Tracxn (−32%)<br><span class='fn'>one-off redomicile tax; gross profit ₹1,277 cr</span>","private — no quarterly","≈28–32% online PA (value) ≈","$9.2B (Jun'25 secondary); IPO late-2026 (~₹4,500 cr issue)","SMBs & startups → moving upmarket to enterprise; strong developer/freelancer wedge"],
+    ["PayU India","PA/PG + LazyPay credit","≈₹4,150 cr / $498M (+12%)","≈ payments near-breakeven ≈","private — no quarterly","≈22–25% ≈","Prosus-owned; India listing ambition","Enterprise & large e-commerce; affordability/EMI stack"],
+    ["Pine Labs","POS + issuing + online","₹2,274 cr ≈ FY25","Q1FY26 first profit","Q1FY26: rev ₹616 cr (+18% YoY), PAT ₹4.8 cr","Offline organized-retail POS leader ≈","Listed Nov'25 (₹221 issue, ₹252 day-1); mcap ≈$3.3B","Enterprise offline retail, brand-EMI (issuing via Qwikcilver); SEA/Middle East expansion"],
+    ["Cashfree","PA + payouts + verification","FY24: ₹643 cr (FY25 awaited)","FY24 loss ≈−₹135 cr ≈ (−21%)","—","≈10–12% ≈; leader in payouts","$700M (Feb'25, Krafton-led)","Startups & D2C; payouts, subscriptions, cross-border; TPV $80B+"],
+    ["Juspay","Orchestration + HyperSDK (not a PA)","₹514 cr (+61%)","+₹62 cr (+12%) — first profit","—","Routes large share of enterprise checkout traffic","$1.2B (Jan'26, WestBridge) — first unicorn of 2026","Large enterprises (Amazon, Swiggy-scale); agentic-payments pilot with NPCI + OpenAI"],
+    ["BharatPe","Offline QR + merchant lending","₹1,426 cr FY24 ≈","FY24 loss ≈−₹474 cr ≈ (−33%)","—","#3 offline QR ≈","≈$2.85B (Aug'21) — stale mark","Kirana/offline merchants; lending is the monetisation engine; Unity SFB stake"],
+    ["Paytm (One97)","Devices/soundbox + PA + distribution","≈₹6,900 cr FY25 ≈","≈ near-breakeven; quarterly public","listed — see exchange filings","Devices/soundbox leader; PA share mid-single-digit ≈","Listed; ₹1,342 (12 Jul'26)","Omnichannel SMB merchants; subscription devices + lending/insurance distribution"],
+  ],
+  fundingRounds:[
+    // [co, investors, raised$M, val$B, revAtRaise, mult, month, sortMonth, prevRaised$M, prevVal$B, prevRev, prevMult, prevMonth, delta%]
+    ["Juspay ✓Tracxn","WestBridge Capital (lead); SoftBank, Accel (existing)",28,1.24,"₹829 cr TTM incl. proj.",12.8,"Jan 23, 2026",202601,45,1.19,"₹568 cr TTM incl. proj.",18,"Apr 7, 2025",4],
+    ["Razorpay ✓Tracxn","Series F: Tiger Global, Lone Pine, GIC · Jun'25 secondary at $9.2B",375,7.5,"₹1,330 cr TTM",42,"Dec 19, 2021 (last priced round)",202112,160,3.0,"₹898 cr TTM",23.7,"Apr 18, 2021",150],
+    ["Cashfree ✓Tracxn","Krafton (corporate lead), Apis Growth Fund",23,0.7,"₹641 cr TTM",9.2,"Feb 5, 2025 ($23M primary; $53M incl. secondary)",202502,35.3,0.2,"₹186 cr TTM",12,"Nov 23, 2020",250],
+    ["PhonePe ✓Tracxn","Walmart; Ribbit, Tiger Global, General Atlantic, TVS",658,12.6,"₹2,850 cr TTM",36.5,"Jan 19, 2023 · marked $14.5B on Oct 30, 2025",202510,700,5.5,"≈₹690 cr FY20 ≈",60,"Dec 2020",129],
+    ["Pine Labs","Public markets (IPO $440M)",440,3.3,"≈₹2,274 cr (~$270M) ≈",12,"Nov 2025 (IPO)",202511,150,5.0,"≈₹933 cr FY22 (~$118M) ≈",42,"Mar 2022",-34],
+    ["BharatPe ✓Tracxn","Tiger Global, Dragoneer",370,2.7,"₹119 cr FY21",178,"Aug 2021 — no priced round since",202108,108,0.9,"≈₹110 cr ≈",56,"Feb 2021",200],
+  ],
+  hirings:[
+    // [co, url, total, tech, product, sales, finance, mktg, hr, ops, other, asof]
+    ["PhonePe","https://www.phonepe.com/careers/",68,16,2,6,2,0,1,12,29,"12 Jul'26 · live via Greenhouse API"],
+    ["Razorpay","https://job-boards.greenhouse.io/razorpaysoftwareprivatelimited",52,11,7,25,1,3,2,3,0,"12 Jul'26 · live via Greenhouse API — heavily sales-weighted (25/52)"],
+    ["Paytm","https://paytm.com/about-us/our-team/","—","—","—","—","—","—","—","—","—","own portal — needs browser scrape"],
+    ["Pine Labs","https://www.pinelabs.com/careers/open-jobs",2,0,0,2,0,0,0,0,0,"12 Jul'26 · scraped — near-freeze post-IPO"],
+    ["Cashfree","https://www.cashfree.com/careers/","—","—","—","—","—","—","—","—","—","pending"],
+    ["Juspay","https://juspay.io/careers","—","—","—","—","—","—","—","—","—","pending"],
+    ["PayU","https://payu.in/careers/","—","—","—","—","—","—","—","—","—","pending"],
+    ["BharatPe","https://bharatpe.com/careers","—","—","—","—","—","—","—","—","—","pending"],
+  ],
+  zones:[
+    { id:"tpap", n:"1 · Consumer Payment Apps (TPAPs)", rev:"≈₹16–18k cr combined", prof:"turning positive; blended margin ≈ −2% (PhonePe profitable)",
+      cos:[
+        ["PhonePe","Distribution + UX; monetises via P2M devices, lending & insurance cross-sell","Runs on NPCI's UPI switch, accessed through sponsor PSP banks (Yes Bank, ICICI) — every UPI app must ride on a bank's licence, which is why 'TPAP' means third-party. Unusually, PhonePe hosts on its own data centres rather than public cloud, and has built its fraud-detection engine in-house on its transaction telemetry."],
+        ["Google Pay","Scale distribution; Google identity & UX","Connects to UPI through PSP handles at four partner banks (Axis, HDFC, SBI, ICICI), giving it redundancy if any one bank's systems slow down. The app runs on Google's global infrastructure, with India payments data localised to comply with RBI's data-residency circular."],
+        ["Paytm","Omnichannel app + devices funnel","After RBI shut down its in-house Paytm Payments Bank in 2024, Paytm migrated its UPI handles to four partner PSP banks (Axis, Yes, SBI, HDFC) — a case study in regulatory dependency. It retains its own Payment Aggregator licence from RBI for the merchant-acquiring side."],
+        ["CRED","Affluent-user niche; credit-card bill payment wedge","Rides Axis Bank's PSP infrastructure for UPI access. Its real asset is data-driven gating: users are admitted based on credit scores pulled from bureaus (TransUnion CIBIL), giving CRED a pre-filtered affluent audience it monetises through lending and commerce."],
+        ["Navi / super.money / BHIM","Challengers gaining share ahead of the 30%-cap deadline","All ride partner PSP banks for UPI access — none needs its own licence. super.money leans on Flipkart's checkout traffic for distribution; BHIM is owned and run by NPCI itself. Their combined rise (≈6.5%) is partly strategic positioning for the market-share cap that bites 31 Dec 2026."] ] },
+    { id:"acq", n:"2 · Merchant Acquiring & Gateways", rev:"≈₹12–13k cr", prof:"≈ −5% to breakeven ex-one-offs; Juspay/Pine Labs/Paytm profitable",
+      cos:[
+        ["Razorpay","One-stop merchant acceptance + business banking + capital","Acquires card payments through partner acquiring banks (Axis, RBL, ICICI) running on Visa/Mastercard rails, and UPI through sponsor banks on NPCI rails. Merchant onboarding KYC is automated using government identity APIs — Aadhaar (from UIDAI), PAN validation (NSDL e-Gov) and the central KYC registry (CERSAI). Infrastructure runs on AWS's Indian regions."],
+        ["PayU","Enterprise gateway + affordability/EMI stack","Processes cards through bank acquirers on the international card networks. Its LazyPay pay-later product underwrites using credit-bureau records combined with PayU's own checkout behaviour data — an example of a gateway converting payment flow into lending signal."],
+        ["Pine Labs","POS hardware + brand-EMI + prepaid/issuing","POS terminals connect to both NPCI rails (RuPay, UPI) and Visa/Mastercard. Its brand-EMI engine plugs directly into issuer banks' loan systems so a phone buyer gets an instant EMI at the till — the brand, bank and Pine Labs share the subvention. Gift cards run on its own Qwikcilver rails."],
+        ["Cashfree","Payouts & API-banking depth alongside collections","Its payouts product (the strength) pushes money out over IMPS and UPI rails through partner banks — used for refunds, vendor payments, gig wages. Its verification suite repackages government data sources (Aadhaar, PAN, bank-account penny-drop, GSTIN) into single developer APIs."],
+        ["BharatPe","Offline QR aggregation + merchant lending","Built on UPI QR interoperability — an NPCI standard that means one printed QR accepts payments from every app, which is what let BharatPe give QRs away free. Monetisation comes from merchant loans funded by NBFC partners, with BharatPe earning origination and collection fees."] ] },
+    { id:"infra", n:"3 · Payments Infra & Orchestration", rev:"≈₹3,000 cr", prof:"mixed; Juspay profitable, issuing platforms still investing",
+      cos:[
+        ["Juspay","Checkout orchestration, routing, success-rate optimisation","Its SDK sits inside merchant apps (Amazon, Swiggy scale) and routes each transaction to whichever gateway or bank has the best success rate at that moment. Consumes NPCI's UPI specifications and the card networks' tokenisation APIs (Visa VTS, Mastercard MDES). Currently piloting agentic payments with NPCI and OpenAI."],
+        ["M2P Fintech","Issuing & credit APIs for fintechs and banks","A fintech that wants to launch a card programme gets its BIN (card-number range) sponsored by an M2P partner bank, with M2P running the technology stack on Visa or RuPay rails — the fintech never touches the card network directly."],
+        ["Zeta","Modern core-banking + issuing stack for banks","Sells cloud-native processing to banks themselves (e.g., HDFC Bank's PayZapp rebuild) — modernising the incumbents from within rather than riding on top of them."],
+        ["Setu","Public-rail APIs for developers","Packages India's public infrastructure into developer-friendly APIs: Bharat Connect bill payments (an NPCI system), Account Aggregator data flows (RBI framework, governed through the Sahamati alliance) and UPI deep links."],
+        ["FSS / Mindgate","Bank-side UPI switches & processing","Their licensed switch software runs inside the PSP banks and processes the actual UPI messages — the invisible layer between the app you tap and NPCI's central switch."] ] },
+    { id:"rails", n:"4 · Rails & Networks", rev:"NPCI ≈₹3,300 cr FY24 ≈", prof:"NPCI surplus ≈₹1,100 cr (not-for-profit, ≈33%)",
+      cos:[
+        ["NPCI","Owns & operates UPI, IMPS, RuPay, NETC, AePS, Bharat Connect; writes the scheme rules","A not-for-profit promoted by RBI and the Indian Banks' Association — effectively a public utility. It runs the central switches, earns small per-transaction switching fees, and publishes the rulebook (circulars on caps, interchange, API limits) that every player in zones 1–3 must code against."],
+        ["Visa / Mastercard","Card rails, tokenisation, cross-border acceptance","Own the global card networks, plus the tokenisation infrastructure (VTS/MDES) that every Indian gateway now consumes — mandatory since RBI banned merchants from storing raw card numbers in 2022."],
+        ["NPCI International (NIPL)","Exports the UPI playbook abroad","Licenses the UPI stack to other countries (UAE, Namibia, Peru), builds bilateral links like UPI–PayNow with Singapore, and connects to BIS Project Nexus — the multilateral effort to link national instant-payment systems."] ] },
+    { id:"banks", n:"5 · Banks: PSP / Sponsor / Settlement", rev:"UPI itself is zero-MDR — banks earn float, FX & govt incentives", prof:"MeitY incentive pool ≈₹1,500–3,500 cr/yr for small-ticket P2M",
+      cos:[
+        ["Yes Bank","Largest PSP handle base — PhonePe's primary sponsor","Every @ybl UPI address resolves through Yes Bank's systems. The bank holds NPCI membership and RBI settlement accounts on behalf of the TPAPs it sponsors, earning float income and processing fees — licence-as-a-service, essentially."],
+        ["Axis / HDFC / ICICI / SBI","Play every banking role in the chain simultaneously","PSP sponsors for the consumer apps, acquiring banks for the gateways, and settlement banks for merchant payouts. Their UPI switches typically run FSS or Mindgate software layered over Finacle (Infosys) or Flexcube (Oracle) core-banking systems."],
+        ["RBL / Federal","Specialist fintech-partner banks","Provide BIN sponsorship for card programmes and the escrow/nodal accounts that RBI's Payment Aggregator rules require every gateway to maintain — small banks that turned fintech partnership into a business line."] ] },
+    { id:"kyc", n:"6 · Identity, KYC & Fraud", rev:"≈₹600–900 cr", prof:"several profitable (small base)",
+      cos:[
+        ["Signzy / IDfy / HyperVerge","Automated merchant & user onboarding (video-KYC, document AI)","Orchestrate government identity infrastructure into onboarding flows: Aadhaar eKYC and offline XML from UIDAI, the central KYC registry run by CERSAI, DigiLocker documents from MeitY, and PAN checks via NSDL e-Gov. On top they add their own computer vision for liveness detection and document-forgery checks."],
+        ["Bureau","Device intelligence & fraud scoring at onboarding","Scores risk from device fingerprints and behavioural signals (SIM age, typing cadence, network graph), enriched by telco data partnerships — designed to catch mule accounts and synthetic identities before KYC even begins."],
+        ["PA / TPAP in-house stacks","Transaction-level fraud models","The large gateways and apps run their own real-time fraud engines using velocity rules and tokenised network data on their proprietary traffic — scale of data is the moat, which is why the biggest players build rather than buy."] ] },
+    { id:"reg", n:"7 · Regulators & Policy Layer", rev:"—", prof:"—",
+      cos:[
+        ["RBI","Licenses and supervises the whole chain","Statutory authority under the Payment & Settlement Systems Act, 2007. Licenses Payment Aggregators and wallet issuers, sets PSP and KYC rules, and itself operates the wholesale rails (RTGS/NEFT) that final settlement runs on."],
+        ["NPCI (scheme role)","The operational rulebook","Issues the circulars that move markets: the 30% TPAP market-share cap, interchange on PPI-UPI transactions, API rate limits. Not a statutory regulator, but in practice every product roadmap in zones 1–3 is written around NPCI circulars."],
+        ["MeitY","Funds the zero-MDR regime","Since merchants pay no fee on UPI, the economics are propped up by a government incentive scheme (≈₹1,500–3,500 cr/yr from the union budget) paid to banks for small-ticket merchant transactions — the single most debated policy issue in Indian payments."],
+        ["iSPIRT / Sahamati","The ideas layer","Volunteer think-tank that authored the India Stack, OCEN and DEPA specifications which NPCI and RBI later institutionalised. Sahamati now governs the Account Aggregator ecosystem as an industry alliance."] ] },
+    { id:"tech", n:"8 · Enabling Tech Vendors", rev:"n/a (global vendors)", prof:"—",
+      cos:[
+        ["AWS / GCP / Azure","Cloud hosting for most gateways and apps","Host the bulk of Indian payments workloads in India-region data centres, because RBI's 2018 data-localisation circular requires payments data to be stored only in India. Regulated-workload compliance is a selling point of their Mumbai/Hyderabad regions."],
+        ["ACI / FSS","Payment switches & processing software","License the switching software banks run to connect to card networks and NPCI, often bundled with managed services — decades-old plumbing that most fintech demos quietly depend on."],
+        ["Telcos (Jio/Airtel/Vi)","UPI's silent dependency","Every UPI registration depends on an outbound SMS for device binding, and OTPs ride TRAI-regulated SMS routes. Telco outages are an under-appreciated single point of failure for the entire consumer payments stack."],
+        ["Soundbox OEMs","Merchant hardware supply chain","Contract manufacturers (Indian and Chinese) build the payment-confirmation soundboxes and POS devices for Paytm, PhonePe and GPay — hardware subscription revenue is now a key monetisation lever in zone 1."] ] },
+  ],
+};
+// ============ END DATA ============
+
+const TABS = [
+  { id:"payments", name:"Payments", srcs:[["NPCI statistics","https://www.npci.org.in/statistics/"],["PIB UPI 10-year release","https://www.pib.gov.in/PressReleasePage.aspx?PRID=2257087&reg=3&lang=2"],["Jun'26 UPI (Bizz Buzz)","https://www.bizzbuzz.news/fintech/upi-transactions-india-2272-billion-june-2026-npci-1396120"],["Razorpay FY25 (Entrackr)","https://entrackr.com/fintrackr/razorpay-revenue-soars-65-in-fy25-gross-profit-crosses-rs-1200-cr-10567344"],["Juspay FY25 & unicorn (Inc42/Elets)","https://bfsi.eletsonline.com/juspay-raises-50-million-in-series-d-follow-on-round-becomes-first-unicorn-of-2026/"],["Pine Labs IPO (TechCrunch)","https://techcrunch.com/2025/11/14/pine-labs-gets-warm-market-welcome-on-440m-india-ipo-despite-a-valuation-trim/"],["Cashfree round (TechCrunch)","https://techcrunch.com/2025/02/04/krafton-leads-cashfrees-53m-funding-at-700m-valuation/"]] },
+  { id:"lending", name:"Lending & Credit", srcs:[["RBI WSS & sectoral deployment","https://www.rbi.org.in"],["Jun'26 credit growth (Business Standard)","https://www.business-standard.com/industry/banking/bank-credit-growth-hits-2-year-high-of-18-6-as-deposits-rise-over-7-trn-126071001123_1.html"],["RBI Financial Stability Report","https://www.rbi.org.in/Scripts/PublicationsView.aspx"],["Screener.in (prices/P-E ✓13 Jul)","https://www.screener.in"],["MFIN Micrometer Q4FY26","https://www.business-standard.com/finance/news/microfinance-portfolio-grows-in-q4-fy26-for-first-time-in-seven-quarters-126061201157_1.html"],["CRIF MicroLend","https://www.crifhighmark.com/media/6097/microlend-feb-2026.pdf"],["TransUnion CIBIL CMI","https://www.transunioncibil.com"]] },
+  { id:"wealthtech", name:"WealthTech", srcs:[["AMFI","https://www.amfiindia.com/research-information/amfi-monthly"],["FY26 active clients (BT)","https://www.businesstoday.in/markets/stocks/story/zerodha-groww-angel-one-upstox-how-active-clients-changed-in-past-8-years-full-table-526520-2026-04-20"],["NSE broker data (Chittorgarh)","https://www.chittorgarh.com/report/top_20_share_brokers_in_india_by_clients_at_nse/1/?year=2026"],["Screener.in ✓13 Jul","https://www.screener.in"],["SEBI bulletins","https://www.sebi.gov.in"]] },
+];
+
+const $ = (s,p=document)=>p.querySelector(s);
+document.getElementById("stamp").textContent = "Last updated: " + DATA.lastUpdated;
+
+// ---- month labels for PAY (Jul'21 .. Jun'26) ----
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+PAY.labels=[]; { let m=6,y=21; for(let i=0;i<60;i++){ PAY.labels.push(MONTHS[m]+"'"+y); m++; if(m===12){m=0;y++;} } }
+PAY.share=(i)=>{ // interpolate anchors -> [pp,gp]
+  const A=PAY.shareAnchors;
+  for(let k=0;k<A.length-1;k++){ const [i0,p0,g0]=A[k],[i1,p1,g1]=A[k+1];
+    if(i>=i0&&i<=i1){ const t=(i-i0)/(i1-i0); return [p0+(p1-p0)*t, g0+(g1-g0)*t]; } }
+  return [A[A.length-1][1],A[A.length-1][2]];
+};
+
+const nav = $("#nav"), tabsEl = $("#tabs");
+const chartInit = {};
+
+function tiles(arr){
+  return `<h2>Quick numbers</h2><div class="tiles">` + arr.map(x=>
+    `<div class="tile"><div class="l">${x.l}</div><div class="v">${x.v}</div>${x.chg?`<span class="chg ${x.dir}">${x.chg}</span>`:""}<div class="d">${x.d||""}</div></div>`
+  ).join("") + `</div>`;
+}
+function tableHTML(headers, rows, sortable=false){
+  return `<div class="twrap"><table${sortable?' class="sort-t"':''}><thead><tr>${headers.map((h,i)=>`<th${sortable?` class="sortable" data-c="${i}"`:""}>${h}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function chartbox(id,title,h){ return `<div class="chartbox"${h?` style="height:${h}px"`:""}><h3>${title}</h3><div class="cwrap"><canvas id="${id}"></canvas></div></div>`; }
+
+// ---------- payments render ----------
+function renderPayments(){
+  const d=DATA.payments, fr=PAY.fundingRounds;
+  const fundRows=fr.map(r=>{
+    const dv=r[13];
+    return [ `<b>${r[0]}</b>`, r[1],
+      `<span data-v="${r[2]}">${r[2]?("$"+r[2]+"M"):"secondary"}</span>`,
+      `<span data-v="${r[3]}">$${r[3]}B</span>`, r[4],
+      `<span data-v="${r[5]}">~${r[5]}x</span>`, `<span data-v="${r[7]}">${r[6]}</span>`,
+      `<span data-v="${r[8]}">$${r[8]}M</span>`, `<span data-v="${r[9]}">$${r[9]}B</span>`, r[10],
+      `<span data-v="${r[11]}">~${r[11]}x</span>`, r[12],
+      `<span data-v="${dv}" class="${dv>=0?"up2":"down2"}">${dv>=0?"▲ +":"▼ "}${dv}%</span>` ];
+  });
+  const hireRows=PAY.hirings.map(r=>[`<a href="${r[1]}" target="_blank"><b>${r[0]}</b></a>`,r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9],r[10],`<span class="fn">${r[11]}</span>`]);
+  const s=[];
+  s.push(tiles(d.tiles));
+  s.push(`<h2>Trends — UPI volume & value <span class="flag">app-split ≈ derived from NPCI app-wise releases</span></h2>
+     <div>
+       <span class="ctrl" id="payRange"><button data-r="3">Quarter</button><button data-r="12">1 Year</button><button data-r="60" class="on">5 Years</button></span>
+       <span class="ctrl" id="payApp"><button data-a="all" class="on">All UPI</button><button data-a="pp">PhonePe</button><button data-a="gp">Google Pay</button><button data-a="ot">Others</button></span>
+       <span class="fn">click multiple apps to superimpose & compare · hover anywhere on a chart for exact monthly values</span>
+     </div>
+     <div class="charts">${chartbox("c-pvol","UPI monthly volume (B txns)")}${chartbox("c-pval","UPI monthly value (₹ lakh cr)")}</div>
+     <div class="fn">Aug'25–Apr'26 monthly totals interpolated to FY26 actuals (FY26: 241.6B / ₹314 L cr); May–Jun'26 actual. Weekly job replaces with NPCI actuals.</div>`);
+  s.push(`<h2>Market share — UPI apps</h2>
+     <div><span class="ctrl" id="payBasis"><button data-b="volPct" class="on">By volume</button><button data-b="valPct">By value ≈</button></span></div>
+     <div class="charts">
+       ${chartbox("c-pie1","All apps — share (hover: % · volume · value) · "+PAY.latest.m)}
+       ${chartbox("c-sharetrend","Share trend 5Y — PhonePe / Google Pay / Others (% of volume)")}
+       ${chartbox("c-pie2","Beyond the duopoly — everyone except PhonePe & GPay")}
+       ${chartbox("c-tailbar","Challenger apps — share of total UPI volume by quarter (%) ≈")}
+     </div>
+     <div class="fn">Value-basis shares are estimates (PhonePe ticket sizes skew higher). Watch: NPCI 30% market-cap deadline 31 Dec 2026 — the single biggest share-shift catalyst.</div>`);
+  s.push(`<h2>Merchant payments — companies <span class="flag">private-co revenue = FY (MCA filings); quarterly only for listed</span></h2>`);
+  s.push(tableHTML(["Company","Model","FY25 revenue","FY25 PAT (margin)","Latest quarter","Mkt share","Status / valuation","Target segment & note"], PAY.merchants));
+  s.push(`<div class="fn">Market-share figures for private PAs are directional estimates — replace with your Tracxn/Statista sector splits for precision.</div>`);
+  s.push(`<h2>Funding rounds — payments companies <span class="flag">click column headers to sort</span></h2>`);
+  s.push(tableHTML(["Company","Top investors","Raised","Valuation","Revenue @ raise","Multiple","Month","Prev raised","Prev val","Prev revenue","Prev multiple","Prev month","Δ Valuation"], fundRows, true));
+  s.push(`<div class="fn">Multiples = valuation ÷ TTM revenue (incl. projections), per Tracxn. All rows except Pine Labs verified from Tracxn on 12 Jul'26. Key reads: Juspay's Jan'26 "unicorn round" was ↑ only 4% vs Apr'25 (multiple compressed 18x→12.8x as revenue grew ₹568→829 cr). Razorpay hasn't priced a round since Dec'21 — the $9.2B Jun'25 mark is secondary. PhonePe's Tracxn mark rose to $14.5B (Oct'25) ahead of IPO. Cashfree's Feb'25 primary was $23M of the reported $53M. BharatPe flat at $2.7B since Aug'21. Pine Labs = IPO data (public).</div>`);
+  s.push(`<h2>Hirings — open roles by function <span class="flag">PhonePe live; others need browser scraping</span></h2>`);
+  s.push(tableHTML(["Company","Total","Tech","Product","Sales","Finance","Marketing","HR","Ops","Other","As of"], hireRows));
+  s.push(`<div class="fn">PhonePe pulled from its public Greenhouse job-board API. Most others (Razorpay, Paytm, Pine Labs…) render jobs via JavaScript — connect Claude-in-Chrome in a session and I'll scrape and fill these; the weekly job keeps API-accessible boards fresh.</div>`);
+  s.push(`<h2>Value chain map — Indian payments <span class="flag">click a zone for companies, value-add & tech sourcing</span></h2>
+     <div class="flow">Money flow: Consumer → <b>TPAP app (1)</b> → <b>PSP bank (5)</b> → <b>NPCI switch (4)</b> → <b>beneficiary/acquirer bank (5)</b> → <b>gateway/acquirer (2)</b> → Merchant · orchestrated by <b>(3)</b>, KYC'd by <b>(6)</b>, ruled by <b>(7)</b>, hosted on <b>(8)</b></div>
+     <div class="zones" id="zones">${PAY.zones.map((z,i)=>`<div class="zone" data-z="${i}"><div class="zn">${z.n}</div><div class="zc">${z.cos.map(c=>c[0].split(" ")[0]).slice(0,5).join(" · ")}</div><div class="zr">Rev: <b>${z.rev}</b><br>Profit: ${z.prof}</div></div>`).join("")}</div>
+     <div class="zpanel" id="zpanel">Click any zone above to see its companies, the value each adds, and where their key tech/APIs are sourced from (company / government / think-tank).</div>`);
+  return s.join("");
+}
+
+// ---------- generic renders (other tabs) ----------
+function render(id){
+  const d = DATA[id];
+  if(id==="payments") return renderPayments();
+  if(id==="lending"){
+    const numCell=(v)=>`<span data-v="${v}">${v}</span>`;
+    const priceCell=(p,pe)=>p==="—"?"—":`${p} <span class="fn">P/E ${numCell(pe)}</span>`;
+    const bankRows=d.banks.map(r=>[`<b>${r[0]}</b>`,r[1],priceCell(r[2],r[3]),numCell(r[4])+(r[0]==="HDFC Bank"?" ✓":" ≈"),numCell(r[5]),numCell(r[6]),numCell(r[7]),numCell(r[8]),r[9]]);
+    const sfbRows=d.sfbs.map(r=>[`<b>${r[0]}</b>`,r[1]+" ✓",numCell(r[2]),r[3],r[4],r[5],r[6]]);
+    const nbfcRows=d.nbfcs.map(r=>[`<b>${r[0]}</b>`,r[1],priceCell(r[2],r[3]),r[4],numCell(r[5]),numCell(r[6]),r[7]]);
+    return `<div class="chips">${[["l-macro","Macro"],["l-banks","Banks"],["l-sfbs","SFBs"],["l-nbfcs","NBFCs"],["l-mfi","MFI"],["l-regulation","Regulation"],["l-deals","Deals"],["l-digital","Digital lending"],["l-talent","Talent"],["l-vc","Value chain"]].map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join("")}</div>`
+    + `<span id="l-macro"></span>` + tiles(d.tiles)
+    + `<h2>Macro trends</h2><div class="charts">${chartbox("c-macro","Credit growth vs repo rate (%) — the cycle in one chart")}${chartbox("c-gnpa","Bank GNPA cycle (%) — AQR (FY15) → IBC → COVID → cleanest books in decades")}${chartbox("c-pl","Unsecured personal-loan growth (% YoY) — note the Nov'23 risk-weight break")}</div>
+       <div class="fn">FY25 credit-growth dip reflects the risk-weight clampdown; FY26–27 reacceleration followed the Feb'25 rollback + rate cuts. GNPA FY25–26 ≈ from RBI FSR.</div>`
+    + `<span id="l-banks"></span><h2>Banks — universe <span class="flag">prices & P/E ✓ screener.in 13 Jul'26 · P/B, RoA, NIM, GNPA, CASA ≈ latest reported — quarterly refresh</span></h2>`
+    + tableHTML(["Bank","Type","Price · P/E ✓","P/B","RoA %","NIM %","GNPA %","CASA %","The one-line thesis"], bankRows, true)
+    + `<span id="l-sfbs"></span><h2>Small Finance Banks <span class="flag">prices, P/E, TTM PAT ✓ screener 13 Jul'26 — the MFI cycle visible in earnings</span></h2>`
+    + tableHTML(["SFB","Price ✓","P/E","TTM PAT","MFI share ≈","Universal-licence status","Note"], sfbRows, true)
+    + `<span id="l-nbfcs"></span><h2>NBFCs — universe <span class="flag">prices & P/E ✓ 13 Jul'26; incl. new listings Tata Capital & HDB Financial</span></h2>`
+    + tableHTML(["NBFC","Segment","Price · P/E ✓","AUM","RoA % ≈","GNPA % ≈","The one-line thesis"], nbfcRows, true)
+    + `<span id="l-mfi"></span><h2>Microfinance — the cycle just turned</h2>` + tiles(d.mfi.tiles)
+    + `<div class="charts">${chartbox("c-mfi","MFI: GLP (₹ L cr, bars) vs PAR 31–180 (%, line) — the full stress cycle ≈")}</div>
+       <div class="fn">Source: MFIN Micrometer 57th ed. (Q4 FY26) + CRIF MicroLend. Intermediate quarters ≈ interpolated. Guardrails (MFIN caps on lenders-per-borrower, 2024) engineered the fix — regulation timeline event Feb'25 connects here.</div>`
+    + `<span id="l-regulation"></span><h2>Regulation timeline — click any event for who it hit</h2>
+       <div class="tl">${d.regTimeline.map((e,i)=>`<div class="tl-e" data-i="${i}"><span class="tl-date">${e[0]}</span><b>${e[1]}</b><div class="tl-d">${e[2]}</div></div>`).join("")}</div>`
+    + `<span id="l-deals"></span><h2>Deals — PE, M&A, listings <span class="flag">seed set; Tracxn LiveDeals refresh next session</span></h2>`
+    + tableHTML(["When","Deal","Size","The read"], d.deals)
+    + `<span id="l-digital"></span><h2>Digital lenders — comparison <span class="flag">FACE quarterly disbursal data + Tracxn round verification: next refresh</span></h2>`
+    + tableHTML(["Company","Segment","Capital model","Note"], d.lenders)
+    + `<span id="l-talent"></span><h2>Talent — hiring at lenders <span class="flag">structure ready; ATS pulls next session (same method as payments tab)</span></h2>`
+    + tableHTML(["Company","Careers","Status"], d.talent.map(r=>[`<b>${r[0]}</b>`,`<a href="${r[1]}" target="_blank">careers page</a>`,`<span class="fn">${r[2]}</span>`]))
+    + `<span id="l-vc"></span><h2>Value chain map — Indian lending <span class="flag">click a zone</span></h2>
+       <div class="flow">Money flow: <b>Capital (1)</b> → <b>balance-sheet lenders (2)</b> → borrowers, originated via <b>(3)</b>, underwritten on <b>(4)</b>, recovered through <b>(5)</b>, ruled & subsidised by <b>(6)</b></div>
+       <div class="zones" id="lzones">${d.zones.map((z,i)=>`<div class="zone lzone" data-z="${i}"><div class="zn">${z.n}</div><div class="zc">${z.cos.map(c=>c[0].split(" (")[0].split(" /")[0]).slice(0,3).join(" · ")}</div><div class="zr">${z.rev}<br>${z.prof}</div></div>`).join("")}</div>
+       <div class="zpanel" id="lzpanel">Click any zone above for companies, value-add and second-order detail.</div>`;
+  }
+  if(id==="wealthtech"){
+    const numCell=(v)=>`<span data-v="${v}">${v}</span>`;
+    return `<div class="chips">${[["w-drivers","Drivers"],["w-brokers","Broking"],["w-mf","Mutual funds"],["w-infra","Infra & AMCs"],["w-startups","Startups"],["w-hni","HNI · PMS · AIF"],["w-rails","New rails"],["w-reg","Regulation"],["w-talent","Talent"],["w-vc","Value chain"]].map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join("")}</div>`
+    + `<span id="w-drivers"></span>` + tiles(d.tiles)
+    + `<h2>Drivers vs measures — the causality pair</h2>
+       <div class="charts">${chartbox("c-fin","DRIVER: financial share of household savings (%) ≈ RBI")}${chartbox("c-clients","MEASURE: NSE active clients (crore) — note the FY26 decline post-F&O curbs ✓")}</div>
+       <div class="fn">Every ~1% shift of household savings into financial assets ≈ ₹3+ L cr of annual flows. FY23 dip = post-COVID physical-asset (real estate/gold) rebound. FY26 client decline is trading churn — SIP flows hit records the same year.</div>`
+    + `<span id="w-part"></span><span id="w-mf"></span><h2>Mutual funds & participation</h2>
+       <div class="charts">${chartbox("c-sip","Monthly SIP inflow (₹ cr, June each year)")}${chartbox("c-aum","MF industry AUM (₹ L cr)")}</div>`
+    + `<span id="w-brokers"></span><h2>Brokers — FY26 active clients ✓ + market data ✓ 13 Jul'26 <span class="flag">industry actives fell 4.92→4.57 cr in FY26</span></h2>`
+    + tableHTML(["Broker","Price · P/E","Actives FY26","Share","TTM PAT","The read"], d.brokers.map(r=>[`<b>${r[0]}</b>`,r[1],r[2],r[3],r[4],r[5]]), true)
+    + `<span id="w-infra"></span><h2>Market infrastructure <span class="flag">prices ✓ 13 Jul'26 — the toll-booth layer</span></h2>`
+    + tableHTML(["Company","Price · P/E ✓","TTM PAT","Growth","Moat note"], d.infra.map(r=>[`<b>${r[0]}</b>`,r[1],r[2],r[3],r[4]]), true)
+    + `<h2>AMCs <span class="flag">prices ✓ 13 Jul'26</span></h2>`
+    + tableHTML(["AMC","Price · P/E ✓","TTM PAT","Growth","Note"], d.amcs.map(r=>[`<b>${r[0]}</b>`,r[1],r[2],r[3],r[4]]), true)
+    + `<span id="w-startups"></span><h2>WealthTech startups <span class="flag">Dezerv ✓ verified; others ≈ — Tracxn refresh next session</span></h2>`
+    + tableHTML(["Company","Model","Last round / status","The read"], d.startups.map(r=>[`<b>${r[0]}</b>`,r[1],r[2],r[3]]))
+    + `<span id="w-hni"></span><h2>HNI · PMS · AIF — where the fees still live</h2>` + tiles(d.pmsaif)
+    + `<div class="fn">Cat II AIFs (private credit, PE) dominate commitments — cross-link to the lending tab's securitisation/private-credit zone. SEBI is reviewing PMS rules amid the record AUM.</div>`
+    + `<span id="w-rails"></span><h2>New asset rails</h2>` + tiles(d.rails)
+    + `<span id="w-reg"></span><h2>Regulation timeline — the F&O reset arc (click events)</h2>
+       <div class="tl">${d.regTimeline.map((e,i)=>`<div class="tl-e" data-i="${i}"><span class="tl-date">${e[0]}</span><b>${e[1]}</b><div class="tl-d">${e[2]}</div></div>`).join("")}</div>`
+    + `<span id="w-talent"></span><h2>Talent — hiring signals</h2>`
+    + tableHTML(["Company","Careers","Signal"], d.talent.map(r=>[`<b>${r[0]}</b>`,r[1]==="—"?"—":`<a href="${r[1]}" target="_blank">careers</a>`,r[2]]))
+    + `<span id="w-vc"></span><h2>Value chain map — Indian wealth <span class="flag">click a zone</span></h2>
+       <div class="flow">Flow: <b>Savers (1)</b> → via <b>distribution (2)</b> → into <b>products (3)</b> → settled on <b>infrastructure (4)</b> → enabled by <b>KYC/data rails (5)</b> → ruled by <b>(6)</b></div>
+       <div class="zones" id="wzones">${d.zones.map((z,i)=>`<div class="zone wzone" data-z="${i}"><div class="zn">${z.n}</div><div class="zc">${z.cos.map(c=>c[0].split(" (")[0]).slice(0,3).join(" · ")}</div><div class="zr">${z.rev}<br>${z.prof}</div></div>`).join("")}</div>
+       <div class="zpanel" id="wzpanel">Click any zone for players, value-add and second-order detail.</div>`;
+  }
+  if(id==="insurance") return tiles(d.tiles)
+    + `<h2>Trends</h2><div class="charts">${chartbox("c-ins","Global insurtech funding ($B) — Gallagher Re")}</div>`
+    + `<h2>India insurtech — comparison</h2>` + tableHTML(["Company","Model","Status","Note"], d.players);
+  if(id==="crypto") return tiles(d.tiles)
+    + `<div class="note">${d.context}</div>`
+    + `<h2>Trends</h2><div class="charts">${chartbox("c-mcap","Total crypto market cap ($T) ≈")}</div>`
+    + `<h2>India exchanges</h2>` + tableHTML(["Company","Model","Note"], d.exchanges);
+  if(id==="funding") return tiles(d.tiles)
+    + `<h2>Trends</h2><div class="charts">${chartbox("c-fund","India fintech funding by year ($B) ≈ Tracxn")}${chartbox("c-q1","Q1'25 vs Q1'26 — amount ($M) & deal count")}</div>`
+    + `<h2>Themes to watch</h2>` + tableHTML(["Theme","Read"], d.watch);
+  if(id==="publicmkts") return tiles(d.tiles)
+    + `<h2>Listed fintech universe <span class="flag">prices auto-fill weekly; SmartAPI integration pending</span></h2>`
+    + tableHTML(["Company","Last price","Business","Note"], d.stocks);
+  return "";
+}
+
+TABS.forEach((t)=>{
+  const btn = document.createElement("button");
+  btn.textContent = t.name; btn.dataset.tab = t.id;
+  btn.onclick = ()=>activate(t.id);
+  nav.appendChild(btn);
+  const sec = document.createElement("section");
+  sec.className = "tab"; sec.id = "tab-"+t.id;
+  sec.innerHTML = render(t.id) + `<div class="src">Sources: ${t.srcs.map(s=>`<a href="${s[1]}" target="_blank">${s[0]}</a>`).join(" · ")}</div>`;
+  tabsEl.appendChild(sec);
+});
+
+const AX = { plugins:{legend:{labels:{boxWidth:12,font:{size:11}}}}, interaction:{mode:"index",intersect:false}, responsive:true, maintainAspectRatio:false,
+  scales:{ x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:14}}, y:{grid:{color:"#eef0f6"},ticks:{font:{size:11}}} } };
+const C1="#1f3864", C2="#2e9bd6", C3="#e8a33d", C4="#0a7d4f", C5="#8a5b00", C6="#b3261e", C7="#7a5fd0", C8="#c3ccdd";
+
+// ---------- payments charts & interactions ----------
+const payState={ range:60, apps:["all"], basis:"volPct" };
+let chVol, chVal, chPie1, chPie2;
+const APPDEFS={ all:{n:"All UPI",c:"#1f3864"}, pp:{n:"PhonePe ≈",c:"#5f259f"}, gp:{n:"Google Pay ≈",c:"#2e9bd6"}, ot:{n:"Others ≈",c:"#b3261e"} };
+
+function paySeries(kind, app){ // kind: 'vol'|'val'; app: 'all'|'pp'|'gp'|'ot'
+  const base=PAY[kind], n=base.length, from=n-payState.range;
+  const idx=[...Array(n).keys()].slice(from);
+  return idx.map(i=>{
+    const [pp,gp]=PAY.share(i);
+    const f= app==="all"?100: app==="pp"?pp: app==="gp"?gp: (100-pp-gp);
+    return +(base[i]*f/100).toFixed(2);
+  });
+}
+function payLabels(){ const n=PAY.labels.length; return PAY.labels.slice(n-payState.range); }
+function updatePayTrend(){
+  const labels=payLabels();
+  const mk=(kind,unit)=>payState.apps.map(a=>({
+    label:APPDEFS[a].n+" "+unit, data:paySeries(kind,a), borderColor:APPDEFS[a].c,
+    backgroundColor:payState.apps.length===1?APPDEFS[a].c+"18":"transparent",
+    fill:payState.apps.length===1, tension:.25, pointRadius:0, pointHitRadius:12, borderWidth:2 }));
+  chVol.data.labels=labels; chVol.data.datasets=mk("vol","(B)"); chVol.update();
+  chVal.data.labels=labels; chVal.data.datasets=mk("val","(₹ L cr)"); chVal.update();
+}
+function pieTip(items){ // build tooltip lines with % + volume + value
+  return {
+    callbacks:{ label:(ctx)=>{
+      const a=items[ctx.dataIndex];
+      return ` ${a.n}: ${ctx.parsed}%  ·  ${(a.volPct*PAY.latest.volB/100).toFixed(2)}B txns  ·  ₹${(a.valPct*PAY.latest.valL/100).toFixed(2)} L cr`;
+    } } };
+}
+function updatePies(){
+  const b=payState.basis;
+  const main=[PAY.apps[0],PAY.apps[1],PAY.apps[2],{n:"Others (rest)",volPct:+(100-PAY.apps[0].volPct-PAY.apps[1].volPct-PAY.apps[2].volPct).toFixed(1),valPct:+(100-PAY.apps[0].valPct-PAY.apps[1].valPct-PAY.apps[2].valPct).toFixed(1)}];
+  chPie1.data.labels=main.map(a=>a.n); chPie1.data.datasets[0].data=main.map(a=>a[b]);
+  chPie1.options.plugins.tooltip=pieTip(main); chPie1.update();
+  const tail=PAY.apps.slice(2); const tot=tail.reduce((s,a)=>s+a[b],0);
+  chPie2.data.labels=tail.map(a=>a.n); chPie2.data.datasets[0].data=tail.map(a=>+(a[b]/tot*100).toFixed(1));
+  chPie2.options.plugins.tooltip=pieTip(tail); chPie2.update();
+}
+
+function initPayments(){
+  chVol=new Chart($("#c-pvol"),{type:"line",data:{labels:[],datasets:[]},options:AX});
+  chVal=new Chart($("#c-pval"),{type:"line",data:{labels:[],datasets:[]},options:AX});
+  updatePayTrend();
+  // share trend lines (5Y, volume basis)
+  const pp=[],gp=[],ot=[];
+  for(let i=0;i<60;i++){ const [p,g]=PAY.share(i); pp.push(+p.toFixed(1)); gp.push(+g.toFixed(1)); ot.push(+(100-p-g).toFixed(1)); }
+  new Chart($("#c-sharetrend"),{type:"line",data:{labels:PAY.labels,datasets:[
+    {label:"PhonePe",data:pp,borderColor:C1,pointRadius:0,tension:.25},
+    {label:"Google Pay",data:gp,borderColor:C2,pointRadius:0,tension:.25},
+    {label:"Others",data:ot,borderColor:C6,pointRadius:0,tension:.25}]},
+    options:{...AX,scales:{...AX.scales,y:{...AX.scales.y,min:0,max:60}}}});
+  chPie1=new Chart($("#c-pie1"),{type:"doughnut",data:{labels:[],datasets:[{data:[],backgroundColor:[C1,C2,C3,C8]}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{boxWidth:12,font:{size:11}}}}}});
+  chPie2=new Chart($("#c-pie2"),{type:"doughnut",data:{labels:[],datasets:[{data:[],backgroundColor:[C3,C4,C7,C5,C6,C2,C1,C8]}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{boxWidth:12,font:{size:11}}}}}});
+  updatePies();
+  const tk=Object.keys(PAY.tail), tc=[C3,C4,C7,C5,C6];
+  new Chart($("#c-tailbar"),{type:"bar",data:{labels:PAY.tailQuarters,datasets:tk.map((k,i)=>({label:k,data:PAY.tail[k],backgroundColor:tc[i]}))},options:AX});
+  // controls
+  $("#payRange").addEventListener("click",e=>{ if(!e.target.dataset.r)return;
+    payState.range=+e.target.dataset.r; [...$("#payRange").children].forEach(b=>b.classList.toggle("on",b===e.target)); updatePayTrend(); });
+  $("#payApp").addEventListener("click",e=>{ const a=e.target.dataset.a; if(!a)return;
+    if(a==="all"){ payState.apps=["all"]; }
+    else {
+      payState.apps=payState.apps.filter(x=>x!=="all");
+      if(payState.apps.includes(a)) payState.apps=payState.apps.filter(x=>x!==a);
+      else payState.apps.push(a);
+      if(payState.apps.length===0) payState.apps=["all"];
+    }
+    [...$("#payApp").children].forEach(b=>b.classList.toggle("on",payState.apps.includes(b.dataset.a)));
+    updatePayTrend(); });
+  $("#payBasis").addEventListener("click",e=>{ if(!e.target.dataset.b)return;
+    payState.basis=e.target.dataset.b; [...$("#payBasis").children].forEach(b=>b.classList.toggle("on",b===e.target)); updatePies(); });
+  // (table sorting is handled globally — see delegated handler at bottom)
+  // value chain zones
+  $("#zones").addEventListener("click",e=>{
+    const zEl=e.target.closest(".zone"); if(!zEl)return;
+    document.querySelectorAll(".zone").forEach(x=>x.classList.remove("sel")); zEl.classList.add("sel");
+    const z=PAY.zones[+zEl.dataset.z];
+    $("#zpanel").innerHTML=`<h4>${z.n}</h4><div class="fn">Section revenue: <b>${z.rev}</b> · Profitability: ${z.prof}</div>`
+      + tableHTML(["Company","Value added to the chain","Key tech / APIs & where sourced (company · govt · think-tank)"], z.cos);
+  });
+}
+
+const AXc=AX;
+function initCharts(id){
+  if(chartInit[id]) return; chartInit[id]=true;
+  const d = DATA[id];
+  if(id==="payments"){ initPayments(); return; }
+  if(id==="lending"){
+    new Chart($("#c-macro"),{type:"line",data:{labels:d.macro.labels,datasets:[
+      {label:"Credit growth %",data:d.macro.credit,borderColor:C1,backgroundColor:C1,tension:.25,pointHitRadius:12},
+      {label:"Repo %",data:d.macro.repo,borderColor:C3,backgroundColor:C3,stepped:true,pointHitRadius:12}]},options:AXc});
+    new Chart($("#c-gnpa"),{type:"line",data:{labels:d.gnpa.labels,datasets:[{label:"GNPA %",data:d.gnpa.data,borderColor:C6,backgroundColor:"rgba(179,38,30,.08)",fill:true,tension:.3,pointHitRadius:12}]},options:AXc});
+    new Chart($("#c-pl"),{type:"bar",data:{labels:d.pl.labels,datasets:[{label:"PL growth % YoY",data:d.pl.data,backgroundColor:d.pl.labels.map(l=>["FY24","FY25"].includes(l)?"#c3ccdd":C1)}]},options:AXc});
+    new Chart($("#c-mfi"),{data:{labels:d.mfi.qlabels,datasets:[
+      {type:"bar",label:"GLP ₹ L cr",data:d.mfi.glp,backgroundColor:C1,yAxisID:"y"},
+      {type:"line",label:"PAR 31–180 %",data:d.mfi.par,borderColor:C6,backgroundColor:C6,tension:.3,yAxisID:"y1",pointHitRadius:12}]},
+      options:{...AXc,scales:{...AXc.scales,y1:{position:"right",grid:{display:false},ticks:{font:{size:11}}}}}});
+  }
+  if(id==="wealthtech"){
+    new Chart($("#c-fin"),{type:"line",data:{labels:d.finShare.labels,datasets:[{label:"Financial share %",data:d.finShare.data,borderColor:C4,backgroundColor:"rgba(10,125,79,.08)",fill:true,tension:.3,pointHitRadius:12}]},options:AXc});
+    new Chart($("#c-clients"),{type:"bar",data:{labels:d.clients.labels,datasets:[{label:"Active clients (cr)",data:d.clients.data,backgroundColor:d.clients.labels.map(l=>l==="FY26"?C6:C1)}]},options:AXc});
+    new Chart($("#c-sip"),{type:"line",data:{labels:d.sipTrend.labels,datasets:[{label:"SIP ₹ cr",data:d.sipTrend.data,borderColor:C4,backgroundColor:C4,tension:.3,fill:false,pointHitRadius:12}]},options:AXc});
+    new Chart($("#c-aum"),{type:"bar",data:{labels:d.aumTrend.labels,datasets:[{label:"AUM ₹ L cr",data:d.aumTrend.data,backgroundColor:C1}]},options:AXc});
+  }
+  if(id==="insurance") new Chart($("#c-ins"),{type:"bar",data:{labels:d.fundingTrend.labels,datasets:[{label:"$B",data:d.fundingTrend.data,backgroundColor:C1}]},options:AXc});
+  if(id==="crypto") new Chart($("#c-mcap"),{type:"line",data:{labels:d.mcapTrend.labels,datasets:[{label:"$T ≈",data:d.mcapTrend.data,borderColor:C3,backgroundColor:C3,tension:.3}]},options:AXc});
+  if(id==="funding"){
+    new Chart($("#c-fund"),{type:"bar",data:{labels:d.annualTrend.labels,datasets:[{label:"$B",data:d.annualTrend.data,backgroundColor:C1}]},options:AXc});
+    new Chart($("#c-q1"),{data:{labels:d.q1Compare.labels,datasets:[
+      {type:"bar",label:"$M",data:d.q1Compare.amount,backgroundColor:C1,yAxisID:"y"},
+      {type:"line",label:"# deals",data:d.q1Compare.deals,borderColor:C3,backgroundColor:C3,yAxisID:"y1"}]},
+      options:{...AXc,scales:{...AXc.scales,y1:{position:"right",grid:{display:false}}}}});
+  }
+}
+
+function activate(id){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));
+  document.querySelectorAll("section.tab").forEach(s=>s.classList.toggle("active",s.id==="tab-"+id));
+  initCharts(id);
+}
+
+// global: sortable tables (any tab) — click column headers
+document.addEventListener("click",(e)=>{
+  const th=e.target.closest("table.sort-t th.sortable");
+  if(th){
+    const tbl=th.closest("table"), tb=tbl.querySelector("tbody"), c=+th.dataset.c;
+    const rows=[...tb.rows]; const dir=th.dataset.dir==="asc"?-1:1; th.dataset.dir=dir===1?"asc":"desc";
+    rows.sort((a,b2)=>{
+      const av=a.cells[c].querySelector("[data-v]"), bv=b2.cells[c].querySelector("[data-v]");
+      if(av&&bv) return (parseFloat(av.dataset.v)-parseFloat(bv.dataset.v))*dir;
+      return a.cells[c].textContent.localeCompare(b2.cells[c].textContent)*dir;
+    });
+    rows.forEach(r=>tb.appendChild(r));
+    return;
+  }
+  // regulation timeline accordion
+  const ev=e.target.closest(".tl-e");
+  if(ev){ ev.classList.toggle("open"); return; }
+  // lending value-chain zones
+  const lz=e.target.closest("#lzones .lzone");
+  if(lz){
+    document.querySelectorAll("#lzones .lzone").forEach(x=>x.classList.remove("sel")); lz.classList.add("sel");
+    const z=DATA.lending.zones[+lz.dataset.z];
+    document.getElementById("lzpanel").innerHTML=`<h4>${z.n}</h4><div class="fn">${z.rev} · ${z.prof}</div>`
+      + tableHTML(["Player","Value added","Second-order detail"], z.cos);
+    return;
+  }
+  // wealth value-chain zones
+  const wz=e.target.closest("#wzones .wzone");
+  if(wz){
+    document.querySelectorAll("#wzones .wzone").forEach(x=>x.classList.remove("sel")); wz.classList.add("sel");
+    const z=DATA.wealthtech.zones[+wz.dataset.z];
+    document.getElementById("wzpanel").innerHTML=`<h4>${z.n}</h4><div class="fn">${z.rev} · ${z.prof}</div>`
+      + tableHTML(["Player","Value added","Second-order detail"], z.cos);
+  }
+});
+
+activate("payments");
+</script>
+</body>
+</html>
