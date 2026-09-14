@@ -66,6 +66,14 @@
   .tl-date { display:inline-block; font-size:11px; font-weight:700; color:var(--accent2); margin-right:10px; min-width:70px; }
   .tl-d { display:none; font-size:12.5px; color:var(--muted); margin-top:5px; max-width:900px; }
   .tl-e.open .tl-d { display:block; }
+  .newslist { display:flex; flex-direction:column; gap:8px; }
+  .newsitem { display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:11px 14px; text-decoration:none; color:var(--ink); }
+  .newsitem:hover { border-color:var(--accent2); background:#fbfcff; }
+  .nd { min-width:52px; font-size:11.5px; font-weight:700; color:var(--accent2); padding-top:2px; }
+  .ntag { min-width:66px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:#8a5b00; background:#fdf3e3; border-radius:9px; padding:2px 8px; text-align:center; margin-top:1px; }
+  .nbody { display:flex; flex-direction:column; gap:2px; }
+  .nbody b { font-size:14px; color:var(--ink); }
+  .ngist { font-size:12.5px; color:var(--muted); }
 </style>
 </head>
 <body>
@@ -375,6 +383,24 @@ funding: {
     ["M&A rising","Global fintech M&A $251B in 2025 (BCG); India: consolidation in lending & broking"],
   ],
 },
+news: [
+  ["14 Sep","Markets","Kissht's parent weighs another fundraise four months after its IPO","Loan book grew 61% — the IPO money didn't last; board considering preferential issue or private placement.","https://startupfox.in/article/kissht-s-parent-will-consider-another-fundraise-four-months-after-its-ipo"],
+  ["10 Sep","Funding","Piston raises $15M for a US fuel network built from Kolkata","American company, American customers — every engineer in Kolkata; the play is bypassing card networks entirely.","https://startupfox.in/article/piston-raises-15m-for-a-us-fuel-network-whose-engineering-team-sits-in-kolkata"],
+  ["8 Sep","Funding","Fundly.ai raises $4M from existing backers, three years after its seed","Insider round with headcount down ~20% — pivoting from lending into commerce.","https://startupfox.in/article/fundly-ai-raises-4m-from-its-existing-backers-three-years-after-a-3m-seed"],
+  ["3 Sep","Funding","Slice raises at $450M — down from a $1.5B peak, and profitable","Half the round is secondaries; priced as a bank now, not a fintech.","https://startupfox.in/article/slice-s-450m-valuation-looks-like-a-crash-until-you-price-it-as-a-bank"],
+  ["1 Sep","Policy","UPI moved less money in August than July — on 850M more transactions","Record 24.51B volume, value slipped to ₹29.82 L cr; the average ticket keeps shrinking.","https://startupfox.in/article/upi-moved-less-money-in-august-than-july-on-850-million-more-transactions"],
+  ["11 Aug","Funding","Vecton AI raises ₹6 cr pre-seed led by Zeropearl VC","Compliant AI systems for banks and insurers, forward-deployed engineering model.","https://startupfox.in/article/vecton-ai-raises-6-crore-in-pre-seed-round-led-by-zeropearl-vc"],
+  ["31 Jul","Product","super.money launches superGift with Flipkart, Myntra, Cleartrip","Multi-brand gifting; Razorpay and Pine Labs power redemption.","https://startupfox.in/article/super-money-launches-supergift-multi-brand-gifting-solution-with-flipkart-myntra-and-cleartrip"],
+  ["27 Jul","Results","PhonePe FY26: ₹7,920 cr revenue, net loss widens 62% to ₹2,792 cr","Company claims ₹1,377 cr normalised operating loss — numbers that will follow it into the IPO.","https://startupfox.in/article/phonepe-reports-7-920-crore-fy26-revenue-as-net-loss-widens-62-percent-to-2-792-crore"],
+  ["18 Jul","Product","Le'Udhaar launches repayment automation for informal credit","AutoPay mandates + micro-debits aimed at India's ~$200B informal lending market.","https://startupfox.in/article/le-udhaar-informal-credit-repayment-fintech-launch"],
+  ["22 Jun","Funding","Meta invests $900M in CRED at $4.5B; Kunal Shah to head WhatsApp globally","The season's wildest headline — 20% stake, interim CEO at CRED.","https://startupfox.in/article/meta-invests-900m-cred-kunal-shah-whatsapp-ceo"],
+  ["2 Jun","M&A","Scripbox acquires Bluechip Capital's MF distribution business","₹1,000 cr+ AUM moves over — the MFD succession/consolidation trade in action.","https://startupfox.in/article/scripbox-acquires-bluechip-capital-wealth-management"],
+  ["1 Jun","Funding","Rovia raises $1M pre-seed led by Antler for cross-border equity management","Targets the $1.5T of employer stock stuck across borders.","https://startupfox.in/article/wealthtech-startup-rovia-raises-1-million-preseed-round-led"],
+  ["31 May","Markets","PB Fintech founders sell ₹665 cr in block deal","Post-Q4-profit liquidation; follows Tencent's full exit.","https://startupfox.in/article/pb-fintech-founders-sell-665-crore-stake-block-deal"],
+  ["26 May","Expansion","Paytm puts €9M into a Luxembourg subsidiary ahead of Europe launch","Regulatory groundwork for cross-border expansion.","https://startupfox.in/article/paytm-europe-payments-investment-9-million-luxembourg-expansion"],
+  ["26 May","Results","Pine Labs posts ₹60 cr Q4 net profit, reversing year-ago loss","Merchant-acquisition costs down, lending margin up — the turnaround confirmed.","https://startupfox.in/article/pine-labs-q4-fy26-net-profit-turnaround-fintech"],
+  ["21 May","Funding","Scapia raises $63M led by General Catalyst; valuation doubles past $500M","Travel + fintech convergence keeps getting funded.","https://startupfox.in/article/scapia-raises-63-million-general-catalyst-travel-fintech"],
+],
 publicmkts: {
   tiles: [
     { l:"Paytm (One97)", v:"₹1,342", d:"12 Jul'26 · near 52-wk high", chg:"+5% day", dir:"up" },
@@ -401,7 +427,7 @@ publicmkts: {
 const PAY = {
   // 60 months Jul'21..Jun'26. vol in B txns, val in ₹ lakh cr. Indices 49-57 (Aug'25-Apr'26) interpolated to FY26 actuals.
   vol:[3.24,3.55,3.65,4.21,4.18,4.56, 4.62,4.53,5.41,5.58,5.95,5.86,6.29,6.58,6.78,7.31,7.30,7.82, 8.03,7.53,8.65,8.89,9.41,9.34,9.96,10.58,10.56,11.41,11.24,12.02, 12.20,12.10,13.44,13.30,14.04,13.89,14.44,14.96,15.04,16.58,15.48,16.73, 16.99,16.11,18.30,17.89,18.68,18.40,19.47,19.8,19.9,21.3,20.6,21.4, 21.8,20.4,22.0,22.0,23.2,22.72, 23.66,24.51],
-  val:[6.06,6.39,6.54,7.71,7.68,8.27, 8.32,8.27,9.60,9.83,10.41,10.14,10.63,10.73,11.16,12.11,11.90,12.82, 12.98,12.35,14.05,14.07,14.89,14.75,15.34,15.76,15.79,17.16,17.40,18.23, 18.41,18.28,19.78,19.64,20.45,20.07,20.64,20.61,20.64,23.50,21.55,23.25, 23.48,21.96,24.77,23.95,25.14,24.04,25.08,25.2,25.4,27.3,26.1,27.5, 28.0,25.9,29.0,27.8,29.9,28.92, 29.4,29.82],
+  val:[6.06,6.39,6.54,7.71,7.68,8.27, 8.32,8.27,9.60,9.83,10.41,10.14,10.63,10.73,11.16,12.11,11.90,12.82, 12.98,12.35,14.05,14.07,14.89,14.75,15.34,15.76,15.79,17.16,17.40,18.23, 18.41,18.28,19.78,19.64,20.45,20.07,20.64,20.61,20.64,23.50,21.55,23.25, 23.48,21.96,24.77,23.95,25.14,24.04,25.08,25.2,25.4,27.3,26.1,27.5, 28.0,25.9,29.0,27.8,29.9,28.92, 30.2,29.82],
   estFrom:49, estTo:57,
   // [index, PhonePe %, GPay %] anchors (volume share, NPCI app-wise releases)
   shareAnchors:[[0,45.9,34.5],[18,46.5,34.5],[30,48.0,37.0],[42,47.8,36.5],[54,46.5,34.0],[60,45.9,32.3],[61,45.9,32.3]],
@@ -499,6 +525,7 @@ const PAY = {
 const TABS = [
   { id:"payments", name:"Payments", srcs:[["NPCI statistics","https://www.npci.org.in/statistics/"],["PIB UPI 10-year release","https://www.pib.gov.in/PressReleasePage.aspx?PRID=2257087&reg=3&lang=2"],["Jun'26 UPI (Bizz Buzz)","https://www.bizzbuzz.news/fintech/upi-transactions-india-2272-billion-june-2026-npci-1396120"],["Razorpay FY25 (Entrackr)","https://entrackr.com/fintrackr/razorpay-revenue-soars-65-in-fy25-gross-profit-crosses-rs-1200-cr-10567344"],["Juspay FY25 & unicorn (Inc42/Elets)","https://bfsi.eletsonline.com/juspay-raises-50-million-in-series-d-follow-on-round-becomes-first-unicorn-of-2026/"],["Pine Labs IPO (TechCrunch)","https://techcrunch.com/2025/11/14/pine-labs-gets-warm-market-welcome-on-440m-india-ipo-despite-a-valuation-trim/"],["Cashfree round (TechCrunch)","https://techcrunch.com/2025/02/04/krafton-leads-cashfrees-53m-funding-at-700m-valuation/"]] },
   { id:"lending", name:"Lending & Credit", srcs:[["RBI WSS & sectoral deployment","https://www.rbi.org.in"],["Jun'26 credit growth (Business Standard)","https://www.business-standard.com/industry/banking/bank-credit-growth-hits-2-year-high-of-18-6-as-deposits-rise-over-7-trn-126071001123_1.html"],["RBI Financial Stability Report","https://www.rbi.org.in/Scripts/PublicationsView.aspx"],["Screener.in (prices/P-E ✓13 Jul)","https://www.screener.in"],["MFIN Micrometer Q4FY26","https://www.business-standard.com/finance/news/microfinance-portfolio-grows-in-q4-fy26-for-first-time-in-seven-quarters-126061201157_1.html"],["CRIF MicroLend","https://www.crifhighmark.com/media/6097/microlend-feb-2026.pdf"],["TransUnion CIBIL CMI","https://www.transunioncibil.com"]] },
+  { id:"news", name:"News", srcs:[["StartupFox — Fintech","https://startupfox.in/category/fintech"]] },
   { id:"wealthtech", name:"WealthTech", srcs:[["AMFI","https://www.amfiindia.com/research-information/amfi-monthly"],["FY26 active clients (BT)","https://www.businesstoday.in/markets/stocks/story/zerodha-groww-angel-one-upstox-how-active-clients-changed-in-past-8-years-full-table-526520-2026-04-20"],["NSE broker data (Chittorgarh)","https://www.chittorgarh.com/report/top_20_share_brokers_in_india_by_clients_at_nse/1/?year=2026"],["Screener.in ✓13 Jul","https://www.screener.in"],["SEBI bulletins","https://www.sebi.gov.in"]] },
 ];
 
@@ -653,6 +680,13 @@ function render(id){
   if(id==="funding") return tiles(d.tiles)
     + `<h2>Trends</h2><div class="charts">${chartbox("c-fund","India fintech funding by year ($B) ≈ Tracxn")}${chartbox("c-q1","Q1'25 vs Q1'26 — amount ($M) & deal count")}</div>`
     + `<h2>Themes to watch</h2>` + tableHTML(["Theme","Read"], d.watch);
+  if(id==="news") return `<h2>Fintech news — curated from StartupFox <span class="flag">updated each data round · click any story for the original</span></h2>`
+    + `<div class="newslist">` + DATA.news.map(n=>
+      `<a class="newsitem" href="${n[4]}" target="_blank" rel="noopener">
+        <span class="nd">${n[0]}</span><span class="ntag">${n[1]}</span>
+        <span class="nbody"><b>${n[2]}</b><span class="ngist">${n[3]}</span></span>
+      </a>`).join("") + `</div>`
+    + `<div class="fn">Summaries are our own one-liners; full reporting and analysis belong to StartupFox — click through for the originals.</div>`;
   if(id==="publicmkts") return tiles(d.tiles)
     + `<h2>Listed fintech universe <span class="flag">prices auto-fill weekly; SmartAPI integration pending</span></h2>`
     + tableHTML(["Company","Last price","Business","Note"], d.stocks);
