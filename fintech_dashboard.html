@@ -69,7 +69,14 @@
 </style>
 </head>
 <body>
-<header><h1>Fintech Weekly Dashboard</h1><span class="stamp" id="stamp"></span></header>
+<header><h1>Fintech Weekly Dashboard</h1><span class="stamp" id="stamp"></span>
+<span id="authbox" style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+  <span id="userchip" style="display:none;align-items:center;gap:7px;background:var(--chip);border:1px solid var(--line);border-radius:18px;padding:4px 12px 4px 5px;font-size:12.5px;font-weight:600;color:var(--accent);">
+    <img id="userpic" src="" alt="" style="width:24px;height:24px;border-radius:50%;" referrerpolicy="no-referrer"><span id="username"></span>
+    <a href="#" id="signout" style="font-size:11px;color:var(--muted);text-decoration:none;">sign out</a>
+  </span>
+  <span id="gsi-btn"></span>
+</span></header>
 <div class="note">India fintech dashboard: Payments · Lending & Credit · WealthTech. Figures marked ✓ are source-verified; ≈ are latest-reported estimates. Compiled by Kohinoor Mukherjee.</div>
 <nav id="nav"></nav>
 <div id="tabs"></div>
@@ -77,29 +84,30 @@
 <script>
 // ============ DATA (weekly job replaces this block only) ============
 const DATA = {
-lastUpdated: "13 Jul 2026",
+lastUpdated: "14 Sep 2026",
 payments: {
   tiles: [
-    { l:"UPI volume (Jun'26)", v:"22.72 B", d:"NPCI monthly", chg:"+23% YoY", dir:"up" },
-    { l:"UPI value (Jun'26)", v:"₹28.92 L cr", d:"NPCI monthly", chg:"+20% YoY", dir:"up" },
+    { l:"UPI volume (Aug'26)", v:"24.51 B", d:"record · 791M/day · NPCI", chg:"+22% YoY · +3.6% MoM", dir:"up" },
+    { l:"UPI value (Aug'26)", v:"₹29.82 L cr", d:"record · NPCI", chg:"+~20% YoY", dir:"up" },
     { l:"UPI FY26 total", v:"241.6 B txns", d:"₹314 L cr · PIB/NPCI" },
     { l:"P2M share of volume", v:"~63%", d:"FY26 · PIB" },
-    { l:"Banks live on UPI", v:"703", d:"FY26 · NPCI" },
-    { l:"PhonePe+GPay share", v:"79%", d:"May'26 · first sub-80% reading", chg:"−7pp from peak", dir:"down" },
+    { l:"Razorpay IPO", v:"DRHP filed ✓", d:"confidential, Jun'26 · ₹5-6k cr issue targeted by end-2026" },
+    { l:"PhonePe+GPay share", v:"78.2%", d:"Jul'26 ✓ (45.89% + 32.33%) — slide continues", chg:"−8pp from peak", dir:"down" },
     { l:"30% share cap deadline", v:"31 Dec 2026", d:"NPCI proposal — the sector's biggest overhang" },
   ],
 },
 lending: {
   tiles: [
-    { l:"Bank credit growth", v:"18.6%", d:"YoY, fortnight ended 27 Jun'26 · 2-yr high · RBI", chg:"vs 12% deposit growth", dir:"up" },
-    { l:"Non-food credit", v:"₹213.8 L cr", d:"May'26 · +17.4% YoY · RBI" },
+    { l:"Bank credit growth", v:"19.1%", d:"YoY · Sep'26 data ✓ — still accelerating", chg:"up from 18.3% prior fortnight", dir:"up" },
+    { l:"Non-food credit", v:"₹213.8 L cr+", d:"May'26 · +17.4% YoY · RBI (refresh pending)" },
     { l:"Credit–deposit growth gap", v:">500 bps", d:"the deposit war — funding costs sticky", chg:"key sector risk", dir:"down" },
-    { l:"Repo rate", v:"5.25%", d:"held, neutral · Jun'26 MPC" },
+    { l:"Repo rate", v:"5.25%", d:"held 4th straight MPC · Aug'26 ✓ · neutral" },
+    { l:"FY27 forecasts (RBI)", v:"GDP 6.7% · CPI 5.0%", d:"Aug'26 MPC: growth ↑, inflation ↓ ✓" },
     { l:"System GNPA", v:"≈2.3%", d:"multi-decade low · RBI FSR ≈" },
     { l:"Digital lending disbursals", v:">₹47 L cr", d:"FY26 projection · EY-DLAI" },
     { l:"FLDG cap", v:"5%", d:"RBI Digital Lending Directions 2025" },
   ],
-  macro: { labels:["FY22","FY23","FY24","FY25","FY26","Jun'26"], credit:[9.6,15.0,16.3,11.0,16.0,18.6], repo:[4.0,6.5,6.5,6.25,5.5,5.25] },
+  macro: { labels:["FY22","FY23","FY24","FY25","FY26","Jun'26","Sep'26"], credit:[9.6,15.0,16.3,11.0,16.0,18.6,19.1], repo:[4.0,6.5,6.5,6.25,5.5,5.25,5.25] },
   gnpa: { labels:["FY15","FY16","FY18","FY20","FY22","FY23","FY24","FY25≈","FY26≈"], data:[4.3,7.5,11.5,8.2,5.8,3.9,2.8,2.3,2.4] },
   pl: { labels:["FY22","FY23","FY24","FY25","FY26≈"], data:[20,26,14,9,11] },
   banks: [
@@ -216,12 +224,12 @@ lending: {
 },
 wealthtech: {
   tiles: [
-    { l:"MF industry AUM", v:"₹82.22 L cr", d:"record · Jun'26 · AMFI" },
-    { l:"Monthly SIP inflow", v:"₹31,781 cr", d:"record · Jun'26 · AMFI", chg:"+4% MoM", dir:"up" },
-    { l:"NSE active clients", v:"4.57 cr", d:"FY26 ✓ — the SEBI F&O reset in one number", chg:"−35 lakh YoY (first decline since FY23)", dir:"down" },
+    { l:"MF industry AUM", v:"₹87.08 L cr", d:"record · Aug'26 ✓ · AMFI" },
+    { l:"Monthly SIP inflow", v:"₹32,297 cr", d:"record · Aug'26 ✓ · AMFI", chg:"66th straight month of equity inflows", dir:"up" },
+    { l:"SIP accounts", v:"10.02 cr", d:"crossed 10 crore for the first time · Aug'26 ✓" },
+    { l:"NSE active clients", v:"4.57 cr (FY26)", d:"F&O-reset decline; Aug'26: +5.1L MoM ✓ — recovery underway", chg:"Groww share now >29%", dir:"up" },
     { l:"Total demat accounts", v:"≈19.4 cr+", d:"Mar'25 · CDSL+NSDL (monthly refresh pending)" },
     { l:"Financial share of household savings", v:"≈47%", d:"vs ~41% pre-COVID ≈ · RBI — the structural driver" },
-    { l:"Equity share within financial savings", v:"≈7%", d:"the headroom argument ≈" },
     { l:"Discount-broker share", v:"~75%", d:"of active clients ✓" },
   ],
   finShare: { labels:["FY19","FY20","FY21","FY22","FY23","FY24≈","FY25≈"], data:[41,43,52,47,42,45,47] },
@@ -229,7 +237,7 @@ wealthtech: {
   sipTrend: { labels:["Jun'23","Jun'24","Jun'25","Jun'26"], data:[14734,21262,27269,31781] },
   aumTrend: { labels:["Jun'23","Jun'24","Jun'25","Jun'26"], data:[44.4,61.2,74.4,82.2] },
   brokers: [
-    ["Groww (Billionbrains)","₹208 · 62.7","1.30 cr ✓","28.4%","₹2,083 cr","Listed Nov'25; P/E 63 = the growth premium; MF + broking + credit cross-sell"],
+    ["Groww (Billionbrains)","₹208 · 62.7 (13 Jul)","1.30 cr ✓","29%+ ✓Aug'26","₹2,083 cr","Listed Nov'25; share still climbing (+8.7L actives in 2026 — most of any broker)"],
     ["Zerodha","unlisted","0.69 cr ✓","15.1%","≈₹4,700 cr FY24 ≈","Bootstrapped; F&O-heavy → lost ~10L actives in FY26; still the profit king"],
     ["Angel One","₹341 · 34.1","0.67 cr ✓","14.7%","₹915 cr","Sales −1.9% TTM — the F&O curbs visible in the P&L"],
     ["ICICI Securities","delisted Mar'25","0.21 cr ✓","4.6%","—","Folded into ICICI Bank; bank-brokers proved resilient"],
@@ -392,22 +400,22 @@ publicmkts: {
 // ---- Payments deep data ----
 const PAY = {
   // 60 months Jul'21..Jun'26. vol in B txns, val in ₹ lakh cr. Indices 49-57 (Aug'25-Apr'26) interpolated to FY26 actuals.
-  vol:[3.24,3.55,3.65,4.21,4.18,4.56, 4.62,4.53,5.41,5.58,5.95,5.86,6.29,6.58,6.78,7.31,7.30,7.82, 8.03,7.53,8.65,8.89,9.41,9.34,9.96,10.58,10.56,11.41,11.24,12.02, 12.20,12.10,13.44,13.30,14.04,13.89,14.44,14.96,15.04,16.58,15.48,16.73, 16.99,16.11,18.30,17.89,18.68,18.40,19.47,19.8,19.9,21.3,20.6,21.4, 21.8,20.4,22.0,22.0,23.2,22.72],
-  val:[6.06,6.39,6.54,7.71,7.68,8.27, 8.32,8.27,9.60,9.83,10.41,10.14,10.63,10.73,11.16,12.11,11.90,12.82, 12.98,12.35,14.05,14.07,14.89,14.75,15.34,15.76,15.79,17.16,17.40,18.23, 18.41,18.28,19.78,19.64,20.45,20.07,20.64,20.61,20.64,23.50,21.55,23.25, 23.48,21.96,24.77,23.95,25.14,24.04,25.08,25.2,25.4,27.3,26.1,27.5, 28.0,25.9,29.0,27.8,29.9,28.92],
+  vol:[3.24,3.55,3.65,4.21,4.18,4.56, 4.62,4.53,5.41,5.58,5.95,5.86,6.29,6.58,6.78,7.31,7.30,7.82, 8.03,7.53,8.65,8.89,9.41,9.34,9.96,10.58,10.56,11.41,11.24,12.02, 12.20,12.10,13.44,13.30,14.04,13.89,14.44,14.96,15.04,16.58,15.48,16.73, 16.99,16.11,18.30,17.89,18.68,18.40,19.47,19.8,19.9,21.3,20.6,21.4, 21.8,20.4,22.0,22.0,23.2,22.72, 23.66,24.51],
+  val:[6.06,6.39,6.54,7.71,7.68,8.27, 8.32,8.27,9.60,9.83,10.41,10.14,10.63,10.73,11.16,12.11,11.90,12.82, 12.98,12.35,14.05,14.07,14.89,14.75,15.34,15.76,15.79,17.16,17.40,18.23, 18.41,18.28,19.78,19.64,20.45,20.07,20.64,20.61,20.64,23.50,21.55,23.25, 23.48,21.96,24.77,23.95,25.14,24.04,25.08,25.2,25.4,27.3,26.1,27.5, 28.0,25.9,29.0,27.8,29.9,28.92, 29.4,29.82],
   estFrom:49, estTo:57,
   // [index, PhonePe %, GPay %] anchors (volume share, NPCI app-wise releases)
-  shareAnchors:[[0,45.9,34.5],[18,46.5,34.5],[30,48.0,37.0],[42,47.8,36.5],[54,46.5,34.0],[59,46.0,32.8]],
-  latest:{ m:"Jun'26", volB:22.72, valL:28.92 },
-  apps:[ // volPct = share of volume (May-Jun'26, NPCI); valPct = share of value ≈
-    {n:"PhonePe",volPct:46.0,valPct:50.0},{n:"Google Pay",volPct:33.0,valPct:34.0},
-    {n:"Paytm",volPct:8.0,valPct:5.5},{n:"Navi",volPct:3.2,valPct:1.8},
+  shareAnchors:[[0,45.9,34.5],[18,46.5,34.5],[30,48.0,37.0],[42,47.8,36.5],[54,46.5,34.0],[60,45.9,32.3],[61,45.9,32.3]],
+  latest:{ m:"Aug'26", volB:24.51, valL:29.82 },
+  apps:[ // volPct = share of volume (Jul'26, NPCI ✓); valPct = share of value ≈
+    {n:"PhonePe",volPct:45.9,valPct:50.0},{n:"Google Pay",volPct:32.3,valPct:34.0},
+    {n:"Paytm",volPct:8.05,valPct:5.5},{n:"Navi",volPct:3.4,valPct:1.9},
     {n:"super.money",volPct:2.3,valPct:1.0},{n:"BHIM",volPct:1.0,valPct:0.8},
     {n:"CRED",volPct:0.9,valPct:1.5},{n:"Amazon Pay",volPct:0.6,valPct:0.5},
     {n:"WhatsApp Pay",volPct:0.4,valPct:0.3},{n:"Others",volPct:4.6,valPct:4.6} ],
   tailQuarters:["Q2'24","Q4'24","Q2'25","Q4'25","Q2'26"],
   tail:{ "Paytm":[9.0,8.5,8.2,8.0,8.0], "Navi":[0.6,1.5,2.0,2.7,3.2], "super.money":[0.05,0.4,0.9,1.6,2.3], "BHIM":[0.2,0.3,0.4,0.6,1.0], "CRED":[0.7,0.8,0.85,0.9,0.9] },
   merchants:[
-    ["Razorpay","Full-stack PA/PG + RazorpayX + capital","₹3,783 cr op. (+65%); ₹3,930 cr consol. ✓Tracxn","−₹1,210 cr ✓Tracxn (−32%)<br><span class='fn'>one-off redomicile tax; gross profit ₹1,277 cr</span>","private — no quarterly","≈28–32% online PA (value) ≈","$9.2B (Jun'25 secondary); IPO late-2026 (~₹4,500 cr issue)","SMBs & startups → moving upmarket to enterprise; strong developer/freelancer wedge"],
+    ["Razorpay","Full-stack PA/PG + RazorpayX + capital","₹3,783 cr op. (+65%); ₹3,930 cr consol. ✓Tracxn","−₹1,210 cr ✓Tracxn (−32%)<br><span class='fn'>one-off redomicile tax; gross profit ₹1,277 cr</span>","private — no quarterly","≈28–32% online PA (value) ≈","DRHP filed Jun'26 ✓ — ₹5-6k cr IPO targeted end-2026; last mark $9.2B","SMBs & startups → moving upmarket to enterprise; strong developer/freelancer wedge"],
     ["PayU India","PA/PG + LazyPay credit","≈₹4,150 cr / $498M (+12%)","≈ payments near-breakeven ≈","private — no quarterly","≈22–25% ≈","Prosus-owned; India listing ambition","Enterprise & large e-commerce; affordability/EMI stack"],
     ["Pine Labs","POS + issuing + online","₹2,274 cr ≈ FY25","Q1FY26 first profit","Q1FY26: rev ₹616 cr (+18% YoY), PAT ₹4.8 cr","Offline organized-retail POS leader ≈","Listed Nov'25 (₹221 issue, ₹252 day-1); mcap ≈$3.3B","Enterprise offline retail, brand-EMI (issuing via Qwikcilver); SEA/Middle East expansion"],
     ["Cashfree","PA + payouts + verification","FY24: ₹643 cr (FY25 awaited)","FY24 loss ≈−₹135 cr ≈ (−21%)","—","≈10–12% ≈; leader in payouts","$700M (Feb'25, Krafton-led)","Startups & D2C; payouts, subscriptions, cross-border; TPV $80B+"],
@@ -420,7 +428,7 @@ const PAY = {
     ["Juspay ✓Tracxn","WestBridge Capital (lead); SoftBank, Accel (existing)",28,1.24,"₹829 cr TTM incl. proj.",12.8,"Jan 23, 2026",202601,45,1.19,"₹568 cr TTM incl. proj.",18,"Apr 7, 2025",4],
     ["Razorpay ✓Tracxn","Series F: Tiger Global, Lone Pine, GIC · Jun'25 secondary at $9.2B",375,7.5,"₹1,330 cr TTM",42,"Dec 19, 2021 (last priced round)",202112,160,3.0,"₹898 cr TTM",23.7,"Apr 18, 2021",150],
     ["Cashfree ✓Tracxn","Krafton (corporate lead), Apis Growth Fund",23,0.7,"₹641 cr TTM",9.2,"Feb 5, 2025 ($23M primary; $53M incl. secondary)",202502,35.3,0.2,"₹186 cr TTM",12,"Nov 23, 2020",250],
-    ["PhonePe ✓Tracxn","Walmart; Ribbit, Tiger Global, General Atlantic, TVS",658,12.6,"₹2,850 cr TTM",36.5,"Jan 19, 2023 · marked $14.5B on Oct 30, 2025",202510,700,5.5,"≈₹690 cr FY20 ≈",60,"Dec 2020",129],
+    ["PhonePe ✓Tracxn","Walmart; Ribbit, Tiger Global, General Atlantic, TVS",658,12.6,"₹2,850 cr TTM",36.5,"Jan 19, 2023 · marked $14.5B Oct'25 · IPO approved by SEBI, delayed on market conditions ✓Sep'26",202510,700,5.5,"≈₹690 cr FY20 ≈",60,"Dec 2020",129],
     ["Pine Labs","Public markets (IPO $440M)",440,3.3,"≈₹2,274 cr (~$270M) ≈",12,"Nov 2025 (IPO)",202511,150,5.0,"≈₹933 cr FY22 (~$118M) ≈",42,"Mar 2022",-34],
     ["BharatPe ✓Tracxn","Tiger Global, Dragoneer",370,2.7,"₹119 cr FY21",178,"Aug 2021 — no priced round since",202108,108,0.9,"≈₹110 cr ≈",56,"Feb 2021",200],
   ],
@@ -499,7 +507,7 @@ document.getElementById("stamp").textContent = "Last updated: " + DATA.lastUpdat
 
 // ---- month labels for PAY (Jul'21 .. Jun'26) ----
 const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-PAY.labels=[]; { let m=6,y=21; for(let i=0;i<60;i++){ PAY.labels.push(MONTHS[m]+"'"+y); m++; if(m===12){m=0;y++;} } }
+PAY.labels=[]; { let m=6,y=21; for(let i=0;i<PAY.vol.length;i++){ PAY.labels.push(MONTHS[m]+"'"+y); m++; if(m===12){m=0;y++;} } }
 PAY.share=(i)=>{ // interpolate anchors -> [pp,gp]
   const A=PAY.shareAnchors;
   for(let k=0;k<A.length-1;k++){ const [i0,p0,g0]=A[k],[i1,p1,g1]=A[k+1];
@@ -544,7 +552,7 @@ function renderPayments(){
        <span class="fn">click multiple apps to superimpose & compare · hover anywhere on a chart for exact monthly values</span>
      </div>
      <div class="charts">${chartbox("c-pvol","UPI monthly volume (B txns)")}${chartbox("c-pval","UPI monthly value (₹ lakh cr)")}</div>
-     <div class="fn">Aug'25–Apr'26 monthly totals interpolated to FY26 actuals (FY26: 241.6B / ₹314 L cr); May–Jun'26 actual. Weekly job replaces with NPCI actuals.</div>`);
+     <div class="fn">Aug'25–Apr'26 monthly totals interpolated to FY26 actuals (FY26: 241.6B / ₹314 L cr); May–Aug'26 actual NPCI (Jul'26 value ≈). Aug'26 = all-time record: 24.51B / ₹29.82 L cr.</div>`);
   s.push(`<h2>Market share — UPI apps</h2>
      <div><span class="ctrl" id="payBasis"><button data-b="volPct" class="on">By volume</button><button data-b="valPct">By value ≈</button></span></div>
      <div class="charts">
@@ -828,6 +836,47 @@ document.addEventListener("click",(e)=>{
 });
 
 activate("payments");
+
+// ---- Google sign-in (activates once GOOGLE_CLIENT_ID is set) ----
+const GOOGLE_CLIENT_ID = ""; // paste your Web OAuth client ID here, e.g. "1234-abc.apps.googleusercontent.com"
+function showUser(u){
+  try{
+    document.getElementById("gsi-btn").style.display="none";
+    const chip=document.getElementById("userchip");
+    chip.style.display="flex";
+    document.getElementById("username").textContent=(u.name||u.email||"").split(" ")[0];
+    if(u.picture) document.getElementById("userpic").src=u.picture;
+  }catch(e){}
+}
+function initAuth(){
+  if(!GOOGLE_CLIENT_ID) return;
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem("fd_user")||"null"); }catch(e){}
+  if(saved){ showUser(saved); return; }
+  const s=document.createElement("script");
+  s.src="https://accounts.google.com/gsi/client"; s.async=true; s.defer=true;
+  s.onload=function(){
+    try{
+      google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: (resp)=>{
+        try{
+          const p=JSON.parse(atob(resp.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));
+          const u={ sub:p.sub, name:p.name, email:p.email, picture:p.picture, ts:Date.now() };
+          try{ localStorage.setItem("fd_user", JSON.stringify(u)); }catch(e){}
+          showUser(u);
+          // future: POST u + visit event to backend (Supabase/Sheet) here
+        }catch(e){}
+      }});
+      google.accounts.id.renderButton(document.getElementById("gsi-btn"), { theme:"outline", size:"medium", shape:"pill", text:"signin_with" });
+    }catch(e){}
+  };
+  document.head.appendChild(s);
+}
+document.getElementById("signout").addEventListener("click",(e)=>{
+  e.preventDefault();
+  try{ localStorage.removeItem("fd_user"); }catch(err){}
+  location.reload();
+});
+initAuth();
 </script>
 </body>
 </html>
