@@ -1,0 +1,46 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+    paths: ["content/**", "src/**", "assets/**", "build.py", "requirements.txt"]
+  pull_request:
+    paths: ["content/**", "src/**", "assets/**", "build.py", "requirements.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      # On a pull request: only validate the posts, so a bad post fails the check.
+      - name: Validate posts
+        if: github.event_name == 'pull_request'
+        run: python build.py --check
+
+      # On main: rebuild the pages and commit them, so adding a markdown file is enough to publish.
+      - name: Build and commit generated pages
+        if: github.event_name != 'pull_request'
+        run: |
+          python build.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to rebuild."
+          else
+            git commit -m "Rebuild site"
+            git push
+          fi
