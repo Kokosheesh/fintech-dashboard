@@ -1,0 +1,19 @@
+  <article class="article">
+    <div class="wrap">
+      <a class="article__back" href="/blog/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6"></path><path d="M12 5l-7 7 7 7"></path></svg> All writing</a>
+
+      <header class="article__head">
+        <p class="mono mono--accent">{{category}}</p>
+        <h1 class="article__title">{{title}}</h1>
+        <p class="article__dek">{{description}}</p>
+        <p class="article__meta mono">{{meta}}</p>
+      </header>
+
+      <img class="article__cover" src="{{cover}}" alt="" width="800" height="450">
+
+      <div class="article__body">
+{{body}}
+      </div>
+{{next}}
+    </div>
+  </article>

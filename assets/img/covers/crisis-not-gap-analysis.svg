@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img">
+<defs>
+  <radialGradient id="g" cx="70%" cy="12%" r="80%">
+    <stop offset="0" stop-color="#4C9AFF" stop-opacity="0.16"/>
+    <stop offset="1" stop-color="#4C9AFF" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="450" fill="#0B1422"/>
+<rect width="800" height="450" fill="url(#g)"/>
+<polyline points="70,246 86,228 103,241 120,267 136,241 152,208 169,234 186,233 202,228 218,218 235,244 252,270 268,286 284,271 301,266 318,251 334,266 350,233 367,207 384,193 400,164 416,168 433,137 450,137 466,163 482,178 499,198 516,214 532,236 548,219 565,231 582,209 598,179 614,162 631,191 648,184 664,183 680,204 697,208 714,227 730,257" fill="none" stroke="#3E5878" stroke-width="2.5" stroke-linejoin="round" opacity="0.75"/>
+<line x1="60" y1="228" x2="740" y2="228" stroke="#46D6A8" stroke-width="3"/>
+<circle cx="740" cy="228" r="7" fill="#46D6A8"/>
+<rect x="556" y="120" width="150" height="44" rx="10" fill="#2F7CE0" opacity="0.22" stroke="#4C9AFF" stroke-width="1.5"/>
+<rect x="576" y="136" width="72" height="12" rx="6" fill="#4C9AFF" opacity="0.85"/>
+</svg>

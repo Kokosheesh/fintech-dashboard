@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Kohinoor Mukherjee — Writing</title>
+    <link>https://fintech.pelicanx.in/blog/</link>
+    <description>Notes on fintech and on building product.</description>
+    <language>en</language>
+    <item>
+      <title>Always question what the numerator and the denominator actually mean</title>
+      <link>https://fintech.pelicanx.in/blog/numerator-denominator/</link>
+      <guid>https://fintech.pelicanx.in/blog/numerator-denominator/</guid>
+      <category>Data</category>
+      <description>Owning a KPI starts with refusing the definition you were handed, and cutting through the noise around it.</description>
+    </item>
+    <item>
+      <title>Users perceive value through design, so good is not good enough</title>
+      <link>https://fintech.pelicanx.in/blog/good-is-not-enough/</link>
+      <guid>https://fintech.pelicanx.in/blog/good-is-not-enough/</guid>
+      <category>Craft</category>
+      <description>Hierarchy and clutter are the easy part. Alignment, adjacency and flicker are what people actually feel.</description>
+    </item>
+    <item>
+      <title>What to keep upfront, and what to put behind a click</title>
+      <link>https://fintech.pelicanx.in/blog/upfront-or-behind-a-click/</link>
+      <guid>https://fintech.pelicanx.in/blog/upfront-or-behind-a-click/</guid>
+      <category>Product</category>
+      <description>Let people skip the boring parts quickly. This is not academia — nobody likes reading more than three words.</description>
+    </item>
+    <item>
+      <title>Start with the customer problem, then work back to the tech</title>
+      <link>https://fintech.pelicanx.in/blog/problem-then-tech/</link>
+      <guid>https://fintech.pelicanx.in/blog/problem-then-tech/</guid>
+      <category>Building</category>
+      <description>A big problem may justify a new vendor contract. A small one doesn&#x27;t deserve an hour, let alone an AI copilot.</description>
+    </item>
+    <item>
+      <title>In a crisis, leadership doesn&#x27;t want a gap analysis</title>
+      <link>https://fintech.pelicanx.in/blog/crisis-not-gap-analysis/</link>
+      <guid>https://fintech.pelicanx.in/blog/crisis-not-gap-analysis/</guid>
+      <category>Leadership</category>
+      <description>They want radical action, a clear problem statement and an impact number.</description>
+    </item>
+  </channel>
+</rss>
