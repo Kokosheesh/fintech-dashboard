@@ -55,6 +55,27 @@
           </div>
         </article>
 
+        <!-- 03 -->
+        <article class="tile">
+          <div class="tile__top">
+            <span class="tile__kicker">Web game</span>
+            <span class="badge badge--live">LIVE</span>
+          </div>
+          <h2 class="tile__title">Founder's Seat</h2>
+          <p class="tile__desc">A grand-strategy simulation for future founders: run a post-seed SaaS start-up for 36 months from one command dashboard, and get graded on your judgment, not your luck.</p>
+          <ul class="stack-tags"><li>Simulation</li><li>Strategy</li><li>EdTech</li></ul>
+          <div class="tile__foot">
+            <a class="btn btn--sm btn--quiet" href="https://fintech.pelicanx.in/founders-seat/" target="_blank" rel="noopener noreferrer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><path d="M19 5l-8 8"></path><path d="M18 14v5H5V6h5"></path></svg>
+              Open live
+            </a>
+            <a class="btn btn--sm btn--ghost" href="#p=founders-seat" data-open-project="founders-seat">
+              Read the story
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg>
+            </a>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -121,8 +142,8 @@
   data-status="LIVE"
   data-lede="A household-staff ledger for Indian homes: who came, who's owed what, and when they're off."
   data-live="https://claude.ai/code/artifact/66f06408-2363-41b3-b2bc-43b42c82d12b"
-  data-next="pelicanx"
-  data-next-label="PelicanX">
+  data-next="founders-seat"
+  data-next-label="Founder's Seat">
 
   <div class="shot">
     <img src="/assets/img/project-gharos.jpg" alt="GharOS running on a phone: the household home screen with three helpers, the month's salary due, and a pending leave request" width="1200" height="1047" loading="lazy">
@@ -146,5 +167,40 @@
   <div class="detail-block">
     <h3>What I'd change</h3>
     <p>ID capture is simulated and the matching side has no supply behind it — both are honest prototypes of a flow, not the thing itself. The next step is one real household running it for a full month and telling me what breaks.</p>
+  </div>
+</template>
+<template id="detail-founders-seat"
+  data-title="Founder's Seat"
+  data-kicker="Web game"
+  data-role="Solo build"
+  data-status="LIVE"
+  data-lede="A grand-strategy simulation for future founders: 36 months, one company, every call yours."
+  data-live="https://fintech.pelicanx.in/founders-seat/"
+  data-next="pelicanx"
+  data-next-label="PelicanX">
+
+  <div class="shot">
+    <img src="/assets/img/project-founders-seat.svg" alt="The Founder's Seat dashboard in month 13: cash, runway, MRR and board confidence across the top, the month's agenda, an MRR chart and the market map" width="1400" height="875" loading="lazy">
+  </div>
+
+  <div class="detail-block">
+    <h3>The problem</h3>
+    <p>Case studies teach start-up decisions in hindsight: you read what the founder did and argue about it. What they rarely teach is the feel of the job — that every choice spends the same scarce cash and attention, that hires and fundraises take months to pay off, and that you have to commit before the numbers are clear. Most MBA students and founder's office hires meet that for the first time on the job.</p>
+  </div>
+
+  <div class="detail-block">
+    <h3>What I built</h3>
+    <ol>
+      <li>A Europa Universalis-style command dashboard for a post-seed logistics SaaS company in Bengaluru: ten panels for finance, growth, product, team, operations, partners, capital, reports and goals, all driven by one simulation.</li>
+      <li>A monthly loop where founder focus is the binding constraint: Strategy, Ops and People points refill every month, so you can raise, recruit or ship — rarely all three.</li>
+      <li>Real operating texture: marketing channels with saturation and ROAS, A/B tests with noisy results, partner negotiations, enterprise RFPs that pull engineers off the roadmap, crises, board meetings, and a month-end P&amp;L, cash flow and MIS pack.</li>
+      <li>A debrief that grades every decision on what you knew at the time, so a good call that went badly still scores well. Shared seeds let a whole class play the same market.</li>
+      <li>Accounts with Google sign-in, a 7-day free trial and a one-time unlock through PhonePe, plus an owner dashboard for sign-ups, daily logins and payments.</li>
+    </ol>
+  </div>
+
+  <div class="detail-block">
+    <h3>What I'd change</h3>
+    <p>The balance is tuned with scripted bots, not real players, so the first cohorts will find the exploits. Next is a faculty view of a whole cohort's decisions, and a shared market where classmates compete for the same customers.</p>
   </div>
 </template>
