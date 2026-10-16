@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Founder's Seat — A grand-strategy simulation for future CEOs</title>
+<meta name="description" content="Run a post-seed startup from a single command dashboard. Hire, fire, raise, pivot, and live with the consequences. Cohort licences for MBA programmes at ₹2,000 per student. Join the waitlist.">
+<meta property="og:title" content="Founder's Seat — Every call is yours.">
+<meta property="og:description" content="A grand-strategy simulation for MBA students, future founders, founder's office and strategy teams. Join the waitlist.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B0D10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' fill='%230B0D10'/%3E%3Cpath d='M4 4h20v20H4zM4 12h20M12 12v12' fill='none' stroke='%23C9A45C' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0D10; --panel:#0F1318; --raised:#12161C; --hi:#161B22;
+  --line:#1E242C; --line2:#2A323C;
+  --ivory:#ECE6DA; --body:#B8BDC4; --muted:#8E959E; --faint:#7C838C; --off:#6B727B;
+  --accent:#C9A45C; --accent-hi:#E2C27F; --up:#7DB892; --down:#E08B7C;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gut:clamp(20px,8.3vw,120px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--ivory);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-hi)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.wrap{padding-inline:var(--gut);max-width:1440px;margin-inline:auto}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase}
+.mono{font-family:var(--mono)}
+.em{font-style:italic;color:var(--accent)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:rgba(11,13,16,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{height:80px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:14px;color:var(--ivory);font-family:var(--mono);font-size:14px;letter-spacing:.22em;font-weight:500}
+.brand:hover{color:var(--ivory)}
+.links{display:flex;align-items:center;gap:36px;font-size:15px}
+.links a{color:var(--body)}
+.links a:hover{color:var(--ivory)}
+.btn-ghost{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border:1px solid var(--accent);color:var(--accent)!important;font-weight:500}
+.btn-ghost:hover{background:var(--accent);color:var(--ink)!important}
+
+/* hero */
+.hero{padding-top:clamp(56px,7vw,104px);padding-bottom:64px;display:flex;flex-direction:column;gap:32px}
+.hero h1{font-size:clamp(52px,7.2vw,104px);line-height:.98;letter-spacing:-.02em;max-width:1100px}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:64px}
+.lede{max-width:540px;font-size:clamp(17px,1.4vw,20px);line-height:1.55;color:var(--body)}
+
+/* form */
+.signup{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
+.roles{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:0}
+.roles legend{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);margin-bottom:10px;padding:0}
+.role{min-height:44px;padding:0 14px;background:transparent;color:var(--body);border:1px solid var(--line2);font:14px var(--sans);cursor:pointer;transition:all .15s}
+.role:hover{border-color:var(--accent);color:var(--ivory)}
+.role[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.field{display:flex}
+.field input{flex:1;min-width:0;height:60px;padding:0 20px;background:var(--raised);border:1px solid var(--line2);border-right:0;color:var(--ivory);font:17px var(--sans)}
+.field input::placeholder{color:var(--faint)}
+.field input:focus{outline:none;border-color:var(--accent)}
+.btn{height:60px;padding:0 28px;background:var(--accent);color:var(--ink);border:0;font:600 16px var(--sans);cursor:pointer;white-space:nowrap;transition:background .15s}
+.btn:hover{background:var(--accent-hi)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.hp{position:absolute;left:-9999px}
+.fine{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--muted)}
+.err{font-size:14px;color:var(--down);min-height:0}
+.done{padding:24px 28px;border:1px solid var(--accent);background:var(--raised);display:flex;flex-direction:column;gap:8px}
+.done .t{font-family:var(--serif);font-size:32px;line-height:1.1}
+.done p{font-size:15px;color:var(--body)}
+[hidden]{display:none!important}
+
+/* dashboard */
+.shot{padding-top:24px;padding-bottom:96px}
+.dash{border:1px solid var(--line2);background:var(--panel);box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.dash-top{min-height:44px;padding:8px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.ctrl{display:flex;align-items:center;gap:16px}
+.ctrl b{color:var(--ivory);font-weight:400}
+.speed{display:flex;gap:4px}
+.speed span{width:28px;height:24px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line2)}
+.speed span.on{border-color:var(--accent)}
+.metrics{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.metric{padding:16px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;font-family:var(--mono)}
+.metric:last-child{border-right:0}
+.metric .l{font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.metric .v{font-size:22px}
+.metric .d{font-size:12px}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)} .acc{color:var(--accent)}
+.dash-body{display:grid;grid-template-columns:220px minmax(0,1fr) 360px;min-height:520px}
+.rail{border-right:1px solid var(--line);padding:16px 0}
+.rail h4,.map h4{margin:0;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.rail h4{padding:0 20px 12px}
+.rail li{list-style:none;padding:11px 20px;display:flex;justify-content:space-between;font-size:14px;color:var(--body);border-left:2px solid transparent}
+.rail li.on{color:var(--ivory);background:var(--hi);border-left-color:var(--accent)}
+.rail li i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--down)}
+.rail ul{margin:0;padding:0}
+.map{padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.map-head{display:flex;justify-content:space-between}
+.provinces{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:10px}
+.prov{padding:16px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.prov.home{border-color:var(--accent);background:var(--hi)}
+.prov.locked{color:var(--off)}
+.prov .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-size:15px}
+.prov .tag{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.prov .share{font-family:var(--mono);font-size:26px}
+.bar{height:3px;background:var(--line);margin:8px 0}
+.bar span{display:block;height:3px;background:var(--accent)}
+.prov .riv{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.event{border-left:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:14px;background:var(--raised)}
+.event .h{font-family:var(--serif);font-size:28px;line-height:1.1}
+.event p{font-size:14px;color:var(--body)}
+.choice{padding:12px 14px;border:1px solid var(--line2)}
+.choice.pick{border-color:var(--accent)}
+.choice b{display:block;font-size:14px;font-weight:500}
+.choice small{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px}
+.caption{margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.06em}
+
+/* built for */
+.for{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--line);margin-bottom:120px}
+.for div{padding:28px 0 28px 32px;border-left:1px solid var(--line);font-family:var(--serif);font-size:26px}
+.for div:first-child{padding-left:0;border-left:0}
+
+/* sections */
+.h2{font-size:clamp(40px,4.5vw,64px);line-height:1.02}
+.how{padding-bottom:140px;display:flex;flex-direction:column;gap:64px}
+.split{display:flex;justify-content:space-between;align-items:flex-end;gap:80px}
+.split p{max-width:420px;font-size:18px;line-height:1.6;color:var(--body)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.step{display:flex;flex-direction:column;gap:16px;padding-top:28px;border-top:1px solid var(--line2)}
+.step:first-child{border-top-color:var(--accent)}
+.step h3{font-size:34px}
+.step p{font-size:16px;line-height:1.6;color:var(--body)}
+.num{font-family:var(--mono);font-size:13px;color:var(--accent)}
+
+.panels-sec{background:var(--panel);border-block:1px solid var(--line)}
+.panels-sec .wrap{padding-block:120px 140px;display:flex;flex-direction:column;gap:56px}
+.panels-sec .intro{display:flex;flex-direction:column;gap:20px}
+.grid9{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line2);border-left:1px solid var(--line2)}
+.cell{padding:32px;min-height:180px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);display:flex;flex-direction:column;gap:14px;transition:background .2s}
+.cell:hover{background:var(--raised)}
+.cell .top{display:flex;justify-content:space-between;align-items:baseline}
+.cell h3{font-size:30px}
+.cell .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.cell p{font-size:15px;line-height:1.6;color:var(--body)}
+
+.score{padding-block:140px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:96px;align-items:start}
+.score .l{display:flex;flex-direction:column;gap:28px}
+.score .l>p{font-size:18px;line-height:1.6;color:var(--body)}
+.formula{margin-top:12px;padding:28px 32px;border:1px solid var(--line2);background:var(--raised);display:flex;flex-direction:column;gap:10px}
+.formula .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted)}
+.formula .f{font-family:var(--mono);font-size:24px}
+.formula small{font-size:14px;color:var(--muted)}
+.rows{border-top:1px solid var(--line2)}
+.row{padding:28px 0;border-bottom:1px solid var(--line2);display:flex;justify-content:space-between;gap:32px}
+.row h3{font-size:30px}
+.row p{max-width:300px;font-size:15px;line-height:1.6;color:var(--body)}
+
+.schools{padding:72px 80px;border:1px solid var(--accent);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:80px;align-items:center}
+.schools .l{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.schools h2{font-size:clamp(32px,3.6vw,52px);line-height:1.05}
+.feat{display:flex;flex-direction:column;gap:22px}
+.feat>div{display:flex;gap:20px}
+.feat span{font-family:var(--mono);color:var(--accent)}
+.feat b{display:block;font-size:18px;font-weight:500}
+.feat p{font-size:15px;color:var(--body);margin-top:4px;line-height:1.55}
+
+.pricing{padding-block:140px 0;display:flex;flex-direction:column;gap:56px}
+.pricing .intro{display:flex;justify-content:space-between;align-items:flex-end;gap:80px}
+.pricing .intro p{max-width:420px;font-size:18px;line-height:1.6;color:var(--body)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:1100px){.plans{grid-template-columns:minmax(0,1fr)}}
+.flinks{display:flex;gap:18px;flex-wrap:wrap}.flinks a{color:inherit}.flinks a:hover{color:var(--accent)}
+.plan{padding:40px;border:1px solid var(--line2);background:var(--panel);display:flex;flex-direction:column;gap:20px}
+.plan.hl{border-color:var(--accent)}
+.plan .tier{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--muted)}
+.plan .price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.plan .price b{font-family:var(--serif);font-weight:400;font-size:64px;line-height:1;color:var(--ivory)}
+.plan .price span{font-size:15px;color:var(--body)}
+.plan>p{font-size:16px;line-height:1.6;color:var(--body)}
+.plan ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:20px}
+.plan li{font-size:15px;color:var(--ivory);display:flex;gap:12px}
+.plan li::before{content:"—";font-family:var(--mono);color:var(--accent)}
+.plan .btn-ghost{align-self:flex-start;margin-top:auto}
+.plan .btn-solid{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;min-height:52px;padding:0 24px;background:var(--accent);color:var(--ink);font-weight:600}
+.plan .btn-solid:hover{background:var(--accent-hi);color:var(--ink)}
+.pricing .note{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--faint)}
+
+.final{padding-block:160px 120px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:32px}
+.final h2{font-size:clamp(52px,6.7vw,96px);line-height:1;letter-spacing:-.02em}
+.final .signup{margin-top:16px;max-width:600px}
+.final .done{text-align:left}
+.playnow{display:flex;flex-direction:column;align-items:center;gap:14px}
+.playnow .btn{display:inline-flex;align-items:center;gap:12px;height:68px;padding:0 40px;font-size:18px;letter-spacing:.14em;text-decoration:none;color:var(--ink)!important}
+.playnow .btn:hover{color:var(--ink)!important}
+.playnow p{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.or{display:flex;align-items:center;gap:16px;width:100%;max-width:600px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line2)}
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{min-height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* responsive */
+@media (max-width:1180px){
+  .dash-body{grid-template-columns:minmax(0,1fr) 340px}
+  .rail{display:none}
+  .metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .metric:nth-child(4){border-right:0}
+  .metric:nth-child(-n+4){border-bottom:1px solid var(--line)}
+}
+@media (max-width:960px){
+  .links a:not(.btn-ghost){display:none}
+  .hero-row,.split{flex-direction:column;align-items:flex-start;gap:32px}
+  .dash-body{grid-template-columns:1fr}
+  .map{display:none}
+  .event{border-left:0}
+  .for{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .for div:nth-child(3){padding-left:0;border-left:0}
+  .for div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:1fr;gap:32px}
+  .grid9{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .score{grid-template-columns:1fr;gap:56px;padding-block:96px}
+  .schools{grid-template-columns:1fr;gap:40px;padding:48px 40px}
+  .pricing{padding-top:96px}
+  .pricing .intro{flex-direction:column;align-items:flex-start;gap:24px}
+  .plans{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .nav .wrap{height:64px}
+  .brand{font-size:12px;letter-spacing:.2em;gap:10px}
+  .brand svg{width:22px;height:22px}
+  .btn-ghost{padding:0 14px;font-size:14px}
+  .eyebrow{font-size:11px;letter-spacing:.18em}
+  .hero{gap:24px}
+  .field{flex-direction:column;gap:8px}
+  .field input{flex:none;border-right:1px solid var(--line2);height:56px;font-size:16px}
+  .btn{height:56px}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric:nth-child(n){border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .metric:nth-child(even){border-right:0}
+  .metric:nth-child(n+5){display:none}
+  .metric .v{font-size:20px}
+  .dash-top{font-size:10px;padding:10px 14px}
+  .speed{display:none}
+  .event .h{font-size:24px}
+  .shot{padding-bottom:64px}
+  .for{grid-template-columns:1fr;margin-bottom:72px}
+  .for div,.for div:nth-child(n){padding:16px 0;border-left:0;border-bottom:1px solid var(--line);font-size:22px}
+  .for div:last-child{border-bottom:0}
+  .how{padding-bottom:80px;gap:32px}
+  .step h3{font-size:28px}
+  .panels-sec .wrap{padding-block:64px 72px;gap:28px}
+  .grid9{grid-template-columns:1fr;border-left:0}
+  .cell{padding:16px 0;min-height:0;border-right:0;gap:6px}
+  .cell h3{font-size:24px}
+  .cell p{font-size:14px}
+  .score{padding-block:72px;gap:40px}
+  .formula{padding:20px}
+  .formula .f{font-size:16px}
+  .row{flex-direction:column;gap:8px;padding:20px 0}
+  .row h3{font-size:26px}
+  .schools{padding:32px 24px;gap:28px}
+  .pricing{padding-top:72px;gap:32px}
+  .plan{padding:28px 24px}
+  .plan .price b{font-size:48px}
+  .final{padding-block:96px 72px;align-items:stretch;text-align:left}
+  .playnow{align-items:stretch}.playnow .btn{justify-content:center}.playnow p{text-align:center}
+  footer .wrap{flex-direction:column;align-items:flex-start;justify-content:center;padding-block:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Founder's Seat, home">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#C9A45C" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="22" height="22"/><path d="M3 12h22M12 12v13"/></svg>
+      FOUNDER'S SEAT
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#game">The game</a>
+      <a href="#how">How it plays</a>
+      <a href="#scoring">Scoring</a>
+      <a href="#schools">For schools</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn-ghost" href="#join">Request a seat</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div class="eyebrow">A grand-strategy simulation for future CEOs</div>
+    <h1>Thirty-six months. One company. <span class="em">Every call is yours.</span></h1>
+    <div class="hero-row">
+      <p class="lede">Run a post-seed startup from a single command dashboard. Hire, fire, raise, pivot, and live with the consequences month after month. Built for MBA cohorts, founder's office and strategy teams.</p>
+      <div class="signup" data-source="hero">
+        <form novalidate>
+          <fieldset class="roles">
+            <legend>I AM A</legend>
+            <button type="button" class="role" aria-pressed="true">MBA student</button>
+            <button type="button" class="role" aria-pressed="false">Future founder</button>
+            <button type="button" class="role" aria-pressed="false">Founder's office</button>
+            <button type="button" class="role" aria-pressed="false">Strategy</button>
+          </fieldset>
+          <div style="height:16px"></div>
+          <div class="field">
+            <label class="sr" for="email-hero">Work or school email</label>
+            <input id="email-hero" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@school.edu" required>
+            <input class="hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn" type="submit">Request a seat</button>
+          </div>
+          <p class="err" role="alert"></p>
+          <p class="fine">Early access opens cohort by cohort. No spam, ever.</p>
+        </form>
+        <div class="done" hidden tabindex="-1">
+          <div class="eyebrow" style="font-size:12px">Seat requested</div>
+          <div class="t">You're on the list.</div>
+          <p>We'll write to <span class="who"></span> when your cohort's seat opens.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="game" class="wrap shot">
+    <div class="dash rv" role="img" aria-label="The game's command dashboard: cash, runway, MRR and morale metrics, a market map of customer segments, and a decision event about a large customer demanding a custom module.">
+      <div class="dash-top" aria-hidden="true">
+        <span class="scen">SCENARIO · POST-SEED B2B SAAS · BENGALURU</span>
+        <div class="ctrl">
+          <b>MONTH 07 / 36</b>
+          <div class="speed">
+            <span class="on"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#C9A45C" stroke-width="1.5"><path d="M3 1v8M7 1v8"/></svg></span>
+            <span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#8E959E" stroke-width="1.5"><path d="M2 1l6 4-6 4z"/></svg></span>
+            <span><svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="#8E959E" stroke-width="1.5"><path d="M1 1l5 4-5 4zM7 1l5 4-5 4z"/></svg></span>
+          </div>
+        </div>
+      </div>
+      <div class="metrics" aria-hidden="true">
+        <div class="metric"><span class="l">CASH</span><span class="v">₹3.1 Cr</span><span class="d down">−₹31L / MO</span></div>
+        <div class="metric"><span class="l">RUNWAY</span><span class="v">9.6 mo</span><span class="d down">BELOW 12 MO</span></div>
+        <div class="metric"><span class="l">MRR</span><span class="v">₹11.2L</span><span class="d up">+5.8% MOM</span></div>
+        <div class="metric"><span class="l">FOCUS</span><span class="v">4·2·3</span><span class="d acc">STR·OPS·PPL</span></div>
+        <div class="metric"><span class="l">BURN MULT.</span><span class="v">2.4×</span><span class="d down">TARGET &lt; 1.5</span></div>
+        <div class="metric"><span class="l">HEADCOUNT</span><span class="v">19</span><span class="d flat">+2 THIS MO</span></div>
+        <div class="metric"><span class="l">MORALE</span><span class="v">72</span><span class="d down">−4</span></div>
+        <div class="metric"><span class="l">BOARD</span><span class="v">64</span><span class="d flat">STEADY</span></div>
+      </div>
+      <div class="dash-body" aria-hidden="true">
+        <div class="rail">
+          <h4>PANELS</h4>
+          <ul>
+            <li class="on">Finance <i>!</i></li><li>Product</li><li>Team &amp; Org <i style="color:var(--accent)">•</i></li>
+            <li>Growth &amp; Sales</li><li>Customers <i>!</i></li><li>Capital &amp; Board</li>
+            <li>Ops &amp; Tech</li><li>Competition</li><li>Founder</li>
+          </ul>
+        </div>
+        <div class="map">
+          <div class="map-head"><h4>MARKET MAP · SEGMENTS</h4><h4>YOUR SHARE</h4></div>
+          <div class="provinces">
+            <div class="prov home"><div class="top">Bengaluru SMB<span class="tag">HOME</span></div><div><div class="share">24%</div><div class="bar"><span style="width:24%"></span></div><div class="riv">2 RIVALS</div></div></div>
+            <div class="prov"><div class="top">Mumbai SMB<span class="tag">ACTIVE</span></div><div><div class="share">18%</div><div class="bar"><span style="width:18%"></span></div><div class="riv">3 RIVALS</div></div></div>
+            <div class="prov"><div class="top">Pune SMB<span class="tag">ACTIVE</span></div><div><div class="share">11%</div><div class="bar"><span style="width:11%"></span></div><div class="riv">1 RIVAL</div></div></div>
+            <div class="prov"><div class="top">Delhi mid-market<span class="tag">ENTRY</span></div><div><div class="share">6%</div><div class="bar"><span style="width:6%"></span></div><div class="riv">RIVAL RAISED $10M</div></div></div>
+            <div class="prov locked"><div class="top">Enterprise<span class="tag">LOCKED</span></div><div><div class="share">—</div><div class="bar"></div><div class="riv">NEEDS SOC 2</div></div></div>
+            <div class="prov locked"><div class="top">Southeast Asia<span class="tag">LOCKED</span></div><div><div class="share">—</div><div class="bar"></div><div class="riv">NEEDS SERIES A</div></div></div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="eyebrow" style="font-size:11px;letter-spacing:.14em">Event · decision required</div>
+          <div class="h">Your largest customer wants a custom module.</div>
+          <p>Kavya Logistics, 14% of MRR, will renew only if you build their dispatch integration this quarter.</p>
+          <div class="choice pick"><b>A · Build it. Keep the logo.</b><small>−2 OPS FOCUS · ROADMAP +6 WKS</small></div>
+          <div class="choice"><b>B · Offer a paid services SOW</b><small>+₹6L ONE-TIME · CHURN RISK ?</small></div>
+          <div class="choice"><b>C · Decline. Protect the roadmap.</b><small>+MORALE · CHURN RISK HIGH</small></div>
+        </div>
+      </div>
+    </div>
+    <p class="caption">IN-GAME VIEW · ILLUSTRATIVE SCENARIO DATA</p>
+  </section>
+
+  <div class="wrap">
+    <div class="for rv">
+      <div>MBA students</div><div>Future founders</div><div>Founder's office</div><div>Strategy &amp; consulting</div>
+    </div>
+  </div>
+
+  <section id="how" class="wrap how">
+    <div class="split rv">
+      <h2 class="h2" style="max-width:720px">A case study that fights back.</h2>
+      <p>Cases give you the answer in the teaching note. Here, the market moves while you deliberate, and the bill for every decision arrives months later.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><span class="num">01</span><h3>Read the board</h3><p>One command view of cash, runway, MRR, morale and board confidence. Click any panel to go a level deeper: the P&amp;L, the org chart, the cap table.</p></div>
+      <div class="step rv"><span class="num">02</span><h3>Spend your Focus</h3><p>Strategy, Ops and People points refill every month, and never enough. You can fundraise or recruit or ship. Rarely all three.</p></div>
+      <div class="step rv"><span class="num">03</span><h3>Live with the delay</h3><p>A hire pays off in month four. A shortcut on tech debt bites in month ten. Hidden variables decide what you only see through proxies.</p></div>
+    </div>
+  </section>
+
+  <section class="panels-sec">
+    <div class="wrap">
+      <div class="intro rv">
+        <div class="eyebrow">Nine panels · one company</div>
+        <h2 class="h2" style="max-width:900px">Every lever a CEO actually pulls.</h2>
+      </div>
+      <div class="grid9">
+        <div class="cell"><div class="top"><h3>Finance</h3><span class="n">01</span></div><p>P&amp;L, balance sheet, cash flow, burn by function, runway scenarios, unit economics.</p></div>
+        <div class="cell"><div class="top"><h3>Product</h3><span class="n">02</span></div><p>Roadmap queue, tech-debt meter, adoption, incident log, a second product line.</p></div>
+        <div class="cell"><div class="top"><h3>Team &amp; Org</h3><span class="n">03</span></div><p>Org chart with skill, pay, morale and flight risk per person. Hiring pipeline, ESOP pool.</p></div>
+        <div class="cell"><div class="top"><h3>Growth &amp; Sales</h3><span class="n">04</span></div><p>Funnel, channel mix and CAC, quotas, pricing and plan mix, brand.</p></div>
+        <div class="cell"><div class="top"><h3>Customers</h3><span class="n">05</span></div><p>Health scores, cohort retention, NPS, churn reasons, revenue concentration.</p></div>
+        <div class="cell"><div class="top"><h3>Capital &amp; Board</h3><span class="n">06</span></div><p>Cap table and dilution simulator, investor pipeline, term sheets, board asks.</p></div>
+        <div class="cell"><div class="top"><h3>Ops &amp; Tech</h3><span class="n">07</span></div><p>Infra cost, uptime, AI tooling adoption, compliance, vendors.</p></div>
+        <div class="cell"><div class="top"><h3>Competition</h3><span class="n">08</span></div><p>Rival funding, features and pricing, win/loss, a live market feed.</p></div>
+        <div class="cell"><div class="top"><h3>Founder</h3><span class="n">09</span></div><p>Your Focus, energy and burnout, skill tree, co-founder relationship.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="scoring" class="wrap score">
+    <div class="l rv">
+      <div class="eyebrow">How you're judged</div>
+      <h2 class="h2">Not on cash in the bank. <span class="em">On judgment.</span></h2>
+      <p>Hoarding cash never wins. Your primary score is what you'd walk away with at exit, and the game separates good decisions from lucky ones because it knows what you couldn't see.</p>
+      <div class="formula">
+        <span class="k">PRIMARY SCORE</span>
+        <span class="f">Founder Outcome = <span class="acc">EV × Ownership %</span></span>
+        <small>EV = ARR × a multiple earned through growth, retention and margin.</small>
+      </div>
+    </div>
+    <div class="rows rv">
+      <div class="row"><h3>Decision quality</h3><p>Was the call right given what you knew at the time, independent of luck?</p></div>
+      <div class="row"><h3>Capital efficiency</h3><p>ARR added for every rupee burned.</p></div>
+      <div class="row"><h3>Team health</h3><p>Morale held, regretted attrition avoided.</p></div>
+      <div class="row"><h3>Reputation</h3><p>Customer trust, and no scandals from the grey-zone shortcuts.</p></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="schools" class="schools rv">
+      <div class="l">
+        <div class="eyebrow">For programme directors &amp; faculty</div>
+        <h2>Run it with your whole cohort.</h2>
+        <a class="btn-ghost" href="mailto:kohinoor.mukherjee64@gmail.com?subject=Founder%27s%20Seat%20%E2%80%94%20cohort%20pilot">Talk to us about a pilot</a>
+      </div>
+      <div class="feat">
+        <div><span>—</span><div><b>Instructor dashboard</b><p>Every student's decision log, with their reasoning, in one view.</p></div></div>
+        <div><span>—</span><div><b>Cohort leaderboards</b><p>Same scenario, same seed, a fair fight between sections.</p></div></div>
+        <div><span>—</span><div><b>Scenario editor</b><p>Turn your own case into a playable company.</p></div></div>
+      </div>
+    </section>
+  </div>
+
+  <section id="pricing" class="wrap pricing">
+    <div class="intro rv">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="eyebrow">Pricing</div>
+        <h2 class="h2">Play on your own, or bring your cohort.</h2>
+      </div>
+      <p>Individuals get seven days free, then unlock the game once. Programmes license a whole cohort for a course run, with faculty dashboards and debriefs.</p>
+    </div>
+    <div class="plans">
+      <div class="plan hl rv">
+        <span class="tier">INDIVIDUAL</span>
+        <div class="price"><b>₹269</b><span>one-time, after a 7-day free trial</span></div>
+        <p>For students, aspiring founders and founder's office teams playing on their own. Pay once through PhonePe: UPI, cards or net banking.</p>
+        <ul>
+          <li>Unlimited games and replays</li>
+          <li>Full P&amp;L, cash flow and MIS reports</li>
+          <li>Debrief that grades every decision</li>
+        </ul>
+        <a class="btn-solid" href="play/">Start free trial</a>
+      </div>
+      <div class="plan rv">
+        <span class="tier">FOUNDING PROGRAMME PILOT</span>
+        <div class="price"><b>₹0</b><span>for one cohort</span></div>
+        <p>For the first three MBA programmes in India. Run a full cohort free in exchange for structured feedback and a debrief with your faculty.</p>
+        <ul>
+          <li>Full 36-month campaign for every student</li>
+          <li>Instructor dashboard and decision logs</li>
+          <li>We help design the session plan with your faculty</li>
+        </ul>
+        <a class="btn-ghost" href="mailto:kohinoor.mukherjee64@gmail.com?subject=Founder%27s%20Seat%20%E2%80%94%20founding%20programme%20pilot">Apply for a pilot</a>
+      </div>
+      <div class="plan rv">
+        <span class="tier">COHORT LICENCE</span>
+        <div class="price"><b>₹2,000</b><span>per student, per course run</span></div>
+        <p>Minimum 40 seats (₹80,000 per cohort). Billed to the institution once per course run.</p>
+        <ul>
+          <li>Everything in the pilot</li>
+          <li>Cohort leaderboards on a shared scenario and seed</li>
+          <li>End-of-course debrief report per student</li>
+        </ul>
+        <a class="btn-ghost" href="mailto:kohinoor.mukherjee64@gmail.com?subject=Founder%27s%20Seat%20%E2%80%94%20cohort%20licence">Request a quote</a>
+      </div>
+    </div>
+    <p class="note">PROGRAMME PRICING IS INDICATIVE · GST EXTRA ON LICENCES · <a href="refunds/" style="color:inherit;text-decoration:underline">REFUND POLICY</a></p>
+  </section>
+
+  <section id="join" class="wrap final">
+    <div class="eyebrow">The playable alpha is live</div>
+    <h2>The seat is empty. <span class="em">Take it.</span></h2>
+    <div class="playnow">
+      <a class="btn" href="play/" id="play-now">PLAY NOW <svg width="18" height="18" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+      <p>7-DAY FREE TRIAL · THEN ₹269 ONCE · 36 MONTHS · ONE COMPANY</p>
+    </div>
+    <div class="or">or request a seat for your cohort</div>
+    <div class="signup" data-source="footer">
+      <form novalidate>
+        <fieldset class="roles" style="justify-content:center">
+          <legend class="sr">I am a</legend>
+          <button type="button" class="role" aria-pressed="true">MBA student</button>
+          <button type="button" class="role" aria-pressed="false">Future founder</button>
+          <button type="button" class="role" aria-pressed="false">Founder's office</button>
+          <button type="button" class="role" aria-pressed="false">Strategy</button>
+        </fieldset>
+        <div style="height:16px"></div>
+        <div class="field">
+          <label class="sr" for="email-final">Work or school email</label>
+          <input id="email-final" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@school.edu" required>
+          <input class="hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">Request a seat</button>
+        </div>
+        <p class="err" role="alert"></p>
+      </form>
+      <div class="done" hidden tabindex="-1">
+        <div class="eyebrow" style="font-size:12px">Seat requested</div>
+        <div class="t">You're on the list.</div>
+        <p>We'll write to <span class="who"></span> when your cohort's seat opens.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>FOUNDER'S SEAT · © <span id="yr">2026</span></span>
+    <nav class="flinks" aria-label="Policies"><a href="terms/">Terms</a><a href="privacy/">Privacy</a><a href="refunds/">Refunds</a><a href="contact/">Contact</a></nav>
+    <span>BUILT IN INDIA FOR FUTURE CEOs</span>
+  </div>
+</footer>
+
+<script>
+/* Google Apps Script web-app URL that appends signups to your Sheet.
+   Paste the /exec URL between the quotes. */
+const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbwCAEueFppSdzQnNQNY3CMA_bnkVBbli35eYp732IstOFqPrZmPGmC_jiaOt47Q0ZUX/exec";
+
+(function () {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const params = new URLSearchParams(location.search);
+  const blocks = document.querySelectorAll('.signup');
+
+  function showDone(email) {
+    blocks.forEach(b => {
+      b.querySelector('form').hidden = true;
+      const d = b.querySelector('.done');
+      d.querySelector('.who').textContent = email;
+      d.hidden = false;
+    });
+  }
+
+  try {
+    const saved = localStorage.getItem('fs_waitlist_email');
+    if (saved) showDone(saved);
+  } catch (e) {}
+
+  blocks.forEach(block => {
+    const form = block.querySelector('form');
+    const roles = block.querySelectorAll('.role');
+    const input = form.querySelector('input[name="email"]');
+    const hp = form.querySelector('input[name="company"]');
+    const err = form.querySelector('.err');
+    const btn = form.querySelector('.btn');
+
+    roles.forEach(r => r.addEventListener('click', () => {
+      roles.forEach(x => x.setAttribute('aria-pressed', x === r ? 'true' : 'false'));
+    }));
+    input.addEventListener('input', () => { err.textContent = ''; });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = input.value.trim().toLowerCase();
+      if (!EMAIL_RE.test(email)) { err.textContent = 'Enter a valid email to request a seat.'; input.focus(); return; }
+      if (hp.value) { showDone(email); return; } // bot
+      const role = (block.querySelector('.role[aria-pressed="true"]') || {}).textContent || '';
+      btn.disabled = true; btn.textContent = 'Reserving…';
+      try {
+        if (!WAITLIST_ENDPOINT) throw new Error('Waitlist endpoint not configured');
+        const body = new URLSearchParams({
+          email, role, source: block.dataset.source,
+          utm_source: params.get('utm_source') || '', utm_medium: params.get('utm_medium') || '', utm_campaign: params.get('utm_campaign') || '',
+          referrer: document.referrer || '', page: location.href
+        });
+        await fetch(WAITLIST_ENDPOINT, { method: 'POST', mode: 'no-cors', body });
+        try { localStorage.setItem('fs_waitlist_email', email); } catch (e) {}
+        showDone(email);
+        const d = block.querySelector('.done'); d.focus({ preventScroll: true });
+      } catch (ex) {
+        err.textContent = 'Something went wrong. Please try again in a moment.';
+        console.error(ex);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Request a seat';
+      }
+    });
+  });
+
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => {
+    es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 }) : null;
+  document.querySelectorAll('.rv').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+})();
+</script>
+</body>
+</html>
