@@ -91,7 +91,7 @@
   }
   function fn(route, body) {
     return fresh().then(function () {
-      return fetch(SB + '/functions/v1/phonepe/' + route, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + sess.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+      return fetch(SB + '/functions/v1/instamojo/' + route, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + sess.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.error || ('HTTP ' + r.status)); e.status = r.status; throw e; } return j; });
     });
@@ -127,7 +127,7 @@
       location.href = here();
     },
     gate: function (cb) {
-      var order = new URLSearchParams(location.search).get('order');
+      var qs = new URLSearchParams(location.search), order = qs.get('order'), payId = qs.get('payment_id');
       var g = null;
       try { g = googleReturn(); } catch (e) { g = null; }
       var start = g || Promise.resolve(read());
@@ -136,7 +136,7 @@
         if (!sess) return screen(cb);
         return fresh().then(function () {
           trackLogin();
-          return (order ? fn('status', { order: order }).catch(function () { return null; }) : Promise.resolve(null));
+          return (order ? fn('status', { order: order, payment_id: payId }).catch(function () { return null; }) : Promise.resolve(null));
         }).then(function (st) {
           if (order) history.replaceState(null, '', here());
           return access().then(function (a) {
@@ -163,7 +163,7 @@
       '<div class="acct">' + (sess ? '<span class="mono faint" style="font-size:10px">' + (ACC && ACC.status === 'paid' ? 'FULL ACCESS' : ACC && ACC.status === 'granted' ? 'PROGRAMME ACCESS' : 'SIGNED IN') + '</span><span class="em2">' + esc(sess.user.email) + '</span><button type="button" id="signOut">Sign out</button>' : '<span class="mono faint" style="font-size:10px">PLAYING OFFLINE</span>') + '</div>';
     rf.appendChild(d);
     var so = $('signOut'); if (so) so.addEventListener('click', function () { FSAuth.signOut(); });
-    var ub = $('unlockBtn'); if (ub) ub.addEventListener('click', function () { ub.disabled = true; ub.textContent = 'Opening PhonePe…'; pay(function (m) { ub.disabled = false; ub.textContent = 'Unlock for ₹' + (ACC.price_inr || 269); if (window.__FS_UI) window.__FS_UI.toast(m, true); }); });
+    var ub = $('unlockBtn'); if (ub) ub.addEventListener('click', function () { ub.disabled = true; ub.textContent = 'Opening checkout…'; pay(function (m) { ub.disabled = false; ub.textContent = 'Unlock for ₹' + (ACC.price_inr || 269); if (window.__FS_UI) window.__FS_UI.toast(m, true); }); });
   }
 
   var LOGO = '<a href="../" style="display:flex;align-items:center;gap:10px;color:var(--ivory)"><svg width="22" height="22" viewBox="0 0 28 28" fill="none" stroke="#C9A45C" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="22" height="22"/><path d="M3 12h22M12 12v13"/></svg><b class="mono" style="font-size:12px;letter-spacing:.16em;font-weight:500">FOUNDER\'S SEAT</b></a>';
@@ -226,8 +226,8 @@
         '<ul class="pwlist"><li>Unlimited games and replays</li><li>Full reports: P&amp;L, cash flow and MIS</li><li>Debrief that grades every decision</li><li>Cohort seeds to compete with classmates</li></ul>' +
         (err ? '<p class="note down" role="alert">' + esc(err) + '</p>' : '') +
         (pendingOrder ? '<button type="button" class="btn primary lg" id="pwCheck"' + (busy ? ' disabled' : '') + '>' + (busy ? 'Checking…' : 'Check payment status') + '</button>' : '') +
-        '<button type="button" class="btn ' + (pendingOrder ? '' : 'primary ') + 'lg" id="pwPay"' + (busy ? ' disabled' : '') + '>' + (busy && !pendingOrder ? 'Opening PhonePe…' : 'Pay ₹' + price + ' with PhonePe') + '</button>' +
-        '<p class="note">UPI, cards and net banking through PhonePe\'s secure checkout. No subscription and no auto-renewal. See <a href="../refunds/">refunds</a>. Your programme may already cover access; ask your faculty.</p></div></div></div>';
+        '<button type="button" class="btn ' + (pendingOrder ? '' : 'primary ') + 'lg" id="pwPay"' + (busy ? ' disabled' : '') + '>' + (busy && !pendingOrder ? 'Opening checkout…' : 'Pay ₹' + price) + '</button>' +
+        '<p class="note">UPI, cards, net banking and wallets through Instamojo\'s secure checkout. No subscription and no auto-renewal. See <a href="../refunds/">refunds</a>. Your programme may already cover access; ask your faculty.</p></div></div></div>';
       $('pwOut').addEventListener('click', function () { FSAuth.signOut(); });
       $('pwPay').addEventListener('click', function () { draw(null, true); pay(function (m) { draw(m); }); });
       var ck = $('pwCheck'); if (ck) ck.addEventListener('click', function () {
