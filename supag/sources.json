@@ -1,0 +1,83 @@
+{
+  "_readme": "SUPAG may only fetch from hosts in 'allowlist' (exact match, https only). Each family is one kind of figure. Set enabled:false to switch one off. Bounds are sanity limits: a value outside them is never written — it is held for a human in the PR.",
+  "version": 1,
+  "allowlist": [
+    "www.npci.org.in", "npci.org.in",
+    "www.rbi.org.in", "rbi.org.in", "website.rbi.org.in", "rbidocs.rbi.org.in",
+    "www.amfiindia.com", "amfiindia.com", "portal.amfiindia.com",
+    "www.pib.gov.in", "pib.gov.in",
+    "startupfox.in", "www.medianama.com", "entrackr.com", "inc42.com",
+    "boards-api.greenhouse.io"
+  ],
+  "budgets": {
+    "maxFetchesPerRun": 40,
+    "maxCharsPerPage": 60000,
+    "maxLLMCallsPerRun": 10,
+    "maxOutputTokens": 2000
+  },
+  "families": [
+    {
+      "name": "upi_monthly",
+      "enabled": true,
+      "releaseDay": 2,
+      "entry": ["https://www.npci.org.in/what-we-do/upi/product-statistics",
+                "https://startupfox.in/category/fintech",
+                "https://www.medianama.com/tag/upi/"],
+      "follow": "upi.{0,80}(transactions|processed|volume|billion)",
+      "maxFollow": 3,
+      "bounds": { "momPct": [-15, 15], "yoyPct": [-5, 60] }
+    },
+    {
+      "name": "upi_app_share",
+      "enabled": true,
+      "releaseDay": 18,
+      "entry": ["https://www.npci.org.in/what-we-do/upi/upi-ecosystem-statistics",
+                "https://www.medianama.com/tag/upi/"],
+      "follow": "(app-?wise|phonepe|google pay|market share|upi apps)",
+      "maxFollow": 3,
+      "bounds": { "phonepe": [30, 60], "gpay": [20, 45], "maxMovePp": 3 }
+    },
+    {
+      "name": "amfi_monthly",
+      "enabled": true,
+      "releaseDay": 12,
+      "entry": ["https://www.amfiindia.com/research-information/amfi-monthly"],
+      "follow": "(monthly.{0,20}note|amfi.?monthly|\\.pdf)",
+      "maxFollow": 2,
+      "bounds": { "aumMomPct": [-12, 12], "sipMomPct": [-15, 15] }
+    },
+    {
+      "name": "rbi_credit",
+      "enabled": true,
+      "minAgeDays": 20,
+      "entry": ["https://website.rbi.org.in/web/rbi/press-releases"],
+      "follow": "(statement of position|scheduled banks)",
+      "maxFollow": 2,
+      "bounds": { "creditPct": [0, 35], "depositPct": [0, 30], "maxMovePp": 3 }
+    },
+    {
+      "name": "rbi_policy",
+      "enabled": true,
+      "minAgeDays": 45,
+      "entry": ["https://website.rbi.org.in/web/rbi/press-releases"],
+      "follow": "(monetary policy statement|resolution of the monetary policy committee)",
+      "maxFollow": 2,
+      "bounds": { "maxMoveBps": 50 }
+    },
+    {
+      "name": "news",
+      "enabled": true,
+      "entry": ["https://startupfox.in/category/fintech"],
+      "maxItems": 8,
+      "keep": 24
+    },
+    {
+      "name": "hirings",
+      "enabled": true,
+      "boards": [
+        { "company": "Razorpay", "tab": "payments", "api": "https://boards-api.greenhouse.io/v1/boards/razorpaysoftwareprivatelimited/jobs" },
+        { "company": "Groww", "tab": "wealthtech", "api": "https://boards-api.greenhouse.io/v1/boards/groww/jobs" }
+      ]
+    }
+  ]
+}

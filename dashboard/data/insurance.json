@@ -1,0 +1,86 @@
+{
+  "tiles": [
+    {
+      "l": "Global insurtech funding FY25",
+      "v": "$5.08 B",
+      "d": "first rise since 2021 · Gallagher Re",
+      "chg": "+19.5% YoY",
+      "dir": "up"
+    },
+    {
+      "l": "Q1'26 insurtech funding",
+      "v": "$1.63 B",
+      "d": "95% to AI-focused cos · Gallagher Re"
+    },
+    {
+      "l": "India life NBP",
+      "v": "— update",
+      "d": "monthly · Life Insurance Council"
+    },
+    {
+      "l": "India insurance penetration",
+      "v": "≈3.7%",
+      "d": "of GDP · IRDAI annual report"
+    }
+  ],
+  "fundingTrend": {
+    "labels": [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "data": [
+      15.8,
+      7.98,
+      4.51,
+      4.25,
+      5.08
+    ]
+  },
+  "players": [
+    [
+      "PB Fintech (PolicyBazaar)",
+      "Marketplace/distribution",
+      "Listed · ₹1,582 (8 Jul'26)",
+      "Dominant aggregator; credit via Paisabazaar"
+    ],
+    [
+      "Go Digit",
+      "Full-stack general insurer",
+      "Listed",
+      "Motor-heavy; Virat-famous"
+    ],
+    [
+      "Acko",
+      "Full-stack digital insurer",
+      "Private unicorn",
+      "Embedded + D2C motor/health"
+    ],
+    [
+      "InsuranceDekho",
+      "Distribution (agent-led)",
+      "Private unicorn",
+      "Tier-2/3 POSP network"
+    ],
+    [
+      "Turtlemint",
+      "Advisor platform",
+      "Private",
+      "POSP enablement"
+    ],
+    [
+      "Onsurity",
+      "SME group health",
+      "Private",
+      "Employee-benefits wedge"
+    ],
+    [
+      "Zopper / Riskcovry",
+      "Embedded insurance infra",
+      "Private",
+      "APIs powering ecosystem players"
+    ]
+  ]
+}

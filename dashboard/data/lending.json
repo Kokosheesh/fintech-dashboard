@@ -1,0 +1,861 @@
+{
+  "tiles": [
+    {
+      "l": "Bank credit growth",
+      "p": "30 Sep'26",
+      "v": "19.4%",
+      "chg": "+0.3 pp vs mid-Sep",
+      "dir": "up",
+      "d": "YoY · ₹230 L cr outstanding ✓ RBI",
+      "hero": true
+    },
+    {
+      "l": "Repo rate",
+      "p": "7 Oct'26",
+      "v": "5.50%",
+      "chg": "+25 bps",
+      "dir": "down",
+      "d": "first hike since Feb'23 · stance: calibrated tightening ✓",
+      "hero": true
+    },
+    {
+      "l": "Credit–deposit growth gap",
+      "p": "30 Sep'26",
+      "v": "≈155 bps",
+      "chg": "narrowed from >500 bps",
+      "dir": "up",
+      "d": "credit 19.4% vs deposits 17.8% ✓ RBI",
+      "hero": true
+    },
+    {
+      "l": "FY27 forecasts (RBI)",
+      "v": "GDP 7.1% · CPI 5.2%",
+      "d": "Oct'26 MPC ✓"
+    },
+    {
+      "l": "System GNPA",
+      "v": "≈2.3%",
+      "d": "multi-decade low · RBI FSR ≈"
+    },
+    {
+      "l": "Digital lending disbursals",
+      "v": ">₹47 L cr",
+      "d": "FY26 projection · EY-DLAI"
+    },
+    {
+      "l": "Microfinance PAR 31–180",
+      "v": "1.6%",
+      "d": "Jun'26 vs 5.6% a year ago ✓ MFIN"
+    },
+    {
+      "l": "FLDG cap",
+      "v": "5%",
+      "d": "RBI Digital Lending Directions 2025"
+    }
+  ],
+  "macro": {
+    "labels": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26",
+      "Jun'26",
+      "Sep'26",
+      "Oct'26"
+    ],
+    "credit": [
+      9.6,
+      15,
+      16.3,
+      11,
+      16,
+      18.6,
+      19.4,
+      null
+    ],
+    "repo": [
+      4,
+      6.5,
+      6.5,
+      6.25,
+      5.5,
+      5.25,
+      5.25,
+      5.5
+    ]
+  },
+  "gnpa": {
+    "labels": [
+      "FY15",
+      "FY16",
+      "FY18",
+      "FY20",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25≈",
+      "FY26≈"
+    ],
+    "data": [
+      4.3,
+      7.5,
+      11.5,
+      8.2,
+      5.8,
+      3.9,
+      2.8,
+      2.3,
+      2.4
+    ]
+  },
+  "pl": {
+    "labels": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26≈"
+    ],
+    "data": [
+      20,
+      26,
+      14,
+      9,
+      11
+    ]
+  },
+  "banks": [
+    [
+      "HDFC Bank",
+      "Private",
+      "₹819",
+      16.6,
+      2.17,
+      1.9,
+      3.5,
+      1.3,
+      34,
+      "Post-merger normalisation done; results 18 Jul; P/B ✓ (BV ₹378)"
+    ],
+    [
+      "ICICI Bank",
+      "Private",
+      "₹1,410",
+      18.7,
+      3.2,
+      2.4,
+      4.3,
+      1.7,
+      39,
+      "Sector's RoA benchmark; premium multiple persists"
+    ],
+    [
+      "SBI",
+      "PSU",
+      "₹1,037",
+      11.6,
+      1.5,
+      1.1,
+      3,
+      1.8,
+      40,
+      "PSU re-rating story; ₹9.6 L cr mcap; scale + CASA moat"
+    ],
+    [
+      "Axis Bank",
+      "Private",
+      "₹1,320",
+      15.5,
+      1.9,
+      1.7,
+      3.9,
+      1.3,
+      41,
+      "Citi retail book integrated"
+    ],
+    [
+      "Kotak Mahindra",
+      "Private",
+      "₹385",
+      20.1,
+      2.7,
+      2.4,
+      4.9,
+      1.4,
+      43,
+      "Split-adjusted; embargo lifted, rebuilding 811"
+    ],
+    [
+      "Bank of Baroda",
+      "PSU",
+      "₹251",
+      6.6,
+      0.9,
+      1.1,
+      3.1,
+      2.3,
+      40,
+      "P/E 6.6 — the PSU discount quantified"
+    ],
+    [
+      "PNB",
+      "PSU",
+      "₹106",
+      6.7,
+      1,
+      1,
+      2.9,
+      3.5,
+      38,
+      "Cleanest book in a decade after write-off cycle"
+    ],
+    [
+      "IndusInd Bank",
+      "Private",
+      "₹1,012",
+      88.8,
+      0.9,
+      0.2,
+      4,
+      3.1,
+      33,
+      "P/E 88.8 on collapsed earnings (PAT ₹889 cr TTM) — the 2025 derivatives scandal in one number"
+    ],
+    [
+      "Federal Bank",
+      "Private",
+      "₹333",
+      18.9,
+      1.3,
+      1.3,
+      3.2,
+      2,
+      30,
+      "The fintech-partnership bank (Jupiter, Fi sponsor)"
+    ],
+    [
+      "IDFC First",
+      "Private",
+      "—",
+      0,
+      1.4,
+      1.2,
+      6,
+      1.9,
+      47,
+      "Retail transformation; MFI drag easing"
+    ],
+    [
+      "Yes Bank",
+      "Private",
+      "—",
+      0,
+      1.1,
+      0.6,
+      2.4,
+      1.6,
+      32,
+      "SMBC 20% deal (~₹13,483 cr, May'25) — foreign-control test case"
+    ],
+    [
+      "RBL Bank",
+      "Private",
+      "—",
+      0,
+      0.8,
+      0.8,
+      4.8,
+      2.6,
+      34,
+      "Perennial strategic-interest candidate; cards stress easing"
+    ]
+  ],
+  "sfbs": [
+    [
+      "AU SFB",
+      "₹1,062",
+      30.1,
+      "TTM PAT ₹2,641 cr",
+      "Low",
+      "In-principle universal licence Aug'25; final applied Mar'26 ✓",
+      "₹79,511 cr mcap — bigger than IndusInd; the SFB→universal template"
+    ],
+    [
+      "Ujjivan SFB",
+      "₹67",
+      18.8,
+      "₹693 cr",
+      "~55%",
+      "Applied ≈",
+      "Diversifying out of MFI fastest; cleanest recovery"
+    ],
+    [
+      "Equitas SFB",
+      "₹83",
+      92.6,
+      "₹103 cr",
+      "~18%",
+      "Applied ≈",
+      "P/E 92.6 = earnings collapsed, price holding — market betting on normalisation"
+    ],
+    [
+      "Jana SFB",
+      "₹483",
+      15.5,
+      "₹326 cr",
+      "~40%",
+      "Eligible",
+      "Secured-mix rising; quiet compounder of the cohort"
+    ],
+    [
+      "Suryoday SFB",
+      "₹192",
+      13.4,
+      "₹152 cr",
+      "High",
+      "—",
+      "Small; recovered to profit"
+    ],
+    [
+      "ESAF SFB",
+      "₹36",
+      "loss",
+      "−₹166 cr",
+      "High",
+      "—",
+      "Still loss-making; deepest stress"
+    ],
+    [
+      "Utkarsh SFB",
+      "₹15",
+      "loss",
+      "−₹1,151 cr",
+      "High",
+      "—",
+      "FY26 loss ₹1,151 cr — the MFI cycle's biggest casualty; distress-entry candidate?"
+    ]
+  ],
+  "nbfcs": [
+    [
+      "Bajaj Finance",
+      "Diversified consumer",
+      "₹1,022",
+      33.2,
+      "₹5.47 L cr ✓(+24%)",
+      4.2,
+      1,
+      "₹6.36 L cr mcap; 124M customers; every NBFC pitch is 'next Bajaj'"
+    ],
+    [
+      "Shriram Finance",
+      "CV + diversified",
+      "₹1,049",
+      24.6,
+      "≈2.6 L cr",
+      3.2,
+      4.9,
+      "TTM PAT ₹10,029 cr; used-CV moat"
+    ],
+    [
+      "Cholamandalam",
+      "Vehicle + LAP",
+      "₹1,811",
+      29.5,
+      "≈1.9 L cr",
+      2.4,
+      2.8,
+      "Execution premium; 34% 3-yr sales CAGR"
+    ],
+    [
+      "Tata Capital",
+      "Diversified",
+      "₹359",
+      31.2,
+      "≈2.3 L cr",
+      2,
+      1.7,
+      "2025 listing ✓; ₹1.52 L cr mcap; the newest big comp"
+    ],
+    [
+      "HDB Financial",
+      "Diversified (HDFC arm)",
+      "₹758",
+      24.7,
+      "≈1.1 L cr",
+      2.2,
+      2.2,
+      "Jul'25 listing ✓; TTM PAT ₹2,543 cr"
+    ],
+    [
+      "Muthoot Finance",
+      "Gold",
+      "₹3,061",
+      11.7,
+      "≈1.3 L cr",
+      5,
+      2,
+      "TTM PAT ₹10,590 cr, +54% — the gold-boom trade at 11.7x"
+    ],
+    [
+      "Bajaj Housing",
+      "Housing (prime)",
+      "—",
+      0,
+      "≈1.4 L cr ✓(+24%)",
+      2.4,
+      0.3,
+      "Premium to HFC peers persists"
+    ],
+    [
+      "Manappuram",
+      "Gold + MFI",
+      "—",
+      0,
+      "≈0.45 L cr",
+      4,
+      2.5,
+      "Bain control deal (2025) ≈ — PE playbook live"
+    ],
+    [
+      "L&T Finance",
+      "Retailised diversified",
+      "₹324",
+      25.4,
+      "≈0.95 L cr",
+      2.4,
+      3.2,
+      "TTM PAT ₹3,202 cr; retail pivot done"
+    ],
+    [
+      "Piramal Finance",
+      "Diversified",
+      "—",
+      0,
+      "≈0.80 L cr",
+      1,
+      2.8,
+      "DHFL absorbed; discount-to-book case study"
+    ],
+    [
+      "CreditAccess Grameen",
+      "Microfinance",
+      "—",
+      0,
+      "≈0.27 L cr",
+      2,
+      4.8,
+      "MFI bellwether — cycle turned Q4FY26 (see MFI section)"
+    ],
+    [
+      "Aavas Financiers",
+      "Affordable housing",
+      "—",
+      0,
+      "≈0.19 L cr",
+      3.3,
+      1.1,
+      "PE promoter churn (CVC/GIC) — exit-multiple watch"
+    ],
+    [
+      "Five Star Business",
+      "Secured MSME",
+      "—",
+      0,
+      "≈0.12 L cr",
+      8,
+      1.5,
+      "Highest RoA in Indian lending; can it scale?"
+    ],
+    [
+      "Home First",
+      "Affordable housing",
+      "—",
+      0,
+      "≈0.12 L cr",
+      3.5,
+      1.7,
+      "Tech-led affordable HFC"
+    ],
+    [
+      "Aptus Value",
+      "Affordable housing (South)",
+      "—",
+      0,
+      "≈0.10 L cr",
+      7.5,
+      1.2,
+      "RoA outlier #2; geographic concentration"
+    ]
+  ],
+  "mfi": {
+    "tiles": [
+      {
+        "l": "Industry GLP",
+        "p": "Jun'26",
+        "v": "₹3.29 L cr",
+        "chg": "+1.1% QoQ",
+        "dir": "up",
+        "d": "−6.9% YoY · MFIN Micrometer 58th ✓"
+      },
+      {
+        "l": "Quarterly disbursals",
+        "p": "Q1 FY27",
+        "v": "₹61,718 cr",
+        "chg": "+8.9% YoY",
+        "dir": "up",
+        "d": "MFIN ✓"
+      },
+      {
+        "l": "PAR 31–180",
+        "p": "Jun'26",
+        "v": "1.6%",
+        "chg": "−400 bps YoY",
+        "dir": "up",
+        "d": "from 5.6% a year ago ✓"
+      },
+      {
+        "l": "Peak-to-trough GLP",
+        "v": "≈−28%",
+        "d": "₹4.3→3.15 L cr over 7 quarters ≈"
+      }
+    ],
+    "glp": [
+      4.34,
+      4.1,
+      3.8,
+      3.5,
+      3.3,
+      3.15,
+      3.25,
+      3.29
+    ],
+    "par": [
+      2.1,
+      3.2,
+      4.5,
+      6.3,
+      5.5,
+      3.9,
+      2,
+      1.6
+    ],
+    "qlabels": [
+      "Mar'24",
+      "Jun'24",
+      "Sep'24",
+      "Mar'25",
+      "Jun'25",
+      "Dec'25",
+      "Mar'26",
+      "Jun'26"
+    ]
+  },
+  "deals": [
+    [
+      "Sep 2026",
+      "Moneyview IPO",
+      "₹1,092 cr · 101.87× subscribed",
+      "Issue cut before opening, then bids of ₹77,843 cr — public markets will pay for profitable digital lenders ✓"
+    ],
+    [
+      "Oct 2026",
+      "Seeds Fincap equity raise",
+      "₹100 cr",
+      "Small-ticket business lending (~₹1 L average) still attracts equity ✓"
+    ],
+    [
+      "May 2025",
+      "SMBC → 20% of Yes Bank (from SBI-led consortium)",
+      "≈₹13,483 cr",
+      "Largest foreign bank-stake deal in India; the foreign-control test case ≈"
+    ],
+    [
+      "Mar 2025",
+      "Bain Capital → joint control of Manappuram",
+      "≈$508M",
+      "PE control playbook enters gold lending; watch the operating turnaround ≈"
+    ],
+    [
+      "2024–25",
+      "SMFG absorbs Lendingkart",
+      "distress-priced ≈",
+      "Fintech SME lender rescued by parent capital — cautionary comp for standalone lenders"
+    ],
+    [
+      "Jul–Oct 2025",
+      "HDB Financial + Tata Capital IPOs",
+      "—",
+      "Two mega-NBFC listings reset public comps (both now in table above) ✓"
+    ],
+    [
+      "2024",
+      "Slice × North East SFB merger completed",
+      "—",
+      "The licence-acquisition route — fintech becomes a bank"
+    ]
+  ],
+  "talent": [
+    [
+      "Bajaj Finance",
+      "https://www.bajajfinserv.in/careers",
+      "pending — own portal"
+    ],
+    [
+      "Navi",
+      "https://www.navi.com/careers",
+      "pending — ATS scrape next session"
+    ],
+    [
+      "KreditBee",
+      "https://www.kreditbee.in/careers",
+      "pending"
+    ],
+    [
+      "Moneyview",
+      "https://moneyview.in/careers",
+      "pending"
+    ],
+    [
+      "CreditAccess Grameen",
+      "https://www.creditaccessgrameen.in/careers/",
+      "pending"
+    ],
+    [
+      "AU SFB",
+      "https://www.aubank.in/careers",
+      "pending"
+    ]
+  ],
+  "zones": [
+    {
+      "n": "1 · Capital Sources",
+      "rev": "Deposits fund ~78% of system credit",
+      "prof": "—",
+      "cos": [
+        [
+          "Depositors (via banks)",
+          "The cheapest funding in the chain — CASA at 30–43% of bank books",
+          "Why the deposit war (C-D gap >500bps) is THE constraint on credit growth right now"
+        ],
+        [
+          "Debt markets & MFs",
+          "NCDs/CPs fund NBFCs; MF debt schemes are the marginal buyer",
+          "Nov'23 risk weights showed the fragility: bank→NBFC funding repriced 30–50bps in weeks"
+        ],
+        [
+          "PE / VC equity",
+          "Growth capital for fintech-NBFCs; control deals for mature books",
+          "Bain–Manappuram and SMBC–Yes are the live templates"
+        ]
+      ]
+    },
+    {
+      "n": "2 · Balance-Sheet Lenders",
+      "rev": "System credit ₹213.8 L cr (May'26)",
+      "prof": "System GNPA ≈2.3% — best in decades",
+      "cos": [
+        [
+          "Banks / SFBs / NBFCs / MFIs",
+          "Hold the risk, earn the NIM",
+          "See universe tables above — this zone IS the dashboard's core"
+        ]
+      ]
+    },
+    {
+      "n": "3 · Origination & Distribution",
+      "rev": "≈1–3% origination fees",
+      "prof": "asset-light, thin margins",
+      "cos": [
+        [
+          "DSAs & aggregators (Paisabazaar, BankBazaar)",
+          "Lead-gen and comparison; commissions from lenders",
+          "Paisabazaar originates a meaningful share of unsecured PL digitally"
+        ],
+        [
+          "Fintech LSPs (KreditBee, Moneyview et al. in LSP mode)",
+          "Full-stack origination + servicing on others' balance sheets",
+          "Post-2022 guidelines the LSP label is regulatorily defined — disclosure to borrowers mandatory"
+        ],
+        [
+          "Embedded (Amazon–Axio, marketplace seller finance)",
+          "Credit at point of context",
+          "Acquisition cost near zero; underwriting on platform data"
+        ]
+      ]
+    },
+    {
+      "n": "4 · Data & Underwriting Rails",
+      "rev": "per-pull pricing (₹5–50)",
+      "prof": "high-margin picks-and-shovels",
+      "cos": [
+        [
+          "Bureaus (CIBIL, CRIF, Experian, Equifax)",
+          "Repayment-history scores; the baseline of all underwriting",
+          "CIBIL is majority TransUnion-owned; publishes the CMI the whole industry quotes"
+        ],
+        [
+          "Account Aggregator ecosystem (Sahamati)",
+          "Consent-based bank-statement data; kills PDF-scraping",
+          "RBI framework; Finvu/OneMoney AAs; FIU adoption now spans lenders→insurers"
+        ],
+        [
+          "Perfios / FinBox / Setu",
+          "Analytics layer converting raw statements & GST into decisions",
+          "ULI (RBI) aims to standardise these pipes into a public utility"
+        ]
+      ]
+    },
+    {
+      "n": "5 · Collections & Recovery",
+      "rev": "% of recovered value",
+      "prof": "digital-first cutting costs ~30% ≈",
+      "cos": [
+        [
+          "Credgenics / Spocto",
+          "Digital collections orchestration (calls→legal notices)",
+          "RBI conduct rules apply to agents; digital trails reduce disputes"
+        ],
+        [
+          "ARCs (Edelweiss, Phoenix…)",
+          "Buy NPAs at discount; recover over years",
+          "Security receipts market; bank clean-ups feed this zone"
+        ],
+        [
+          "IBC / DRT / SARFAESI",
+          "The legal recovery stack",
+          "IBC recovery rates ~30-35% — better than pre-2016 but slowing"
+        ]
+      ]
+    },
+    {
+      "n": "6 · Regulator & Guarantees",
+      "rev": "—",
+      "prof": "—",
+      "cos": [
+        [
+          "RBI",
+          "Licensing, SBR layers, digital-lending rules, risk weights",
+          "See timeline above — every event repriced some business model"
+        ],
+        [
+          "CGTMSE / NCGTC",
+          "Credit guarantees up to 85% on MSME loans",
+          "The quiet subsidy making small-ticket MSME lending viable"
+        ],
+        [
+          "SIDBI / NABARD / NHB",
+          "Refinance windows for MSME/agri/housing",
+          "Cheap wholesale funding — the public-sector liquidity backstop"
+        ]
+      ]
+    }
+  ],
+  "regTimeline": [
+    [
+      "Sep 2022",
+      "Digital Lending Guidelines",
+      "Ended pass-through/pool accounts; formalised the LSP model. Killed PPI-based 'shadow credit cards' — Slice and Uni forced to pivot overnight."
+    ],
+    [
+      "Jun 2023",
+      "FLDG capped at 5%",
+      "Legitimised default guarantees but capped skin-in-the-game. Fintech-bank co-lending restructured around the cap; some balance-sheet-light models became unviable."
+    ],
+    [
+      "Nov 2023",
+      "+25pp risk weights on unsecured PL & bank→NBFC lending",
+      "The cycle-turner: fintech PL growth halved within two quarters (see chart above); NBFC borrowing costs rose 30–50 bps; unsecured mix shrank across lenders."
+    ],
+    [
+      "Jan 2024",
+      "Paytm Payments Bank wound down",
+      "Largest fintech enforcement ever. Sector learnt the partner-bank migration playbook; compliance became a valuation input, not a cost line."
+    ],
+    [
+      "Mar 2024",
+      "IIFL gold-loan ban (lifted Sep'24)",
+      "LTV and valuation discipline imposed sector-wide; compliance premium now priced into gold NBFCs."
+    ],
+    [
+      "Apr 2024",
+      "SFB → universal bank pathway opened",
+      "AU applied; defines the endgame for scaled SFBs and resets the licence-arbitrage math for PE buyers."
+    ],
+    [
+      "Feb 2025",
+      "Risk-weight partial rollback (bank→NBFC, MFI)",
+      "Funding taps reopened; timed relief into the MFI stress cycle. NBFC spreads recovered through FY26."
+    ],
+    [
+      "May 2025",
+      "Digital Lending Directions (consolidated rulebook)",
+      "One master direction: LSP disclosure, DLG reporting, borrower protection, cooling-off rights. The compliance moat around scaled digital lenders got deeper."
+    ],
+    [
+      "Jun 2025",
+      "Repo cut to 5.5% + 100bps CRR cut",
+      "Rate cycle turned decisively. NBFC margin tailwind through FY26; growth capital got cheaper exactly as risk weights eased."
+    ],
+    [
+      "Jun 2026",
+      "Credit growth at 2-yr high (18.6%); deposits lag at 12%",
+      "The current setup: growth is back but the deposit war caps NIM expansion. C-D gap >500bps is the number every bank CEO is asked about."
+    ],
+    [
+      "Oct 2026",
+      "Repo hiked 25 bps to 5.50%; stance to calibrated tightening",
+      "First hike since Feb'23. CPI is seen near 5.8% over the next three quarters. Expect external-benchmark loans to reprice first and H2 FY27 credit growth to cool from 19%."
+    ]
+  ],
+  "lenders": [
+    [
+      "Navi",
+      "Consumer PL, home, UPI",
+      "Own NBFC book",
+      "Chaitanya MFI sold; IPO-track"
+    ],
+    [
+      "KreditBee",
+      "Consumer PL (young salaried)",
+      "NBFC + partners",
+      "Among largest by digital PL volume"
+    ],
+    [
+      "Moneyview",
+      "PL + cards + wealth",
+      "Partner-led + NBFC",
+      "Unicorn (2024)"
+    ],
+    [
+      "Fibe (EarlySalary)",
+      "Salary-linked credit, health EMI",
+      "NBFC + co-lend",
+      "Strong salaried niche"
+    ],
+    [
+      "Axio (ex-Capital Float)",
+      "Checkout finance / BNPL",
+      "NBFC",
+      "Acquired by Amazon (2025≈)"
+    ],
+    [
+      "OfBusiness / Oxyzo",
+      "B2B raw-material + SME credit",
+      "Own NBFC (Oxyzo)",
+      "Profitable; IPO-track"
+    ],
+    [
+      "Lendingkart",
+      "SME working capital",
+      "NBFC + co-lend",
+      "Acquired by Fullerton/SMFG"
+    ],
+    [
+      "Slice",
+      "Consumer credit → bank",
+      "Merged with NESFB",
+      "The licence-acquisition route"
+    ]
+  ]
+}

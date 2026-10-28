@@ -1,0 +1,88 @@
+{
+  "tiles": [
+    {
+      "l": "Paytm (One97)",
+      "v": "₹1,342",
+      "d": "12 Jul'26 · near 52-wk high",
+      "chg": "+5% day",
+      "dir": "up"
+    },
+    {
+      "l": "PB Fintech",
+      "v": "₹1,582",
+      "d": "8 Jul'26 · Temasek arm sold 2.2% stake"
+    },
+    {
+      "l": "F-Prime Fintech Index",
+      "v": "— weekly",
+      "d": "fintechindex.com"
+    },
+    {
+      "l": "Repo rate",
+      "v": "5.25%",
+      "d": "neutral stance"
+    }
+  ],
+  "stocks": [
+    [
+      "Paytm (One97)",
+      "₹1,342 (12 Jul)",
+      "Payments + lending distribution",
+      "Rallying; profitability turn"
+    ],
+    [
+      "PB Fintech",
+      "₹1,582 (8 Jul)",
+      "Insurance + credit marketplace",
+      "Temasek block deal ₹1,633 cr"
+    ],
+    [
+      "MobiKwik",
+      "— SmartAPI",
+      "Wallet + BNPL",
+      "Small-cap; volatile"
+    ],
+    [
+      "Zaggle",
+      "— SmartAPI",
+      "B2B spend management",
+      "CFO-stack proxy"
+    ],
+    [
+      "Angel One",
+      "— SmartAPI",
+      "Broking",
+      "Retail-participation proxy"
+    ],
+    [
+      "CDSL",
+      "— SmartAPI",
+      "Depository",
+      "Demat-growth proxy"
+    ],
+    [
+      "CAMS",
+      "— SmartAPI",
+      "MF RTA",
+      "MF-AUM proxy"
+    ],
+    [
+      "KFintech",
+      "— SmartAPI",
+      "RTA + issuer services",
+      "MF + IPO proxy"
+    ],
+    [
+      "Pine Labs",
+      "₹252 (14 Nov'25 close, listing day)",
+      "Merchant payments",
+      "2025 listing; update weekly"
+    ],
+    [
+      "Groww",
+      "— SmartAPI",
+      "Broking + wealth",
+      "2025 listing"
+    ]
+  ]
+}

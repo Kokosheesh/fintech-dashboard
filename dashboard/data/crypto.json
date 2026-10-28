@@ -1,0 +1,70 @@
+{
+  "tiles": [
+    {
+      "l": "Bitcoin",
+      "v": "$63,185",
+      "d": "10 Jul'26 open",
+      "chg": "+2.8% wk",
+      "dir": "up"
+    },
+    {
+      "l": "Ethereum",
+      "v": "$1,744",
+      "d": "10 Jul'26 open",
+      "chg": "+2.7% wk",
+      "dir": "up"
+    },
+    {
+      "l": "BTC market cap",
+      "v": "$1.33 T",
+      "d": "ETH $233B"
+    },
+    {
+      "l": "Total crypto mcap",
+      "v": "≈$2.4 T",
+      "d": "vs >$4T 2025 peak; Jun'26 worst month in 4 yrs"
+    },
+    {
+      "l": "India tax regime",
+      "v": "30% + 1% TDS",
+      "d": "VDA tax; volumes partly offshore"
+    }
+  ],
+  "mcapTrend": {
+    "labels": [
+      "2023",
+      "2024",
+      "2025 peak",
+      "Jul'26"
+    ],
+    "data": [
+      1.7,
+      3.4,
+      4,
+      2.4
+    ]
+  },
+  "exchanges": [
+    [
+      "CoinDCX",
+      "Exchange + Web3",
+      "Largest Indian exchange; acquired BitOasis (MENA)"
+    ],
+    [
+      "CoinSwitch",
+      "Retail broker",
+      "PeakXV/a16z-backed; wealth-app pivot"
+    ],
+    [
+      "Mudrex",
+      "Algo/ETF-style investing",
+      "B2B2C + compliance-first"
+    ],
+    [
+      "ZebPay",
+      "Exchange (veteran)",
+      "Oldest Indian brand"
+    ]
+  ],
+  "context": "Drivers this month: ETF inflows + CLARITY Act sentiment, offset by Middle East conflict (Yahoo Finance, 10 Jul'26)."
+}

@@ -1,0 +1,113 @@
+# SUPAG — weekly update-and-repair agent for fintech_dashboard.html
+# Mondays 06:00 IST it refreshes the data, scans the page, and opens a pull request for you to merge.
+# It can only change dashboard/data/*.json and supag/runs/ (enforced in code before every commit).
+name: SUPAG weekly update
+
+on:
+  schedule:
+    - cron: "30 0 * * 1"            # 00:30 UTC Monday = 06:00 IST
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run = report only, nothing committed · run = open a PR · scan = health check only"
+        type: choice
+        options: [dry-run, run, scan]
+        default: dry-run
+  repository_dispatch:              # entry point for a chat front end (WhatsApp/Telegram via n8n)
+    types: [supag-command]          # client_payload.command: run | dry-run | scan
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: supag
+  cancel-in-progress: false
+
+jobs:
+  supag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPAG_ENABLED: ${{ vars.SUPAG_ENABLED }}
+      SUPAG_MODEL: ${{ vars.SUPAG_MODEL }}
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decide what to do
+        id: mode
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_MODE: ${{ inputs.mode }}
+          CMD: ${{ github.event.client_payload.command }}
+        run: |
+          case "$EVENT" in
+            schedule)            MODE=run ;;
+            workflow_dispatch)   MODE="$INPUT_MODE" ;;
+            repository_dispatch)
+              case "$CMD" in
+                run|dry-run|scan) MODE="$CMD" ;;
+                status)           MODE=scan ;;
+                *) echo "::error::Unknown command '$CMD'. Allowed: run, dry-run, scan, status."; exit 1 ;;
+              esac ;;
+          esac
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "SUPAG mode: $MODE (triggered by $EVENT)"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: supag/requirements.txt
+
+      - name: Install
+        run: |
+          pip install -r supag/requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Tests
+        run: python -m pytest supag/tests -q
+
+      - name: Run SUPAG
+        id: supag
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m supag.run --mode "${{ steps.mode.outputs.mode }}" --report "$RUNNER_TEMP/supag-report.md"
+
+      - name: Show the report on the run page
+        if: always()
+        run: cat "$RUNNER_TEMP/supag-report.md" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      - name: Open a pull request with the refreshed data
+        if: steps.mode.outputs.mode == 'run' && steps.supag.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.supag.outputs.title }}
+          P0: ${{ steps.supag.outputs.p0 }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          BR="supag/$(date -u +%Y-%m-%d)-run${{ github.run_number }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BR"
+          git add dashboard/data/*.json supag/runs/*.json
+          git commit -m "$TITLE"
+          git push origin "$BR"
+          gh label create supag --color 1F3864 --description "Opened by SUPAG" 2>/dev/null || true
+          if [ "$P0" = "true" ]; then { echo "@$OWNER — a P0 issue was found. Don't merge until it's resolved."; echo; cat "$RUNNER_TEMP/supag-report.md"; } > "$RUNNER_TEMP/tmp.md" && mv "$RUNNER_TEMP/tmp.md" "$RUNNER_TEMP/supag-report.md"; fi
+          gh pr create --base main --head "$BR" --title "$TITLE" --body-file "$RUNNER_TEMP/supag-report.md" --label supag
+
+      - name: No data changes — post the health report to the standing issue
+        if: steps.mode.outputs.mode != 'dry-run' && steps.supag.outputs.changed != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          P0: ${{ steps.supag.outputs.p0 }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          gh label create supag-health --color B07A20 --description "SUPAG health reports" 2>/dev/null || true
+          if [ "$P0" = "true" ]; then { echo "@$OWNER — a P0 issue was found on the live dashboard."; echo; cat "$RUNNER_TEMP/supag-report.md"; } > "$RUNNER_TEMP/tmp.md" && mv "$RUNNER_TEMP/tmp.md" "$RUNNER_TEMP/supag-report.md"; fi
+          N=$(gh issue list --label supag-health --state open --json number --jq '.[0].number')
+          if [ -n "$N" ]; then gh issue comment "$N" --body-file "$RUNNER_TEMP/supag-report.md"
+          else gh issue create --title "SUPAG health reports" --label supag-health --body-file "$RUNNER_TEMP/supag-report.md"; fi

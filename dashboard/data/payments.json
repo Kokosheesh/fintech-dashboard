@@ -1,0 +1,838 @@
+{
+  "tiles": [
+    {
+      "l": "UPI volume",
+      "p": "Sep'26",
+      "v": "24.07 B",
+      "chg": "+23% YoY",
+      "dir": "up",
+      "d": "daily average a record 802 M ✓ NPCI",
+      "hero": true
+    },
+    {
+      "l": "UPI value",
+      "p": "Sep'26",
+      "v": "₹29.37 L cr",
+      "chg": "+18% YoY",
+      "dir": "up",
+      "d": "₹97,913 cr a day ✓ NPCI",
+      "hero": true
+    },
+    {
+      "l": "PhonePe + Google Pay share",
+      "p": "Sep'26",
+      "v": "77.8%",
+      "chg": "−4.1 pp YoY",
+      "dir": "down",
+      "d": "45.57% + 32.23% ✓ NPCI app-wise",
+      "hero": true
+    },
+    {
+      "l": "UPI merchant charge",
+      "v": "Deferred",
+      "d": "0.4% on P2M above ₹2,000 was due 15 Oct; no new date"
+    },
+    {
+      "l": "30% share-cap deadline",
+      "v": "31 Dec 2026",
+      "d": "NPCI · measured on a rolling 3-month basis"
+    },
+    {
+      "l": "UPI FY26 total",
+      "v": "241.6 B",
+      "d": "₹314 L cr · PIB/NPCI"
+    },
+    {
+      "l": "Razorpay IPO",
+      "v": "DRHP filed",
+      "d": "confidential, Jun'26 · ₹5–6k cr issue ✓"
+    }
+  ],
+  "pay": {
+    "vol": [
+      3.24,
+      3.55,
+      3.65,
+      4.21,
+      4.18,
+      4.56,
+      4.62,
+      4.53,
+      5.41,
+      5.58,
+      5.95,
+      5.86,
+      6.29,
+      6.58,
+      6.78,
+      7.31,
+      7.3,
+      7.82,
+      8.03,
+      7.53,
+      8.65,
+      8.89,
+      9.41,
+      9.34,
+      9.96,
+      10.58,
+      10.56,
+      11.41,
+      11.24,
+      12.02,
+      12.2,
+      12.1,
+      13.44,
+      13.3,
+      14.04,
+      13.89,
+      14.44,
+      14.96,
+      15.04,
+      16.58,
+      15.48,
+      16.73,
+      16.99,
+      16.11,
+      18.3,
+      17.89,
+      18.68,
+      18.4,
+      19.47,
+      19.8,
+      19.9,
+      21.3,
+      20.6,
+      21.4,
+      21.8,
+      20.4,
+      22,
+      22,
+      23.2,
+      22.72,
+      23.66,
+      24.51,
+      24.07
+    ],
+    "val": [
+      6.06,
+      6.39,
+      6.54,
+      7.71,
+      7.68,
+      8.27,
+      8.32,
+      8.27,
+      9.6,
+      9.83,
+      10.41,
+      10.14,
+      10.63,
+      10.73,
+      11.16,
+      12.11,
+      11.9,
+      12.82,
+      12.98,
+      12.35,
+      14.05,
+      14.07,
+      14.89,
+      14.75,
+      15.34,
+      15.76,
+      15.79,
+      17.16,
+      17.4,
+      18.23,
+      18.41,
+      18.28,
+      19.78,
+      19.64,
+      20.45,
+      20.07,
+      20.64,
+      20.61,
+      20.64,
+      23.5,
+      21.55,
+      23.25,
+      23.48,
+      21.96,
+      24.77,
+      23.95,
+      25.14,
+      24.04,
+      25.08,
+      25.2,
+      25.4,
+      27.3,
+      26.1,
+      27.5,
+      28,
+      25.9,
+      29,
+      27.8,
+      29.9,
+      28.92,
+      30.2,
+      29.82,
+      29.37
+    ],
+    "estFrom": 49,
+    "estTo": 57,
+    "shareAnchors": [
+      [
+        0,
+        45.9,
+        34.5
+      ],
+      [
+        18,
+        46.5,
+        34.5
+      ],
+      [
+        30,
+        48,
+        37
+      ],
+      [
+        42,
+        47.8,
+        36.5
+      ],
+      [
+        54,
+        46.5,
+        34
+      ],
+      [
+        60,
+        45.9,
+        32.3
+      ],
+      [
+        61,
+        45.89,
+        32.33
+      ],
+      [
+        62,
+        45.57,
+        32.23
+      ]
+    ],
+    "latest": {
+      "m": "Sep'26",
+      "volB": 24.07,
+      "valL": 29.37
+    },
+    "apps": [
+      {
+        "n": "PhonePe",
+        "volPct": 45.57,
+        "valPct": 50
+      },
+      {
+        "n": "Google Pay",
+        "volPct": 32.23,
+        "valPct": 34
+      },
+      {
+        "n": "Paytm",
+        "volPct": 8.1,
+        "valPct": 5.5
+      },
+      {
+        "n": "Navi",
+        "volPct": 4.8,
+        "valPct": 1.9
+      },
+      {
+        "n": "super.money",
+        "volPct": 2.3,
+        "valPct": 1
+      },
+      {
+        "n": "BHIM",
+        "volPct": 1,
+        "valPct": 0.8
+      },
+      {
+        "n": "CRED",
+        "volPct": 0.9,
+        "valPct": 1.5
+      },
+      {
+        "n": "Amazon Pay",
+        "volPct": 0.6,
+        "valPct": 0.5
+      },
+      {
+        "n": "WhatsApp Pay",
+        "volPct": 0.4,
+        "valPct": 0.3
+      },
+      {
+        "n": "Others",
+        "volPct": 4.1,
+        "valPct": 4.6
+      }
+    ],
+    "tailQuarters": [
+      "Q2'24",
+      "Q4'24",
+      "Q2'25",
+      "Q4'25",
+      "Q2'26"
+    ],
+    "tail": {
+      "Paytm": [
+        9,
+        8.5,
+        8.2,
+        8,
+        8
+      ],
+      "Navi": [
+        0.6,
+        1.5,
+        2,
+        2.7,
+        3.2
+      ],
+      "super.money": [
+        0.05,
+        0.4,
+        0.9,
+        1.6,
+        2.3
+      ],
+      "BHIM": [
+        0.2,
+        0.3,
+        0.4,
+        0.6,
+        1
+      ],
+      "CRED": [
+        0.7,
+        0.8,
+        0.85,
+        0.9,
+        0.9
+      ]
+    },
+    "merchants": [
+      [
+        "Razorpay",
+        "Full-stack PA/PG + RazorpayX + capital",
+        "₹3,783 cr op. (+65%); ₹3,930 cr consol. ✓Tracxn",
+        "−₹1,210 cr ✓Tracxn (−32%)<br><span class='fn'>one-off redomicile tax; gross profit ₹1,277 cr</span>",
+        "private — no quarterly",
+        "≈28–32% online PA (value) ≈",
+        "DRHP filed Jun'26 ✓ — ₹5-6k cr IPO targeted end-2026; last mark $9.2B",
+        "SMBs & startups → moving upmarket to enterprise; strong developer/freelancer wedge"
+      ],
+      [
+        "PayU India",
+        "PA/PG + LazyPay credit",
+        "≈₹4,150 cr / $498M (+12%)",
+        "≈ payments near-breakeven ≈",
+        "private — no quarterly",
+        "≈22–25% ≈",
+        "Prosus-owned; India listing ambition",
+        "Enterprise & large e-commerce; affordability/EMI stack"
+      ],
+      [
+        "Pine Labs",
+        "POS + issuing + online",
+        "₹2,274 cr ≈ FY25",
+        "Q1FY26 first profit",
+        "Q1FY26: rev ₹616 cr (+18% YoY), PAT ₹4.8 cr",
+        "Offline organized-retail POS leader ≈",
+        "Listed Nov'25 (₹221 issue, ₹252 day-1); mcap ≈$3.3B",
+        "Enterprise offline retail, brand-EMI (issuing via Qwikcilver); SEA/Middle East expansion"
+      ],
+      [
+        "Cashfree",
+        "PA + payouts + verification",
+        "FY24: ₹643 cr (FY25 awaited)",
+        "FY24 loss ≈−₹135 cr ≈ (−21%)",
+        "—",
+        "≈10–12% ≈; leader in payouts",
+        "$700M (Feb'25, Krafton-led)",
+        "Startups & D2C; payouts, subscriptions, cross-border; TPV $80B+"
+      ],
+      [
+        "Juspay",
+        "Orchestration + HyperSDK (not a PA)",
+        "₹514 cr (+61%)",
+        "+₹62 cr (+12%) — first profit",
+        "—",
+        "Routes large share of enterprise checkout traffic",
+        "$1.2B (Jan'26, WestBridge) — first unicorn of 2026",
+        "Large enterprises (Amazon, Swiggy-scale); agentic-payments pilot with NPCI + OpenAI"
+      ],
+      [
+        "BharatPe",
+        "Offline QR + merchant lending",
+        "₹1,426 cr FY24 ≈",
+        "FY24 loss ≈−₹474 cr ≈ (−33%)",
+        "—",
+        "#3 offline QR ≈",
+        "≈$2.85B (Aug'21) — stale mark",
+        "Kirana/offline merchants; lending is the monetisation engine; Unity SFB stake"
+      ],
+      [
+        "Paytm (One97)",
+        "Devices/soundbox + PA + distribution",
+        "≈₹6,900 cr FY25 ≈",
+        "≈ near-breakeven; quarterly public",
+        "listed — see exchange filings",
+        "Devices/soundbox leader; PA share mid-single-digit ≈",
+        "Listed; ₹1,342 (12 Jul'26)",
+        "Omnichannel SMB merchants; subscription devices + lending/insurance distribution"
+      ]
+    ],
+    "fundingRounds": [
+      [
+        "Juspay ✓Tracxn",
+        "WestBridge Capital (lead); SoftBank, Accel (existing)",
+        28,
+        1.24,
+        "₹829 cr TTM incl. proj.",
+        12.8,
+        "Jan 23, 2026",
+        202601,
+        45,
+        1.19,
+        "₹568 cr TTM incl. proj.",
+        18,
+        "Apr 7, 2025",
+        4
+      ],
+      [
+        "Razorpay ✓Tracxn",
+        "Series F: Tiger Global, Lone Pine, GIC · Jun'25 secondary at $9.2B",
+        375,
+        7.5,
+        "₹1,330 cr TTM",
+        42,
+        "Dec 19, 2021 (last priced round)",
+        202112,
+        160,
+        3,
+        "₹898 cr TTM",
+        23.7,
+        "Apr 18, 2021",
+        150
+      ],
+      [
+        "Cashfree ✓Tracxn",
+        "Krafton (corporate lead), Apis Growth Fund",
+        23,
+        0.7,
+        "₹641 cr TTM",
+        9.2,
+        "Feb 5, 2025 ($23M primary; $53M incl. secondary)",
+        202502,
+        35.3,
+        0.2,
+        "₹186 cr TTM",
+        12,
+        "Nov 23, 2020",
+        250
+      ],
+      [
+        "PhonePe ✓Tracxn",
+        "Walmart; Ribbit, Tiger Global, General Atlantic, TVS",
+        658,
+        12.6,
+        "₹2,850 cr TTM",
+        36.5,
+        "Jan 19, 2023 · marked $14.5B Oct'25 · IPO approved by SEBI, delayed on market conditions ✓Sep'26",
+        202510,
+        700,
+        5.5,
+        "≈₹690 cr FY20 ≈",
+        60,
+        "Dec 2020",
+        129
+      ],
+      [
+        "Pine Labs",
+        "Public markets (IPO $440M)",
+        440,
+        3.3,
+        "≈₹2,274 cr (~$270M) ≈",
+        12,
+        "Nov 2025 (IPO)",
+        202511,
+        150,
+        5,
+        "≈₹933 cr FY22 (~$118M) ≈",
+        42,
+        "Mar 2022",
+        -34
+      ],
+      [
+        "BharatPe ✓Tracxn",
+        "Tiger Global, Dragoneer",
+        370,
+        2.7,
+        "₹119 cr FY21",
+        178,
+        "Aug 2021 — no priced round since",
+        202108,
+        108,
+        0.9,
+        "≈₹110 cr ≈",
+        56,
+        "Feb 2021",
+        200
+      ]
+    ],
+    "hirings": [
+      [
+        "PhonePe",
+        "https://www.phonepe.com/careers/",
+        68,
+        16,
+        2,
+        6,
+        2,
+        0,
+        1,
+        12,
+        29,
+        "12 Jul'26 · live via Greenhouse API"
+      ],
+      [
+        "Razorpay",
+        "https://job-boards.greenhouse.io/razorpaysoftwareprivatelimited",
+        52,
+        11,
+        7,
+        25,
+        1,
+        3,
+        2,
+        3,
+        0,
+        "12 Jul'26 · live via Greenhouse API — heavily sales-weighted (25/52)"
+      ],
+      [
+        "Paytm",
+        "https://paytm.com/about-us/our-team/",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "own portal — needs browser scrape"
+      ],
+      [
+        "Pine Labs",
+        "https://www.pinelabs.com/careers/open-jobs",
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        "12 Jul'26 · scraped — near-freeze post-IPO"
+      ],
+      [
+        "Cashfree",
+        "https://www.cashfree.com/careers/",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "pending"
+      ],
+      [
+        "Juspay",
+        "https://juspay.io/careers",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "pending"
+      ],
+      [
+        "PayU",
+        "https://payu.in/careers/",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "pending"
+      ],
+      [
+        "BharatPe",
+        "https://bharatpe.com/careers",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "pending"
+      ]
+    ],
+    "zones": [
+      {
+        "id": "tpap",
+        "n": "1 · Consumer Payment Apps (TPAPs)",
+        "rev": "≈₹16–18k cr combined",
+        "prof": "turning positive; blended margin ≈ −2% (PhonePe profitable)",
+        "cos": [
+          [
+            "PhonePe",
+            "Distribution + UX; monetises via P2M devices, lending & insurance cross-sell",
+            "Runs on NPCI's UPI switch, accessed through sponsor PSP banks (Yes Bank, ICICI) — every UPI app must ride on a bank's licence, which is why 'TPAP' means third-party. Unusually, PhonePe hosts on its own data centres rather than public cloud, and has built its fraud-detection engine in-house on its transaction telemetry."
+          ],
+          [
+            "Google Pay",
+            "Scale distribution; Google identity & UX",
+            "Connects to UPI through PSP handles at four partner banks (Axis, HDFC, SBI, ICICI), giving it redundancy if any one bank's systems slow down. The app runs on Google's global infrastructure, with India payments data localised to comply with RBI's data-residency circular."
+          ],
+          [
+            "Paytm",
+            "Omnichannel app + devices funnel",
+            "After RBI shut down its in-house Paytm Payments Bank in 2024, Paytm migrated its UPI handles to four partner PSP banks (Axis, Yes, SBI, HDFC) — a case study in regulatory dependency. It retains its own Payment Aggregator licence from RBI for the merchant-acquiring side."
+          ],
+          [
+            "CRED",
+            "Affluent-user niche; credit-card bill payment wedge",
+            "Rides Axis Bank's PSP infrastructure for UPI access. Its real asset is data-driven gating: users are admitted based on credit scores pulled from bureaus (TransUnion CIBIL), giving CRED a pre-filtered affluent audience it monetises through lending and commerce."
+          ],
+          [
+            "Navi / super.money / BHIM",
+            "Challengers gaining share ahead of the 30%-cap deadline",
+            "All ride partner PSP banks for UPI access — none needs its own licence. super.money leans on Flipkart's checkout traffic for distribution; BHIM is owned and run by NPCI itself. Their combined rise (≈6.5%) is partly strategic positioning for the market-share cap that bites 31 Dec 2026."
+          ]
+        ]
+      },
+      {
+        "id": "acq",
+        "n": "2 · Merchant Acquiring & Gateways",
+        "rev": "≈₹12–13k cr",
+        "prof": "≈ −5% to breakeven ex-one-offs; Juspay/Pine Labs/Paytm profitable",
+        "cos": [
+          [
+            "Razorpay",
+            "One-stop merchant acceptance + business banking + capital",
+            "Acquires card payments through partner acquiring banks (Axis, RBL, ICICI) running on Visa/Mastercard rails, and UPI through sponsor banks on NPCI rails. Merchant onboarding KYC is automated using government identity APIs — Aadhaar (from UIDAI), PAN validation (NSDL e-Gov) and the central KYC registry (CERSAI). Infrastructure runs on AWS's Indian regions."
+          ],
+          [
+            "PayU",
+            "Enterprise gateway + affordability/EMI stack",
+            "Processes cards through bank acquirers on the international card networks. Its LazyPay pay-later product underwrites using credit-bureau records combined with PayU's own checkout behaviour data — an example of a gateway converting payment flow into lending signal."
+          ],
+          [
+            "Pine Labs",
+            "POS hardware + brand-EMI + prepaid/issuing",
+            "POS terminals connect to both NPCI rails (RuPay, UPI) and Visa/Mastercard. Its brand-EMI engine plugs directly into issuer banks' loan systems so a phone buyer gets an instant EMI at the till — the brand, bank and Pine Labs share the subvention. Gift cards run on its own Qwikcilver rails."
+          ],
+          [
+            "Cashfree",
+            "Payouts & API-banking depth alongside collections",
+            "Its payouts product (the strength) pushes money out over IMPS and UPI rails through partner banks — used for refunds, vendor payments, gig wages. Its verification suite repackages government data sources (Aadhaar, PAN, bank-account penny-drop, GSTIN) into single developer APIs."
+          ],
+          [
+            "BharatPe",
+            "Offline QR aggregation + merchant lending",
+            "Built on UPI QR interoperability — an NPCI standard that means one printed QR accepts payments from every app, which is what let BharatPe give QRs away free. Monetisation comes from merchant loans funded by NBFC partners, with BharatPe earning origination and collection fees."
+          ]
+        ]
+      },
+      {
+        "id": "infra",
+        "n": "3 · Payments Infra & Orchestration",
+        "rev": "≈₹3,000 cr",
+        "prof": "mixed; Juspay profitable, issuing platforms still investing",
+        "cos": [
+          [
+            "Juspay",
+            "Checkout orchestration, routing, success-rate optimisation",
+            "Its SDK sits inside merchant apps (Amazon, Swiggy scale) and routes each transaction to whichever gateway or bank has the best success rate at that moment. Consumes NPCI's UPI specifications and the card networks' tokenisation APIs (Visa VTS, Mastercard MDES). Currently piloting agentic payments with NPCI and OpenAI."
+          ],
+          [
+            "M2P Fintech",
+            "Issuing & credit APIs for fintechs and banks",
+            "A fintech that wants to launch a card programme gets its BIN (card-number range) sponsored by an M2P partner bank, with M2P running the technology stack on Visa or RuPay rails — the fintech never touches the card network directly."
+          ],
+          [
+            "Zeta",
+            "Modern core-banking + issuing stack for banks",
+            "Sells cloud-native processing to banks themselves (e.g., HDFC Bank's PayZapp rebuild) — modernising the incumbents from within rather than riding on top of them."
+          ],
+          [
+            "Setu",
+            "Public-rail APIs for developers",
+            "Packages India's public infrastructure into developer-friendly APIs: Bharat Connect bill payments (an NPCI system), Account Aggregator data flows (RBI framework, governed through the Sahamati alliance) and UPI deep links."
+          ],
+          [
+            "FSS / Mindgate",
+            "Bank-side UPI switches & processing",
+            "Their licensed switch software runs inside the PSP banks and processes the actual UPI messages — the invisible layer between the app you tap and NPCI's central switch."
+          ]
+        ]
+      },
+      {
+        "id": "rails",
+        "n": "4 · Rails & Networks",
+        "rev": "NPCI ≈₹3,300 cr FY24 ≈",
+        "prof": "NPCI surplus ≈₹1,100 cr (not-for-profit, ≈33%)",
+        "cos": [
+          [
+            "NPCI",
+            "Owns & operates UPI, IMPS, RuPay, NETC, AePS, Bharat Connect; writes the scheme rules",
+            "A not-for-profit promoted by RBI and the Indian Banks' Association — effectively a public utility. It runs the central switches, earns small per-transaction switching fees, and publishes the rulebook (circulars on caps, interchange, API limits) that every player in zones 1–3 must code against."
+          ],
+          [
+            "Visa / Mastercard",
+            "Card rails, tokenisation, cross-border acceptance",
+            "Own the global card networks, plus the tokenisation infrastructure (VTS/MDES) that every Indian gateway now consumes — mandatory since RBI banned merchants from storing raw card numbers in 2022."
+          ],
+          [
+            "NPCI International (NIPL)",
+            "Exports the UPI playbook abroad",
+            "Licenses the UPI stack to other countries (UAE, Namibia, Peru), builds bilateral links like UPI–PayNow with Singapore, and connects to BIS Project Nexus — the multilateral effort to link national instant-payment systems."
+          ]
+        ]
+      },
+      {
+        "id": "banks",
+        "n": "5 · Banks: PSP / Sponsor / Settlement",
+        "rev": "Still zero-MDR in practice — a 0.4% charge on P2M > ₹2,000 was deferred on 13 Oct'26",
+        "prof": "MeitY incentive pool ≈₹1,500–3,500 cr/yr for small-ticket P2M",
+        "cos": [
+          [
+            "Yes Bank",
+            "Largest PSP handle base — PhonePe's primary sponsor",
+            "Every @ybl UPI address resolves through Yes Bank's systems. The bank holds NPCI membership and RBI settlement accounts on behalf of the TPAPs it sponsors, earning float income and processing fees — licence-as-a-service, essentially."
+          ],
+          [
+            "Axis / HDFC / ICICI / SBI",
+            "Play every banking role in the chain simultaneously",
+            "PSP sponsors for the consumer apps, acquiring banks for the gateways, and settlement banks for merchant payouts. Their UPI switches typically run FSS or Mindgate software layered over Finacle (Infosys) or Flexcube (Oracle) core-banking systems."
+          ],
+          [
+            "RBL / Federal",
+            "Specialist fintech-partner banks",
+            "Provide BIN sponsorship for card programmes and the escrow/nodal accounts that RBI's Payment Aggregator rules require every gateway to maintain — small banks that turned fintech partnership into a business line."
+          ]
+        ]
+      },
+      {
+        "id": "kyc",
+        "n": "6 · Identity, KYC & Fraud",
+        "rev": "≈₹600–900 cr",
+        "prof": "several profitable (small base)",
+        "cos": [
+          [
+            "Signzy / IDfy / HyperVerge",
+            "Automated merchant & user onboarding (video-KYC, document AI)",
+            "Orchestrate government identity infrastructure into onboarding flows: Aadhaar eKYC and offline XML from UIDAI, the central KYC registry run by CERSAI, DigiLocker documents from MeitY, and PAN checks via NSDL e-Gov. On top they add their own computer vision for liveness detection and document-forgery checks."
+          ],
+          [
+            "Bureau",
+            "Device intelligence & fraud scoring at onboarding",
+            "Scores risk from device fingerprints and behavioural signals (SIM age, typing cadence, network graph), enriched by telco data partnerships — designed to catch mule accounts and synthetic identities before KYC even begins."
+          ],
+          [
+            "PA / TPAP in-house stacks",
+            "Transaction-level fraud models",
+            "The large gateways and apps run their own real-time fraud engines using velocity rules and tokenised network data on their proprietary traffic — scale of data is the moat, which is why the biggest players build rather than buy."
+          ]
+        ]
+      },
+      {
+        "id": "reg",
+        "n": "7 · Regulators & Policy Layer",
+        "rev": "—",
+        "prof": "—",
+        "cos": [
+          [
+            "RBI",
+            "Licenses and supervises the whole chain",
+            "Statutory authority under the Payment & Settlement Systems Act, 2007. Licenses Payment Aggregators and wallet issuers, sets PSP and KYC rules, and itself operates the wholesale rails (RTGS/NEFT) that final settlement runs on."
+          ],
+          [
+            "NPCI (scheme role)",
+            "The operational rulebook",
+            "Issues the circulars that move markets: the 30% TPAP market-share cap, interchange on PPI-UPI transactions, API rate limits. Not a statutory regulator, but in practice every product roadmap in zones 1–3 is written around NPCI circulars."
+          ],
+          [
+            "MeitY",
+            "Funds the zero-MDR regime",
+            "Since merchants pay no fee on UPI, the economics are propped up by a government incentive scheme (≈₹1,500–3,500 cr/yr from the union budget) paid to banks for small-ticket merchant transactions — the single most debated policy issue in Indian payments."
+          ],
+          [
+            "iSPIRT / Sahamati",
+            "The ideas layer",
+            "Volunteer think-tank that authored the India Stack, OCEN and DEPA specifications which NPCI and RBI later institutionalised. Sahamati now governs the Account Aggregator ecosystem as an industry alliance."
+          ]
+        ]
+      },
+      {
+        "id": "tech",
+        "n": "8 · Enabling Tech Vendors",
+        "rev": "n/a (global vendors)",
+        "prof": "—",
+        "cos": [
+          [
+            "AWS / GCP / Azure",
+            "Cloud hosting for most gateways and apps",
+            "Host the bulk of Indian payments workloads in India-region data centres, because RBI's 2018 data-localisation circular requires payments data to be stored only in India. Regulated-workload compliance is a selling point of their Mumbai/Hyderabad regions."
+          ],
+          [
+            "ACI / FSS",
+            "Payment switches & processing software",
+            "License the switching software banks run to connect to card networks and NPCI, often bundled with managed services — decades-old plumbing that most fintech demos quietly depend on."
+          ],
+          [
+            "Telcos (Jio/Airtel/Vi)",
+            "UPI's silent dependency",
+            "Every UPI registration depends on an outbound SMS for device binding, and OTPs ride TRAI-regulated SMS routes. Telco outages are an under-appreciated single point of failure for the entire consumer payments stack."
+          ],
+          [
+            "Soundbox OEMs",
+            "Merchant hardware supply chain",
+            "Contract manufacturers (Indian and Chinese) build the payment-confirmation soundboxes and POS devices for Paytm, PhonePe and GPay — hardware subscription revenue is now a key monetisation lever in zone 1."
+          ]
+        ]
+      }
+    ]
+  }
+}

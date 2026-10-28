@@ -1,0 +1,79 @@
+{
+  "tiles": [
+    {
+      "l": "India fintech Q1'26",
+      "v": "$513 M",
+      "d": "45 rounds · Tracxn",
+      "chg": "+2% YoY $, −54% deals",
+      "dir": "up"
+    },
+    {
+      "l": "Late-stage Q1'26",
+      "v": "$273 M",
+      "d": "Tracxn",
+      "chg": "+126% YoY",
+      "dir": "up"
+    },
+    {
+      "l": "Seed-stage Q1'26",
+      "v": "$25.7 M",
+      "d": "Tracxn",
+      "chg": "−65% YoY",
+      "dir": "down"
+    },
+    {
+      "l": "India tech H1'26 (all)",
+      "v": "$7.2 B",
+      "d": "652 rounds, +12% YoY · Tracxn"
+    },
+    {
+      "l": "Global fintech 2025",
+      "v": "$52.7 B",
+      "d": "highest since 2022 · CB Insights"
+    }
+  ],
+  "annualTrend": {
+    "labels": [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025≈"
+    ],
+    "data": [
+      8,
+      5.7,
+      2.1,
+      1.9,
+      2
+    ]
+  },
+  "q1Compare": {
+    "labels": [
+      "Q1 2025",
+      "Q1 2026"
+    ],
+    "amount": [
+      503,
+      513
+    ],
+    "deals": [
+      99,
+      45
+    ]
+  },
+  "watch": [
+    [
+      "Funding barbell",
+      "Capital concentrating late-stage; seed drought — thesis: infra & profitable models get funded"
+    ],
+    [
+      "IPO window open",
+      "16 fintech IPOs globally in 2025; India: Pine Labs & Groww listed; PhonePe, Razorpay next"
+    ],
+    [
+      "M&A rising",
+      "Global fintech M&A $251B in 2025 (BCG); India: consolidation in lending & broking"
+    ]
+  ]
+}

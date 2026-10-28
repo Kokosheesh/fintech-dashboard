@@ -1,0 +1,41 @@
+# The gate every change to the dashboard must pass — your hand edits included.
+# (Pull requests opened by SUPAG itself already ran these checks inside the SUPAG job.)
+name: SUPAG check
+
+on:
+  pull_request:
+    paths: ["dashboard/**", "fintech_dashboard.html", "supag/**", ".github/workflows/supag*.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: supag/requirements.txt
+      - run: |
+          pip install -r supag/requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: Tests
+        run: python -m pytest supag/tests -q
+      - name: Validate the data
+        run: python -m supag.validate
+      - name: Open the page in a browser and check it
+        id: scan
+        run: python -m supag.run --mode scan --no-links --report "$RUNNER_TEMP/scan.md"
+      - if: always()
+        run: cat "$RUNNER_TEMP/scan.md" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+      - name: Block on P0
+        if: steps.scan.outputs.p0 == 'true'
+        run: |
+          echo "::error::The dashboard has a P0 issue in this pull request — see the summary."
+          exit 1
