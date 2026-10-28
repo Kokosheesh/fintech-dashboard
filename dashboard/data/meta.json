@@ -1,0 +1,256 @@
+{
+  "lastUpdated": "28 Oct 2026",
+  "lastUpdatedISO": "2026-10-28",
+  "updatedBy": "manual",
+  "tabs": [
+    {
+      "id": "payments",
+      "name": "Payments",
+      "srcs": [
+        [
+          "Sep'26 UPI (Outlook Money)",
+          "https://www.outlookmoney.com/banking/upi-processes-2407-billion-transactions-worth-rs-2937-lakh-crore-in-september"
+        ],
+        [
+          "UPI app shares Sep'26 (MediaNama, NPCI app-wise)",
+          "https://www.medianama.com/2026/10/223-upi-transactions-september-value-slipped/"
+        ],
+        [
+          "UPI charge deferral (StartupFox)",
+          "https://startupfox.in/article/npci-has-deferred-the-upi-charge-two-days-before-it-was-due-to-start"
+        ],
+        [
+          "NPCI statistics",
+          "https://www.npci.org.in/statistics/"
+        ],
+        [
+          "PIB UPI 10-year release",
+          "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2257087&reg=3&lang=2"
+        ],
+        [
+          "Razorpay FY25 (Entrackr)",
+          "https://entrackr.com/fintrackr/razorpay-revenue-soars-65-in-fy25-gross-profit-crosses-rs-1200-cr-10567344"
+        ],
+        [
+          "Juspay FY25 & unicorn (Inc42/Elets)",
+          "https://bfsi.eletsonline.com/juspay-raises-50-million-in-series-d-follow-on-round-becomes-first-unicorn-of-2026/"
+        ],
+        [
+          "Pine Labs IPO (TechCrunch)",
+          "https://techcrunch.com/2025/11/14/pine-labs-gets-warm-market-welcome-on-440m-india-ipo-despite-a-valuation-trim/"
+        ],
+        [
+          "Cashfree round (TechCrunch)",
+          "https://techcrunch.com/2025/02/04/krafton-leads-cashfrees-53m-funding-at-700m-valuation/"
+        ]
+      ]
+    },
+    {
+      "id": "lending",
+      "name": "Lending & Credit",
+      "srcs": [
+        [
+          "Credit 30 Sep'26 (Business Standard)",
+          "https://www.business-standard.com/industry/banking/bank-credit-rises-19-4-in-september-rbi-rate-hike-may-slow-growth-in-h2-126101501482_1.html"
+        ],
+        [
+          "Oct'26 MPC (SCC Online)",
+          "https://www.scconline.com/blog/post/2026/10/09/rbi-hikes-repo-rate-to-5-50-percent-october-2026/"
+        ],
+        [
+          "MFIN Micrometer Q1 FY27",
+          "https://mfinindia.org/assets/upload_image/news/pdf/Micrometer%20Q1%20FY%2026-27%20Press%20Release.pdf"
+        ],
+        [
+          "RBI WSS & sectoral deployment",
+          "https://www.rbi.org.in"
+        ],
+        [
+          "RBI Financial Stability Report",
+          "https://www.rbi.org.in/Scripts/PublicationsView.aspx"
+        ],
+        [
+          "Screener.in (prices/P-E ✓13 Jul)",
+          "https://www.screener.in"
+        ],
+        [
+          "CRIF MicroLend",
+          "https://www.crifhighmark.com/media/6097/microlend-feb-2026.pdf"
+        ],
+        [
+          "TransUnion CIBIL CMI",
+          "https://www.transunioncibil.com"
+        ]
+      ]
+    },
+    {
+      "id": "news",
+      "name": "News",
+      "srcs": [
+        [
+          "StartupFox — Fintech",
+          "https://startupfox.in/category/fintech"
+        ]
+      ]
+    },
+    {
+      "id": "wealthtech",
+      "name": "WealthTech",
+      "srcs": [
+        [
+          "AMFI Sep'26 (Equentis)",
+          "https://www.equentis.com/blog/amfi-september-data-2026-mutual-fund-aum-falls-5-1-to-%E2%82%B982-64-lakh-crore-sip-inflows-hit-record-%E2%82%B932490-crore/"
+        ],
+        [
+          "NSE brokers Sep'26 (Inc42)",
+          "https://inc42.com/buzz/brokers-in-september-groww-strengthens-lead-angel-one-closes-in-on-zerodha/"
+        ],
+        [
+          "Demat Sep'26 (Business Standard)",
+          "https://www.business-standard.com/markets/news/september-demat-additions-fall-11-5-to-2-89-million-after-august-s-surge-126100701102_1.html"
+        ],
+        [
+          "AMFI",
+          "https://www.amfiindia.com/research-information/amfi-monthly"
+        ],
+        [
+          "FY26 active clients (BT)",
+          "https://www.businesstoday.in/markets/stocks/story/zerodha-groww-angel-one-upstox-how-active-clients-changed-in-past-8-years-full-table-526520-2026-04-20"
+        ],
+        [
+          "NSE broker data (Chittorgarh)",
+          "https://www.chittorgarh.com/report/top_20_share_brokers_in_india_by_clients_at_nse/1/?year=2026"
+        ],
+        [
+          "Screener.in ✓13 Jul",
+          "https://www.screener.in"
+        ],
+        [
+          "SEBI bulletins",
+          "https://www.sebi.gov.in"
+        ]
+      ]
+    }
+  ],
+  "brief": {
+    "asOf": "28 Oct 2026",
+    "items": [
+      {
+        "tab": "payments",
+        "tag": "Payments",
+        "text": "UPI's September dip is the calendar — daily volume set a record at 802 M. The real story is the 0.4% merchant charge on P2M payments above ₹2,000: announced 15 Sep, survived a stay plea in the Supreme Court, then deferred two days before launch with no new date. Until it returns, UPI's zero-MDR economics stand."
+      },
+      {
+        "tab": "lending",
+        "tag": "Lending",
+        "text": "The RBI hiked the repo rate 25 bps to 5.50% on 7 Oct — the first hike since Feb'23 — with CPI seen near 5.8% over the next three quarters. Credit still grew 19.4%, but deposits at 17.8% have nearly closed the gap that defined 2026. Expect loan growth to cool in H2."
+      },
+      {
+        "tab": "wealthtech",
+        "tag": "Wealth",
+        "text": "SIPs hit another record at ₹32,490 cr while industry AUM fell 5.1% — quarter-end debt redemptions of about ₹1.83 L cr, not retail flight. Groww holds 29% of NSE active clients; Angel One is 36k clients short of overtaking Zerodha for second."
+      }
+    ]
+  },
+  "freshness": {
+    "payments": [
+      {
+        "label": "UPI monthly",
+        "asOf": "2026-09-30",
+        "shown": "Sep'26",
+        "cadenceDays": 31,
+        "lagDays": 5
+      },
+      {
+        "label": "App shares",
+        "asOf": "2026-09-30",
+        "shown": "Sep'26",
+        "cadenceDays": 31,
+        "lagDays": 28
+      },
+      {
+        "label": "Company financials",
+        "asOf": "2025-03-31",
+        "shown": "FY25",
+        "cadenceDays": 365,
+        "lagDays": 240
+      },
+      {
+        "label": "Funding rounds",
+        "asOf": "2026-07-12",
+        "shown": "12 Jul'26",
+        "cadenceDays": 90,
+        "lagDays": 0
+      },
+      {
+        "label": "Hiring",
+        "asOf": "2026-07-12",
+        "shown": "12 Jul'26",
+        "cadenceDays": 7,
+        "lagDays": 0
+      }
+    ],
+    "lending": [
+      {
+        "label": "Bank credit",
+        "asOf": "2026-09-30",
+        "shown": "30 Sep'26",
+        "cadenceDays": 14,
+        "lagDays": 16
+      },
+      {
+        "label": "Policy rate",
+        "asOf": "2026-10-07",
+        "shown": "7 Oct'26",
+        "cadenceDays": 61,
+        "lagDays": 0
+      },
+      {
+        "label": "Microfinance",
+        "asOf": "2026-06-30",
+        "shown": "Jun'26",
+        "cadenceDays": 92,
+        "lagDays": 75
+      },
+      {
+        "label": "Prices & P/E",
+        "asOf": "2026-07-13",
+        "shown": "13 Jul'26",
+        "cadenceDays": 7,
+        "lagDays": 0
+      }
+    ],
+    "wealthtech": [
+      {
+        "label": "AMFI flows",
+        "asOf": "2026-09-30",
+        "shown": "Sep'26",
+        "cadenceDays": 31,
+        "lagDays": 12
+      },
+      {
+        "label": "Broker clients",
+        "asOf": "2026-09-30",
+        "shown": "Sep'26",
+        "cadenceDays": 31,
+        "lagDays": 12
+      },
+      {
+        "label": "Prices & P/E",
+        "asOf": "2026-07-13",
+        "shown": "13 Jul'26",
+        "cadenceDays": 7,
+        "lagDays": 0
+      }
+    ],
+    "news": [
+      {
+        "label": "Latest story",
+        "asOf": "2026-10-27",
+        "shown": "27 Oct'26",
+        "cadenceDays": 7,
+        "lagDays": 2
+      }
+    ]
+  }
+}
