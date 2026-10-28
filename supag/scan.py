@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from .validate import freshness_status
 
 MIN_CHARTS = {"payments": 6, "lending": 4, "wealthtech": 4}
-THIRD_PARTY = ("accounts.google.com", "clarity.ms", "gsi", "googletagmanager")
+THIRD_PARTY = ("accounts.google.com", "clarity.ms", "gsi_logger", "[gsi", "googletagmanager")   # compared lower-case
 AUTOMATED = {"UPI monthly", "App shares", "Hiring", "Bank credit", "Policy rate", "AMFI flows", "Latest story"}
 
 
@@ -53,7 +53,7 @@ def scan(url: str, *, check_links: bool = True, page_hook=None, today: dt.date |
         for e in errors:
             add("P0", "js-error", f"JavaScript error on load: {e}", "Revert the last change to fintech_dashboard.html.")
         for c in console:
-            if not any(t in c for t in THIRD_PARTY) and "Failed to load resource" not in c:
+            if not any(t in c.lower() for t in THIRD_PARTY) and "Failed to load resource" not in c:
                 add("P2", "console-error", c, "Inspect in the browser console.")
 
         meta = pg.evaluate("typeof META==='object' ? META : null")
