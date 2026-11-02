@@ -1,0 +1,154 @@
+{
+ "date": "2026-11-02",
+ "results": [
+  {
+   "family": "upi_monthly",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "upi_app_share",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "amfi_monthly",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "rbi_credit",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "rbi_policy",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "news",
+   "status": "skipped",
+   "changes": [],
+   "rejected": [],
+   "notes": [
+    "no API key"
+   ],
+   "warnings": []
+  },
+  {
+   "family": "hirings",
+   "status": "updated",
+   "changes": [
+    {
+     "metric": "Razorpay open roles",
+     "old": "52",
+     "new": "27",
+     "url": "https://boards-api.greenhouse.io/v1/boards/razorpaysoftwareprivatelimited/jobs",
+     "quote": ""
+    },
+    {
+     "metric": "Groww open roles",
+     "old": "",
+     "new": "9",
+     "url": "https://boards-api.greenhouse.io/v1/boards/groww/jobs",
+     "quote": ""
+    }
+   ],
+   "rejected": [],
+   "notes": [],
+   "warnings": []
+  }
+ ],
+ "findings": [
+  {
+   "priority": "P1",
+   "code": "stale",
+   "msg": "lending · Prices & P/E is overdue (as of 13 Jul'26)",
+   "fix": "Not automated yet — update by hand, or add a source family for it.",
+   "auto": false
+  },
+  {
+   "priority": "P1",
+   "code": "stale",
+   "msg": "wealthtech · Prices & P/E is overdue (as of 13 Jul'26)",
+   "fix": "Not automated yet — update by hand, or add a source family for it.",
+   "auto": false
+  },
+  {
+   "priority": "P2",
+   "code": "aging",
+   "msg": "lending · Bank credit — a newer release is due (as of 30 Sep'26)",
+   "fix": "Due in the next run.",
+   "auto": false
+  },
+  {
+   "priority": "P2",
+   "code": "aging",
+   "msg": "payments · Funding rounds — a newer release is due (as of 12 Jul'26)",
+   "fix": "Due in the next run.",
+   "auto": false
+  },
+  {
+   "priority": "P2",
+   "code": "broken-link",
+   "msg": "https://www.kreditbee.in/careers responds 404",
+   "fix": "Replace the source link in dashboard/data.",
+   "auto": false
+  },
+  {
+   "priority": "P3",
+   "code": "links-unverified",
+   "msg": "4 of 65 external links block automated checks (normal for news sites)",
+   "fix": "",
+   "auto": false
+  },
+  {
+   "priority": "P3",
+   "code": "refreshed",
+   "msg": "hirings: 2 value(s) refreshed",
+   "fix": "",
+   "auto": true
+  }
+ ],
+ "fetches": [
+  {
+   "url": "https://boards-api.greenhouse.io/v1/boards/razorpaysoftwareprivatelimited/jobs",
+   "ok": true,
+   "note": "json",
+   "t": "06:33:26"
+  },
+  {
+   "url": "https://boards-api.greenhouse.io/v1/boards/groww/jobs",
+   "ok": true,
+   "note": "json",
+   "t": "06:33:26"
+  }
+ ],
+ "usage": {}
+}
