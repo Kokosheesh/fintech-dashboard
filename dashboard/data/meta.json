@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "28 Oct 2026",
-  "lastUpdatedISO": "2026-10-28",
-  "updatedBy": "manual",
+  "lastUpdated": "9 Nov 2026",
+  "lastUpdatedISO": "2026-11-09",
+  "updatedBy": "SUPAG",
   "tabs": [
     {
       "id": "payments",
@@ -184,8 +184,8 @@
       },
       {
         "label": "Hiring",
-        "asOf": "2026-07-12",
-        "shown": "12 Jul'26",
+        "asOf": "2026-11-09",
+        "shown": "9 Nov'26",
         "cadenceDays": 7,
         "lagDays": 0
       }
